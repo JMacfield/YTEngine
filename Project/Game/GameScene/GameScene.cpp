@@ -100,6 +100,7 @@ void GameScene::Update(GameManager* gameManager) {
 	}
 
 	Vector3 move = { (float)joyState.Gamepad.sThumbLX / SHRT_MAX,0.0f,0.0f };
+	move.x = move.x * 0.5f;
 
 	humanWorldTransform_->translate_ = Add(humanWorldTransform_[0].translate_, move);
 
