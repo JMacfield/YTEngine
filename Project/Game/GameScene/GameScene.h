@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <Particle3D.h>
+#include "SkyBox.h"
 #include "SkinCluster.h"
 
 //StatePatternを使う時は必ず前方宣言をするように
@@ -68,6 +69,9 @@ private:
 
 	std::unique_ptr<Model> noneAnimationModel_ = nullptr;
 	WorldTransform noneAnimationWorldTransform_ = {};
+
+	std::unique_ptr<SkyBox> skyBox_ = nullptr;
+	WorldTransform skyBoxWorldTransform_ = {};
 
 	const char* GroupName = "Player";
 };

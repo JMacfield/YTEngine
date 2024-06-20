@@ -70,6 +70,11 @@ public:
 
 	ComPtr<ID3D12PipelineState> GetParticle3DGraphicsPipelineState() { return particle3DPSO_.graphicsPipelineState_; }
 
+	ComPtr<ID3D12RootSignature> GetSkyBoxRootSignature() { return skyBoxPSO_.rootSignature_; }
+
+	ComPtr<ID3D12PipelineState> GetSkyBoxGraphicsPipelineState() { return skyBoxPSO_.graphicsPipelineState_; }
+
+
 	void SetSpriteBlendMode(uint32_t blendmode) { selectSpriteBlendMode_ = blendmode; }
 
 	void SetModelBlendMode(uint32_t blendmode) { selectModelBlendMode_ = blendmode; }
@@ -86,6 +91,8 @@ public:
 	static void GenerateAnimationModelPSO();
 
 	static void GenerateParticle3DPSO();
+
+	static void GenerateSkyBoxPSO();
 
 private:
 
@@ -109,6 +116,8 @@ private:
 	PSOInformation particle3DPSO_ = {};
 	//モデル用の変数
 	PSOInformation animationModelPSO_ = {};
+	// スカイボックス用
+	PSOInformation skyBoxPSO_ = {};
 
 	//スプライト用
 	int32_t selectSpriteBlendMode_ = 1;

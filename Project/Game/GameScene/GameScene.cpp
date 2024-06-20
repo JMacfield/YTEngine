@@ -54,27 +54,17 @@ void GameScene::Initialize() {
 	humanWorldTransform_[0].translate_.y = 0.5f;
 	humanWorldTransform_[1].translate_.y = -2.0f;
 
-	//Animation無し
-
-	humanNoneAnimation_.reset(Model::Create(humanModelHandle));
-	humanNoneAnimationWorldTransform_.Initialize();
-	humanNoneAnimationWorldTransform_.translate_.x = -2.0f;
-	humanNoneAnimationWorldTransform_.translate_.y = 0.5f;
-
-	//球
-	//uint32_t noneModelHandle = ModelManager::GetInstance()->LoadModelFile("Resources/CG3/Sphere", "Sphere.obj");
-	//noneAnimationModel_.reset(Model::Create(noneModelHandle));
-	noneAnimationWorldTransform_.Initialize();
-	const float SPHERE_SCALE = 0.5f;
-	noneAnimationWorldTransform_.scale_ = { SPHERE_SCALE,SPHERE_SCALE,SPHERE_SCALE };
-	noneAnimationWorldTransform_.translate_.x = -2.0f;
-	noneAnimationWorldTransform_.translate_.y = -1.0f;
-
 	camera_.Initialize();
 
 	for (int i = 0; i < SIMPLE_SKIN_AMOUNT_; ++i) {
 		worldTransform_[i].rotate_.y = 3.1415f;
 	}
+
+	uint32_t skyBoxTextureHandle = TextureManager::GetInstance()->LoadTexture("Resources/AssignmentTexture/rostock_laage_airport_4k.dds");
+	skyBox_ = std::make_unique<SkyBox>();
+	skyBox_->Create(skyBoxTextureHandle);
+	skyBoxWorldTransform_.Initialize();
+	skyBoxWorldTransform_.scale_ = { 20.0f,20.0f,20.0f };
 }
 
 /// <summary>
@@ -86,6 +76,7 @@ void GameScene::Update(GameManager* gameManager) {
 	XINPUT_STATE joyState;
 
 	camera_.Update();
+	skyBoxWorldTransform_.Update();
 
 	animationTime_[0] += 1.0f / 60.0f;
 	animationTime_[1] += 2.0f / 60.0f;
@@ -133,9 +124,12 @@ void GameScene::Update(GameManager* gameManager) {
 	}
 
 #ifdef _DEBUG
-	
-
+	ImGui::Begin("DebugWindow");
+	ImGui::DragFloat3("CameraTranslate", &camera_.translate_.x, 0.1f);
+	ImGui::DragFloat3("CameraRotate", &camera_.rotate_.x, 0.1f);
+	ImGui::End();
 #endif
+
 	for (int i = 0; i < WALK_HUMAN_AMOUNT_; ++i) {
 		humanWorldTransform_[i].Update();
 	}
@@ -143,6 +137,8 @@ void GameScene::Update(GameManager* gameManager) {
 
 void GameScene::Draw() {
 	human_[0]->Draw(humanWorldTransform_[0], camera_, humanSkinCluster_[0]);
+
+	skyBox_->Draw(skyBoxWorldTransform_, camera_);
 }
 
 GameScene::~GameScene() {

@@ -73,7 +73,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)YTEngine\ResourceManager\SrvManager;$(ProjectDir)YTEngine\Audio;$(ProjectDir)\YTEngine\Lighting;$(ProjectDir)YTEngine\Graphics\3D\ModelManager;$(ProjectDir)\External\assimp\include;$(ProjectDir)YTEngine\Utility\Globalvariables;$(ProjectDir)YTEngine\Input;$(ProjectDir)Project\Game;$(ProjectDir)YTEngine\Camera;$(ProjectDir)YTEngine\ResourceManager\TextureManager;$(ProjectDir)YTEngine\Graphics\2D\Sprite;$(ProjectDir)YTEngine\Graphics\3D\Model;$(ProjectDir)YTEngine\Graphics\3D\Particle3D;$(ProjectDir)YTEngine\EngineCore\DirectXCommon;$(ProjectDir)YTEngine\EngineCore\YTEngine;$(ProjectDir)YTEngine\EngineCore\WinApp;$(ProjectDir)YTEngine\Math\Vector;$(ProjectDir)YTEngine\ResourceManager\PipelineManager;$(ProjectDir)YTEngine\Math\Matrix;$(ProjectDir)YTEngine\Math\WorldTransform;$(ProjectDir)YTEngine\Math\Quaternion;$(ProjectDir)YTEngine\Math\Matrix\Calculation;$(ProjectDir)YTEngine\Conversion\ConvertLog;$(ProjectDir)YTEngine\Conversion\ConvertColor;$(ProjectDir)YTEngine\Conversion\CompileShader;$(ProjectDir)YTEngine\Math\Vector\Calculation;$(ProjectDir)YTEngine\SrvManager;$(ProjectDir)YTEngine\Math\Shape;$(ProjectDir)YTEngine\Graphics\3D\ModelData;$(ProjectDir)YTEngine\Graphics\3D\MaterialData;$(ProjectDir)YTEngine\ConvertFunction\CompileShader;$(ProjectDir)YTEngine\Math\Collision;$(ProjectDir)Project\AllGameScene\GameManager;$(ProjectDir)YTEngine\EngineCore\ImGuiManager;$(ProjectDir)YTEngine\Math\Transform;$(ProjectDir)YTEngine\Manager\AnimationManager;$(ProjectDir)YTEngine\Graphics\3D\AnimationModel</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)YTEngine\Graphics\3D\SkyBox;$(ProjectDir)YTEngine\ResourceManager\SrvManager;$(ProjectDir)YTEngine\Audio;$(ProjectDir)\YTEngine\Lighting;$(ProjectDir)YTEngine\Graphics\3D\ModelManager;$(ProjectDir)\External\assimp\include;$(ProjectDir)YTEngine\Utility\Globalvariables;$(ProjectDir)YTEngine\Input;$(ProjectDir)Project\Game;$(ProjectDir)YTEngine\Camera;$(ProjectDir)YTEngine\ResourceManager\TextureManager;$(ProjectDir)YTEngine\Graphics\2D\Sprite;$(ProjectDir)YTEngine\Graphics\3D\Model;$(ProjectDir)YTEngine\Graphics\3D\Particle3D;$(ProjectDir)YTEngine\EngineCore\DirectXCommon;$(ProjectDir)YTEngine\EngineCore\YTEngine;$(ProjectDir)YTEngine\EngineCore\WinApp;$(ProjectDir)YTEngine\Math\Vector;$(ProjectDir)YTEngine\ResourceManager\PipelineManager;$(ProjectDir)YTEngine\Math\Matrix;$(ProjectDir)YTEngine\Math\WorldTransform;$(ProjectDir)YTEngine\Math\Quaternion;$(ProjectDir)YTEngine\Math\Matrix\Calculation;$(ProjectDir)YTEngine\Conversion\ConvertLog;$(ProjectDir)YTEngine\Conversion\ConvertColor;$(ProjectDir)YTEngine\Conversion\CompileShader;$(ProjectDir)YTEngine\Math\Vector\Calculation;$(ProjectDir)YTEngine\SrvManager;$(ProjectDir)YTEngine\Math\Shape;$(ProjectDir)YTEngine\Graphics\3D\ModelData;$(ProjectDir)YTEngine\Graphics\3D\MaterialData;$(ProjectDir)YTEngine\ConvertFunction\CompileShader;$(ProjectDir)YTEngine\Math\Collision;$(ProjectDir)Project\AllGameScene\GameManager;$(ProjectDir)YTEngine\EngineCore\ImGuiManager;$(ProjectDir)YTEngine\Math\Transform;$(ProjectDir)YTEngine\Manager\AnimationManager;$(ProjectDir)YTEngine\Graphics\3D\AnimationModel</AdditionalIncludeDirectories>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -128,6 +128,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="YTEngine\Audio\Audio.cpp" />
+    <ClCompile Include="YTEngine\Graphics\3D\SkyBox\SkyBox.cpp" />
     <ClCompile Include="YTEngine\Utility\GlobalVariables\GlobalVariables.cpp" />
     <ClCompile Include="YTEngine\Camera\Camera.cpp" />
     <ClCompile Include="YTEngine\EngineCore\DirectXCommon\DirectXCommon.cpp" />
@@ -200,10 +201,23 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="Resources\Shader\SkyBox\SkyBox.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SkyBox\SkyBox.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="YTEngine\Audio\Audio.h" />
     <ClInclude Include="YTEngine\Audio\AudioStruct.h" />
+    <ClInclude Include="YTEngine\Graphics\3D\SkyBox\SkyBox.h" />
     <ClInclude Include="YTEngine\Utility\GlobalVariables\GlobalVariables.h" />
     <ClInclude Include="YTEngine\Camera\Camera.h" />
     <ClInclude Include="YTEngine\EngineCore\DirectXCommon\DirectXCommon.h" />
@@ -281,6 +295,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="Resources\Shader\Particle3D\Particle3D.hlsli" />
+    <None Include="Resources\Shader\SkyBox\SkyBox.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

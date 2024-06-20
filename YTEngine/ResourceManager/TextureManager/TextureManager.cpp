@@ -77,7 +77,7 @@ uint32_t TextureManager::LoadTexture(const std::string& filePath)
 	SrvManager::GetInstance()->CreateSRVForTexture2D(
 		TextureManager::GetInstance()->textureInformation_[textureIndex].handle_,
 		TextureManager::GetInstance()->textureInformation_[textureIndex].resource_.Get(),
-		metadata.format, UINT(metadata.mipLevels));
+		metadata, UINT(metadata.mipLevels));
 
 	return textureIndex;
 }
@@ -88,15 +88,31 @@ DirectX::ScratchImage TextureManager::LoadTextureData(const std::string& filePat
 	//テクスチャファイルを読んでプログラムで扱えるようにする
 	DirectX::ScratchImage image{};
 	std::wstring filePathW = ConvertString(filePath);
-	
-	HRESULT hr = DirectX::LoadFromWICFile(filePathW.c_str(), DirectX::WIC_FLAGS_FORCE_SRGB, nullptr, image);
+	HRESULT hr;
+
+	if (filePathW.ends_with(L".dds"))
+	{
+		hr = DirectX::LoadFromDDSFile(filePathW.c_str(), DirectX::DDS_FLAGS_NONE, nullptr, image);
+	}
+	else
+	{
+		hr = DirectX::LoadFromWICFile(filePathW.c_str(), DirectX::WIC_FLAGS_FORCE_SRGB, nullptr, image);
+	}
 	
 	assert(SUCCEEDED(hr));
 	
 	//ミップマップの作成
 	DirectX::ScratchImage mipImages{};
-	hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImages);
 	
+	if (DirectX::IsCompressed(image.GetMetadata().format))
+	{
+		mipImages = std::move(image);
+	}
+	else
+	{
+		hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 4, mipImages);
+	}
+
 	assert(SUCCEEDED(hr));
 
 	return mipImages;
@@ -139,7 +155,7 @@ ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(const DirectX::TexM
 		&heapProperties,					//Heapの設定
 		D3D12_HEAP_FLAG_NONE,				//Heapの特殊な設定
 		&resourceDesc,						//Resourceの設定
-		D3D12_RESOURCE_STATE_GENERIC_READ,	//初回のResourceState。データの転送を受け入れられるようにする
+		D3D12_RESOURCE_STATE_COPY_DEST,	//初回のResourceState。データの転送を受け入れられるようにする
 		nullptr,							//Clear最適値。使わないのでnullptr
 		IID_PPV_ARGS(&resource));			//作成するResourceポインタへのポインタ
 
@@ -148,29 +164,26 @@ ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(const DirectX::TexM
 	return resource;
 }
 
-//3.TextureResourceに1で読んだデータを転送する
-void TextureManager::UploadTextureData(ComPtr<ID3D12Resource> texture,  const DirectX::ScratchImage& mipImages) 
+[[nodiscard]]
+ComPtr<ID3D12Resource> TextureManager::UploadTextureData(ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages) 
 {
-	//Meta情報を取得
-	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	
-	//全MipMapについて
-	for (size_t mipLevel = 0; mipLevel < metadata.mipLevels; ++mipLevel) 
-	{
-		//MipMapLevelを指定して各Imageを取得
-		const DirectX::Image* img = mipImages.GetImage(mipLevel, 0, 0);
-		
-		//Textureに転送
-		HRESULT hr = texture->WriteToSubresource(
-			UINT(mipLevel),
-			nullptr,				//全領域へコピー
-			img->pixels,			//元データアドレス
-			UINT(img->rowPitch),	//1ラインサイズ
-			UINT(img->slicePitch)	//1枚サイズ
-		);
+	std::vector<D3D12_SUBRESOURCE_DATA> subresources;
+	DirectX::PrepareUpload(DirectXCommon::GetInstance()->GetDevice().Get(), mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
+	uint64_t intermidiateSize = GetRequiredIntermediateSize(texture.Get(), 0, UINT(subresources.size()));
+	ComPtr<ID3D12Resource> intermediateSizeResource = DirectXCommon::GetInstance()->CreateBufferResource(intermidiateSize);
+	UpdateSubresources(DirectXCommon::GetInstance()->GetCommandList().Get(), texture.Get(), intermediateSizeResource.Get(), 0, 0, UINT(subresources.size()), subresources.data());
 
-		assert(SUCCEEDED(hr));
-	}
+	D3D12_RESOURCE_BARRIER barrier{};
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	barrier.Transition.pResource = texture.Get();
+	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+
+	DirectXCommon::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrier);
+
+	return intermediateSizeResource;
 }
 
 void TextureManager::GraphicsCommand(uint32_t texHandle) 

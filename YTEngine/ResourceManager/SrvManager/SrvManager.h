@@ -1,9 +1,13 @@
 #pragma once
+
 #include "DirectXCommon.h"
+#include "TextureManager.h"
 
 
-class SrvManager final{
+class SrvManager final
+{
 private:
+
 	//コンストラクタ
 	SrvManager() = default;
 
@@ -32,7 +36,7 @@ public:
 
 	void PreDraw();
 
-	void CreateSRVForTexture2D(uint32_t srvIndex, ID3D12Resource* pResource, DXGI_FORMAT format, UINT mipLevels);
+	void CreateSRVForTexture2D(uint32_t srvIndex, ID3D12Resource* pResource, const DirectX::TexMetadata& metadata, UINT mipLevels);
 	void CreateSRVForStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, UINT numElements, UINT structureByteStride);
 
 	void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
