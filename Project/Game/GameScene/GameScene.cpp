@@ -87,7 +87,7 @@ void GameScene::Update(GameManager* gameManager) {
 	AnimationManager::GetInstance()->ApplyAnimation(humanSkeleton_[0], humanAnimationModel_, humanModelHandle, humanAnimationTime_[0]);
 	
 	if (!Input::GetInstance()->GetJoystickState(joyState)) {
-		return;
+		//return;
 	}
 
 	Vector3 move = { (float)joyState.Gamepad.sThumbLX / SHRT_MAX,0.0f,0.0f };
