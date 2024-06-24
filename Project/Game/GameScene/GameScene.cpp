@@ -55,6 +55,7 @@ void GameScene::Initialize() {
 	humanWorldTransform_[1].translate_.y = -2.0f;
 
 	camera_.Initialize();
+	camera_.rotate_.y = 3.0f;
 
 	for (int i = 0; i < SIMPLE_SKIN_AMOUNT_; ++i) {
 		worldTransform_[i].rotate_.y = 3.1415f;

@@ -68,8 +68,8 @@ uint32_t TextureManager::LoadTexture(const std::string& filePath)
 	const DirectX::TexMetadata& metadata = mipImages_[textureIndex].GetMetadata();
 
 	TextureManager::GetInstance()->textureInformation_[textureIndex].resource_ = CreateTextureResource(metadata);
-	UploadTextureData(TextureManager::GetInstance()->textureInformation_[textureIndex].resource_.Get(), mipImages_[textureIndex]);
-
+	TextureManager::GetInstance()->textureInformation_[textureIndex].intermidiateResource_ = UploadTextureData(TextureManager::GetInstance()->textureInformation_[textureIndex].resource_.Get(), mipImages_[textureIndex]).Get();
+	
 	//SRVの確保
 	TextureManager::GetInstance()->textureInformation_[textureIndex].handle_ = textureIndex;
 
