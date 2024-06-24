@@ -36,6 +36,13 @@ void SkyBox::Create(uint32_t textureHandle)
 	vertexData_[4].position = { 1.0f,1.0f,-1.0f,1.0f };
 	vertexData_[5].position = { 1.0f,-1.0f,-1.0f,1.0f };
 
+
+	////左面
+	//vertexData_[4].position = { -1.0f,1.0f,-1.0f,1.0f };
+	//vertexData_[5].position = { -1.0f,1.0f,1.0f,1.0f };
+	//vertexData_[6].position = { -1.0f,-1.0f,-1.0f,1.0f };
+	//vertexData_[7].position = { -1.0f,-1.0f,1.0f,1.0f };
+
 	vertexData_[6].position = { -1.0f,1.0f,-1.0f,1.0f };
 	vertexData_[7].position = { -1.0f,1.0f,1.0f,1.0f };
 	vertexData_[8].position = { -1.0f,-1.0f,-1.0f,1.0f };
@@ -43,6 +50,13 @@ void SkyBox::Create(uint32_t textureHandle)
 	vertexData_[9].position = { -1.0f,-1.0f,1.0f,1.0f };
 	vertexData_[10].position = { -1.0f,-1.0f,-1.0f,1.0f };
 	vertexData_[11].position = { -1.0f,1.0f,1.0f,1.0f };
+
+
+	//前面
+	//vertexData_[8].position = { -1.0f,1.0f,1.0f,1.0f };
+	//vertexData_[9].position = { 1.0f,1.0f,1.0f,1.0f };
+	//vertexData_[10].position = { -1.0f,-1.0f,1.0f,1.0f };
+	//vertexData_[11].position = { 1.0f,-1.0f,1.0f,1.0f };
 
 	vertexData_[12].position = { -1.0f,1.0f,1.0f,1.0f };
 	vertexData_[13].position = { 1.0f,1.0f,1.0f,1.0f };
@@ -52,29 +66,68 @@ void SkyBox::Create(uint32_t textureHandle)
 	vertexData_[16].position = { -1.0f,-1.0f,1.0f,1.0f };
 	vertexData_[17].position = { 1.0f,1.0f,1.0f,1.0f };
 
+
+	//後は自力で
+	//後面。
+	//vertexData_[12].position = { 1.0f,1.0f,-1.0f,1.0f };
+	//vertexData_[13].position = { -1.0f,1.0f,-1.0f,1.0f };
+	//vertexData_[14].position = { 1.0f,-1.0f,-1.0f,1.0f };
+	//vertexData_[15].position = { -1.0f,-1.0f,-1.0f,1.0f };
+	//
+	//vertexData_[12].position = { -1.0f,1.0f,-1.0f,1.0f };
+	//vertexData_[13].position = { 1.0f,1.0f,-1.0f,1.0f };
+	//vertexData_[14].position = { -1.0f,-1.0f,-1.0f,1.0f };
+	//vertexData_[15].position = { 1.0f,-1.0f,-1.0f,1.0f };
+
+
+
 	vertexData_[18].position = { 1.0f,1.0f,-1.0f,1.0f };
 	vertexData_[19].position = { -1.0f,1.0f,-1.0f,1.0f };
 	vertexData_[20].position = { -1.0f,-1.0f,-1.0f,1.0f };
+
+
 
 	vertexData_[21].position = { 1.0f,1.0f,-1.0f,1.0f };
 	vertexData_[22].position = { -1.0f,-1.0f,-1.0f,1.0f };
 	vertexData_[23].position = { 1.0f,-1.0f,-1.0f,1.0f };
 
-	/*vertexData_[24].position = { 1.0f,1.0f,1.0f,1.0f };
+
+	////上面。
+	//vertexData_[16].position = { 1.0f,1.0f,1.0f,1.0f };
+	//vertexData_[17].position = { -1.0f,1.0f,1.0f,1.0f };
+	//vertexData_[18].position = { 1.0f,1.0f,-1.0f,1.0f };
+	//vertexData_[19].position = { -1.0f,1.0f,-1.0f,1.0f };
+
+
+
+	vertexData_[24].position = { 1.0f,1.0f,1.0f,1.0f };
 	vertexData_[25].position = { -1.0f,1.0f,1.0f,1.0f };
 	vertexData_[26].position = { -1.0f,1.0f,-1.0f,1.0f };
+
+
 
 	vertexData_[27].position = { 1.0f,1.0f,1.0f,1.0f };
 	vertexData_[28].position = { -1.0f,1.0f,-1.0f,1.0f };
 	vertexData_[29].position = { 1.0f,1.0f,-1.0f,1.0f };
 
+
+
+	////下面。
+	//vertexData_[20].position = { 1.0f,-1.0f,-1.0f,1.0f };
+	//vertexData_[21].position = { -1.0f,-1.0f,-1.0f,1.0f };
+	//vertexData_[22].position = { 1.0f,-1.0f,1.0f,1.0f };
+	//vertexData_[23].position = { -1.0f,-1.0f,1.0f,1.0f };
+
+
 	vertexData_[30].position = { -1.0f,-1.0f,1.0f,1.0f };
 	vertexData_[31].position = { 1.0f,-1.0f,1.0f,1.0f };
 	vertexData_[32].position = { 1.0f,-1.0f,-1.0f,1.0f };
 
+
+
 	vertexData_[33].position = { -1.0f,-1.0f,1.0f,1.0f };
 	vertexData_[34].position = { 1.0f,-1.0f,-1.0f,1.0f };
-	vertexData_[35].position = { -1.0f,-1.0f,-1.0f,1.0f };*/
+	vertexData_[35].position = { -1.0f,-1.0f,-1.0f,1.0f };
 
 	vertexResource_->Unmap(0, nullptr);
 
