@@ -58,6 +58,7 @@ public:
 	struct TextureInformation 
 	{
 		ComPtr<ID3D12Resource> resource_= nullptr;
+		ComPtr<ID3D12Resource> intermidiateResource_ = nullptr;
 
 		D3D12_CPU_DESCRIPTOR_HANDLE srvHandleCPU_ = {};
 		D3D12_GPU_DESCRIPTOR_HANDLE srvHandleGPU_ = {};
