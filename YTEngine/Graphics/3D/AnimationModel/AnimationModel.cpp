@@ -212,6 +212,10 @@ void AnimationModel::Draw(WorldTransform& worldTransform, Camera& camera, SkinCl
 	//DirectionalLight
 	DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
 
+	if (selectLighting_ == Directional) {
+		DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
+	}
+
 	//カメラ
 	DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(4, camera.bufferResource_->GetGPUVirtualAddress());
 
@@ -221,9 +225,16 @@ void AnimationModel::Draw(WorldTransform& worldTransform, Camera& camera, SkinCl
 	//PointLight
 	DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(6, pointLightResource_->GetGPUVirtualAddress());
 
+	if (selectLighting_ == Point) {
+		DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(6, pointLightResource_->GetGPUVirtualAddress());
+	}
+
 	//SpotLight
 	DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(7, spotLightResource_->GetGPUVirtualAddress());
 
+	if (selectLighting_ == Spot) {
+		DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(7, spotLightResource_->GetGPUVirtualAddress());
+	}
 
 	//paletteSrvHandle
 	DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(8, skinCluster.paletteSrvHandle_.second);

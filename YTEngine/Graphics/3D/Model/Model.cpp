@@ -21,8 +21,7 @@ Model* Model::Create(uint32_t modelHandle) {
 
 	PipelineManager::GetInstance()->GenerateModelPSO(model->isSkinning_.isSkinning);
 
-
-	
+	model->selectLighting_ = 4;
 
 	////マテリアル用のリソースを作る。
 	model->materialResource_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(Material)).Get();
@@ -226,7 +225,10 @@ void Model::Draw(WorldTransform& worldTransform,Camera& camera) {
 	//SpotLight
 	DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(7, spotLightResource_->GetGPUVirtualAddress());
 
-	
+	// 環境マップ
+	if (enviromentTextureHandle_ != 0) {
+		SrvManager::GetInstance()->SetGraphicsRootDescriptorTable(8, enviromentTextureHandle_);
+	}
 
 	//DrawCall
 	DirectXCommon::GetInstance()->GetCommandList()->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);

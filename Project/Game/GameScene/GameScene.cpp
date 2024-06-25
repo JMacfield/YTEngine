@@ -51,11 +51,14 @@ void GameScene::Initialize() {
 
 	}
 
+	noneAnimationModel_.reset(Model::Create(humanModelHandle));
+	noneAnimationWorldTransform_.Initialize();
+
 	humanWorldTransform_[0].translate_.y = 0.5f;
 	humanWorldTransform_[1].translate_.y = -2.0f;
 
 	camera_.Initialize();
-
+	
 	for (int i = 0; i < SIMPLE_SKIN_AMOUNT_; ++i) {
 		worldTransform_[i].rotate_.y = 3.1415f;
 	}
@@ -65,6 +68,8 @@ void GameScene::Initialize() {
 	skyBox_->Create(skyBoxTextureHandle);
 	skyBoxWorldTransform_.Initialize();
 	skyBoxWorldTransform_.scale_ = { 20.0f,20.0f,20.0f };
+
+	noneAnimationModel_->SetEnviromentTexture(skyBoxTextureHandle);
 }
 
 /// <summary>
@@ -133,10 +138,13 @@ void GameScene::Update(GameManager* gameManager) {
 	for (int i = 0; i < WALK_HUMAN_AMOUNT_; ++i) {
 		humanWorldTransform_[i].Update();
 	}
+
+	noneAnimationWorldTransform_.Update();
 }
 
 void GameScene::Draw() {
-	human_[0]->Draw(humanWorldTransform_[0], camera_, humanSkinCluster_[0]);
+	//human_[0]->Draw(humanWorldTransform_[0], camera_, humanSkinCluster_[0]);
+	noneAnimationModel_->Draw(noneAnimationWorldTransform_, camera_);\
 
 	skyBox_->Draw(skyBoxWorldTransform_, camera_);
 }

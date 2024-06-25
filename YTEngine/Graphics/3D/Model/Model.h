@@ -61,6 +61,10 @@ public:
 
 public:
 
+	void SetEnviromentTexture(uint32_t textureHandle) {
+		this->enviromentTextureHandle_ = textureHandle;
+	}
+
 	//透明度の変更
 	void SetColor(Vector4 color) {
 		this->materialColor_ = color;
@@ -156,10 +160,7 @@ public:
 		return animationLocalMatrix_;
 	}
 
-
-
-
-
+	
 
 private:
 	struct Material {
@@ -218,7 +219,8 @@ private:
 	SpotLight* spotLightMapData_ = {};
 	SpotLight spotLightData_ = {};
 
-
+	// 環境マップ
+	uint32_t enviromentTextureHandle_ = 0;
 
 #pragma endregion
 

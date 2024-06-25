@@ -47,7 +47,7 @@ Texture2D<float4> gTexture : register(t0);
 SamplerState gSampler : register(s0);
 ConstantBuffer<Camera> gCamera : register(b2);
 ConstantBuffer<PointLight> gPointLight : register(b3);
-ConstantBuffer<SpotLight> gSpotLight : register(b4);
+ConstantBuffer<SpotLight> gSpotLight : register(b4);z
 
 struct PixelShaderOutput 
 {
@@ -155,9 +155,18 @@ PixelShaderOutput main(VertexShaderOutput input)
         output.color.rgb = (diffuseSpotLight + specularSpotLight) * attenuationFactor * falloffFactor;
         output.color.a = gMaterial.color.a * textureColor.a;
     }
+    else if (gMaterial.enableLighting == 4)
+    {
+        float3 cameraToPosition = normalize(input.worldPosition - gCamera.worldPosition);
+        float3 reflectedVector = reflect(cameraToPosition, normalize(input.normal));
+        float4 enviromentColor = gEnviromentTexture.Sample(gSampler, reflectedVector);
+
+        output.color.rgb = enviromentColor.rgb;
+        output.color.a = gMaterial.color.a;
+    }
     else
-	{
-		output.color = gMaterial.color * textureColor;
+    {
+        output.color = gMaterial.color * textureColor;
     }
 
 	return output;

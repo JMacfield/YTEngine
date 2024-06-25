@@ -382,7 +382,8 @@ void PipelineManager::GenerateModelPSO(int32_t isSkinning)
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	//VSでもCBufferを利用することになったので設定を追加
-	D3D12_ROOT_PARAMETER rootParameters[8] = {};
+	// rootParameters[8] = {};
+	D3D12_ROOT_PARAMETER rootParameters[9] = {};
 	//CBVを使う
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	////PixelShaderで使う
@@ -457,6 +458,17 @@ void PipelineManager::GenerateModelPSO(int32_t isSkinning)
 	rootParameters[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	//レジスタ番号2を使う
 	rootParameters[7].Descriptor.ShaderRegister = 4;
+
+	D3D12_DESCRIPTOR_RANGE enviromentDescriptorRange[1] = {};
+	enviromentDescriptorRange[0].BaseShaderRegister = 1;
+	enviromentDescriptorRange[0].NumDescriptors = 1;
+	enviromentDescriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	enviromentDescriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	rootParameters[8].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[8].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[8].DescriptorTable.pDescriptorRanges = enviromentDescriptorRange;
+	rootParameters[8].DescriptorTable.NumDescriptorRanges = _countof(enviromentDescriptorRange);
 
 	//ルートパラメータ配列へのポイント
 	descriptionRootSignature_.pParameters = rootParameters;
