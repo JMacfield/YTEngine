@@ -9,6 +9,7 @@
 #include "Camera.h"
 
 #include "GameObject/Player/Player.h"
+#include "GameObject/Stage/Stage.h"
 
 #include <memory>
 #include <Particle3D.h>
@@ -34,4 +35,6 @@ private:
 	Camera camera_ = {};
 
 	std::unique_ptr<Player> player_;
+
+	std::unique_ptr<Stage> stage_;
 };

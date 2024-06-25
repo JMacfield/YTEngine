@@ -2,15 +2,22 @@
 
 void Player::Initialize()
 {
-	playerModelHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Player", "PlayerPunch.gltf");
-	playerAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerPunch.gltf");
+	playerModelHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/AssignmentModel/human", "walk.gltf");
+	
+	playerIdleAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerIdle.gltf");
+	playerWalkAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerWalk.gltf");
+	playerSprintAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerSprint.gltf");
+	playerGrabAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerGrab.gltf");
+	playerPunchAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerPunch.gltf");
+	playerJumpAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerJump.gltf");
 
 	player_.reset(AnimationModel::Create(playerModelHandle_));
 	
 	playerWorldTransform_.Initialize();
-	playerWorldTransform_.translate_.x = 2.0f;
-	playerWorldTransform_.translate_.y = 0.5f;
-
+	playerWorldTransform_.translate_.x = 0.0f;
+	playerWorldTransform_.translate_.y = -0.3f;
+	playerWorldTransform_.rotate_.y = 1.4f;
+	
 	playerAnimationTime_ = 0;
 
 	playerSkeleton.Create(ModelManager::GetInstance()->GetModelData(playerModelHandle_).rootNode);
@@ -20,9 +27,20 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	ImGui::Begin("Player");
+	ImGui::DragFloat3("Rotate", &playerWorldTransform_.rotate_.x, 0.01f);
+	ImGui::End();
+	
 	AnimationUpdate();
 
 	BehaviorUpdate();
+
+	if (Input::GetInstance()->IsPushKey(DIK_1)) behaviorRequest_ = Behavior::kIdle;
+	if (Input::GetInstance()->IsPushKey(DIK_2)) behaviorRequest_ = Behavior::kWalk;
+	if (Input::GetInstance()->IsPushKey(DIK_3)) behaviorRequest_ = Behavior::kSprint;
+	if (Input::GetInstance()->IsPushKey(DIK_4)) behaviorRequest_ = Behavior::kGrab;
+	if (Input::GetInstance()->IsPushKey(DIK_5)) behaviorRequest_ = Behavior::kPunch;
+	if (Input::GetInstance()->IsPushKey(DIK_6)) behaviorRequest_ = Behavior::kJump;
 }
 
 void Player::Draw(Camera& camera)
@@ -48,7 +66,7 @@ void Player::BehaviorIdleInitialize()
 
 void Player::BehaviorIdleUpdate()
 {
-
+	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerIdleAnimationHandle_, playerModelHandle_, playerAnimationTime_);
 }
 
 void Player::BehaviorWalkInitialize()
@@ -58,7 +76,7 @@ void Player::BehaviorWalkInitialize()
 
 void Player::BehaviorWalkUpdate()
 {
-	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerAnimationHandle_, playerModelHandle_, playerAnimationTime_);
+	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerWalkAnimationHandle_, playerModelHandle_, playerAnimationTime_);
 }
 
 void Player::BehaviorSprintInitialize()
@@ -68,7 +86,7 @@ void Player::BehaviorSprintInitialize()
 
 void Player::BehaviorSprintUpdate()
 {
-
+	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerSprintAnimationHandle_, playerModelHandle_, playerAnimationTime_);
 }
 
 void Player::BehaviorGrabInitialize()
@@ -78,7 +96,7 @@ void Player::BehaviorGrabInitialize()
 
 void Player::BehaviorGrabUpdate()
 {
-
+	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerGrabAnimationHandle_, playerModelHandle_, playerAnimationTime_);
 }
 
 void Player::BehaviorPunchInitialize()
@@ -88,7 +106,7 @@ void Player::BehaviorPunchInitialize()
 
 void Player::BehaviorPunchUpdate()
 {
-
+	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerPunchAnimationHandle_, playerModelHandle_, playerAnimationTime_);
 }
 
 void Player::BehaviorJumpInitialize()
@@ -98,7 +116,7 @@ void Player::BehaviorJumpInitialize()
 
 void Player::BehaviorJumpUpdate()
 {
-
+	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerJumpAnimationHandle_, playerModelHandle_, playerAnimationTime_);
 }
 
 void Player::BehaviorUpdate()

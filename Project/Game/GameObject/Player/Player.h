@@ -41,9 +41,15 @@ private:
 	// プレイヤーに関する基本
 	std::unique_ptr<AnimationModel> player_ = nullptr;
 	uint32_t playerModelHandle_;
-	uint32_t playerAnimationHandle_;
 	WorldTransform playerWorldTransform_ = {};
 
+	uint32_t playerIdleAnimationHandle_;
+	uint32_t playerWalkAnimationHandle_;
+	uint32_t playerSprintAnimationHandle_;
+	uint32_t playerGrabAnimationHandle_;
+	uint32_t playerPunchAnimationHandle_;
+	uint32_t playerJumpAnimationHandle_;
+	
 	Skeleton playerSkeleton = {};
 	float playerAnimationTime_;
 	SkinCluster playerSkinCluster_ = {};
