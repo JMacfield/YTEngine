@@ -17,7 +17,9 @@
 
 enum class Behavior
 {
-	kMove,
+	kIdle,
+	kWalk,
+	kSprint,
 	kGrab,
 	kPunch,
 	kJump,
@@ -25,11 +27,14 @@ enum class Behavior
 
 class Player 
 {
-public: // 基本関数
-
+public: 
+	
+	// 基本関数
 	void Initialize();
 	void Update();
-	void Draw();
+	void Draw(Camera& camera);
+
+	void AnimationUpdate();
 
 private: 
 	
@@ -46,8 +51,14 @@ private:
 private: 
 
 	// プレイヤービヘイビア
-	void BehaviorMoveInitialize();
-	void BehaviorMoveUpdate();
+	void BehaviorIdleInitialize();
+	void BehaviorIdleUpdate();
+
+	void BehaviorWalkInitialize();
+	void BehaviorWalkUpdate();
+
+	void BehaviorSprintInitialize();
+	void BehaviorSprintUpdate();
 
 	void BehaviorGrabInitialize();
 	void BehaviorGrabUpdate();
@@ -58,5 +69,13 @@ private:
 	void BehaviorJumpInitialize();
 	void BehaviorJumpUpdate();
 
+	void BehaviorUpdate();
 
+	Behavior GetBehavior() { return behavior_; }
+
+private:
+
+	// ビヘイビア
+	Behavior behavior_ = Behavior::kWalk;
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 };

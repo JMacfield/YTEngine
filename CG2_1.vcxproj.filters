@@ -297,6 +297,9 @@
     <ClCompile Include="Project\Game\GameObject\Player\Player.cpp">
       <Filter>YTEngine\Source File</Filter>
     </ClCompile>
+    <ClCompile Include="Project\Game\GameScene\CopyGameScene.cpp">
+      <Filter>YTEngine\Source File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Particle3D\Particle3d.PS.hlsl">
