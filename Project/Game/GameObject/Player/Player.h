@@ -34,6 +34,7 @@ public:
 	void Update();
 	void Draw(Camera& camera);
 
+	void Control();
 	void AnimationUpdate();
 
 private: 
@@ -82,6 +83,6 @@ private:
 private:
 
 	// ビヘイビア
-	Behavior behavior_ = Behavior::kWalk;
+	Behavior behavior_ = Behavior::kIdle;
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 };

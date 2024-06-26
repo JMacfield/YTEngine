@@ -4,12 +4,12 @@ void Player::Initialize()
 {
 	playerModelHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/AssignmentModel/human", "walk.gltf");
 	
-	playerIdleAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerIdle.gltf");
-	playerWalkAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerWalk.gltf");
-	playerSprintAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerSprint.gltf");
-	playerGrabAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerGrab.gltf");
-	playerPunchAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerPunch.gltf");
-	playerJumpAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player", "PlayerJump.gltf");
+	playerIdleAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerIdle", "PlayerIdle.gltf");
+	playerWalkAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerWalk", "PlayerWalk.gltf");
+	playerSprintAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerSprint", "PlayerSprint.gltf");
+	playerGrabAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerGrab", "PlayerGrab.gltf");
+	playerPunchAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerPunch", "PlayerPunch.gltf");
+	playerJumpAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerJump", "PlayerJump.gltf");
 
 	player_.reset(AnimationModel::Create(playerModelHandle_));
 	
@@ -35,17 +35,25 @@ void Player::Update()
 
 	BehaviorUpdate();
 
-	if (Input::GetInstance()->IsPushKey(DIK_1)) behaviorRequest_ = Behavior::kIdle;
-	if (Input::GetInstance()->IsPushKey(DIK_2)) behaviorRequest_ = Behavior::kWalk;
-	if (Input::GetInstance()->IsPushKey(DIK_3)) behaviorRequest_ = Behavior::kSprint;
-	if (Input::GetInstance()->IsPushKey(DIK_4)) behaviorRequest_ = Behavior::kGrab;
-	if (Input::GetInstance()->IsPushKey(DIK_5)) behaviorRequest_ = Behavior::kPunch;
-	if (Input::GetInstance()->IsPushKey(DIK_6)) behaviorRequest_ = Behavior::kJump;
+	if (Input::GetInstance()->IsPushKey(DIK_1)) { behaviorRequest_ = Behavior::kIdle; }
+	if (Input::GetInstance()->IsPushKey(DIK_2)) { behaviorRequest_ = Behavior::kWalk; }
+	if (Input::GetInstance()->IsPushKey(DIK_3)) { behaviorRequest_ = Behavior::kSprint; }
+	if (Input::GetInstance()->IsPushKey(DIK_4)) { behaviorRequest_ = Behavior::kGrab; }
+	if (Input::GetInstance()->IsPushKey(DIK_5)) { behaviorRequest_ = Behavior::kPunch; }
+	if (Input::GetInstance()->IsPushKey(DIK_6)) { behaviorRequest_ = Behavior::kJump; }
 }
 
 void Player::Draw(Camera& camera)
 {
 	player_->Draw(playerWorldTransform_, camera, playerSkinCluster_);
+}
+
+void Player::Control()
+{
+	if (Input::GetInstance()->IsPushKey(XINPUT_GAMEPAD_A))
+	{
+		behaviorRequest_ = Behavior::kJump;
+	}
 }
 
 void Player::AnimationUpdate()
@@ -128,11 +136,11 @@ void Player::BehaviorUpdate()
 		switch (behavior_)
 		{
 		case Behavior::kIdle:
+		default:
 			BehaviorIdleInitialize();
 			break;
 
 		case Behavior::kWalk:
-		default:
 			BehaviorWalkInitialize();
 			break;
 
@@ -159,11 +167,11 @@ void Player::BehaviorUpdate()
 	switch (behavior_)
 	{
 	case Behavior::kIdle:
+	default:
 		BehaviorIdleUpdate();
 		break;
 
 	case Behavior::kWalk:
-	default:
 		BehaviorWalkUpdate();
 		break;
 
