@@ -16,7 +16,7 @@ void Player::Initialize()
 	playerWorldTransform_.Initialize();
 	playerWorldTransform_.translate_.x = 0.0f;
 	playerWorldTransform_.translate_.y = -0.3f;
-	playerWorldTransform_.rotate_.y = 1.4f;
+	playerWorldTransform_.rotate_.y = 0.0f;
 	
 	playerAnimationTime_ = 0;
 
@@ -31,6 +31,8 @@ void Player::Update()
 	ImGui::DragFloat3("Rotate", &playerWorldTransform_.rotate_.x, 0.01f);
 	ImGui::End();
 	
+	Control();
+
 	AnimationUpdate();
 
 	BehaviorUpdate();
@@ -50,8 +52,17 @@ void Player::Draw(Camera& camera)
 
 void Player::Control()
 {
-	if (Input::GetInstance()->IsPushKey(XINPUT_GAMEPAD_A))
+	XINPUT_STATE joyState;
+
+	if (!Input::GetInstance()->GetJoystickState(joyState))
 	{
+		return;
+	}
+
+	// ジャンプ
+	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+	{
+		BehaviorJumpInitialize();
 		behaviorRequest_ = Behavior::kJump;
 	}
 }
@@ -119,7 +130,7 @@ void Player::BehaviorPunchUpdate()
 
 void Player::BehaviorJumpInitialize()
 {
-
+	playerAnimationTime_ = 0;
 }
 
 void Player::BehaviorJumpUpdate()
