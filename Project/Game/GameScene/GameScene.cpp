@@ -26,6 +26,7 @@ void GameScene::Update(GameManager* gameManager)
 {
 	gameManager;
 
+	//camera_.translate_.x = player_->GetWorldTransform().translate_.x;
 	camera_.Update();
 
 	player_->Update();

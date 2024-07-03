@@ -25,6 +25,12 @@ Vector3 Subtract(Vector3 v1, Vector3 v2) {
 	return result;
 }
 
+// 掛け算
+Vector3 Multiply(float scalar, const Vector3& v)
+{
+	return { v.x * scalar,v.y * scalar,v.z * scalar };
+}
+
 float Clamp(float t, float min, float max) {
 	if (t < min) {
 		return min;

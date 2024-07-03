@@ -10,6 +10,9 @@ Vector3 Add(Vector3 v1, Vector3 v2);
 //引き算
 Vector3 Subtract(Vector3 v1, Vector3 v2);
 
+// 掛け算
+Vector3 Multiply(float scalar, const Vector3& v);
+
 /// <summary>
 /// クランプ
 /// </summary>

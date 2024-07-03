@@ -37,6 +37,9 @@ public:
 	void Control();
 	void AnimationUpdate();
 
+	// ゲッター
+	WorldTransform GetWorldTransform() { return playerWorldTransform_; }
+
 private: 
 	
 	// プレイヤーに関する基本
