@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Collision.h"
+
 #include "GameManager/IGameScene.h"
 
 #include "Sprite.h"
@@ -15,14 +18,12 @@
 #include <Particle3D.h>
 #include "SkinCluster.h"
 
-class Gamemanager;
+#include "Input.h"
+
+class GameManager;
 
 class GameScene : public IGameScene {
 public:
-
-	GameScene();
-
-	~GameScene();
 
 	void Initialize()override;
 

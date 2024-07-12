@@ -303,6 +303,12 @@
     <ClCompile Include="Project\Game\GameObject\Stage\Stage.cpp">
       <Filter>YTEngine\Source File</Filter>
     </ClCompile>
+    <ClCompile Include="Project\Game\GameScene\TitleScene.cpp">
+      <Filter>YTEngine\Source File</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Game\GameScene\ClearScene.cpp">
+      <Filter>YTEngine\Source File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Particle3D\Particle3d.PS.hlsl">
@@ -539,6 +545,15 @@
       <Filter>YTEngine\Header File</Filter>
     </ClInclude>
     <ClInclude Include="Project\Game\GameObject\Stage\Stage.h">
+      <Filter>YTEngine\Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Game\GameScene\TitleScene.h">
+      <Filter>YTEngine\Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="YTEngine\Math\Shape\OBB.h">
+      <Filter>YTEngine\Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Game\GameScene\ClearScene.h">
       <Filter>YTEngine\Header File</Filter>
     </ClInclude>
   </ItemGroup>

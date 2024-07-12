@@ -85,3 +85,7 @@ void WorldTransform::Transfer() {
 	tranceformationData_->worldInverseTranspose = worldInverseTransposeMatrix_;
 	bufferResource_->Unmap(0, nullptr);
 }
+
+Vector3 WorldTransform::GetWorldPosition() {
+	return { worldMatrix_.m[3][0],worldMatrix_.m[3][1],worldMatrix_.m[3][2] };
+}

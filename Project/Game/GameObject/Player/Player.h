@@ -6,12 +6,15 @@
 #include "AnimationManager.h"
 #include "AnimationModel.h"
 #include "Camera.h"
+#include "Collision.h"
 #include "Input.h"
 #include "Model.h"
 #include "Particle3D.h"
 #include "SkinCluster.h"
 #include "Sprite.h"
 #include "TextureManager.h"
+
+#include "GameObject/Stage/Stage.h"
 
 #include <memory>
 
@@ -37,8 +40,13 @@ public:
 	void Control();
 	void AnimationUpdate();
 
-	// ゲッター
+	// ゲッタ
 	WorldTransform GetWorldTransform() { return playerWorldTransform_; }
+	OBB GetCollision() { return playerCollision_; }
+
+	// セッタ
+	void SetCollision();
+	void SetFallSpeed(float fallSpeed) { fallSpeed_ = fallSpeed; }
 
 private: 
 	
@@ -50,13 +58,19 @@ private:
 	uint32_t playerIdleAnimationHandle_;
 	uint32_t playerWalkAnimationHandle_;
 	uint32_t playerSprintAnimationHandle_;
-	uint32_t playerGrabAnimationHandle_;
 	uint32_t playerPunchAnimationHandle_;
 	uint32_t playerJumpAnimationHandle_;
+
+	uint32_t playerGrabAnimationHandle_;
+	uint32_t playerGrabStartAnimationHandle_;
+	uint32_t playerGrabStopAnimationHandle_;
 	
 	Skeleton playerSkeleton = {};
 	float playerAnimationTime_;
 	SkinCluster playerSkinCluster_ = {};
+
+	OBB playerCollision_;
+	float fallSpeed_ = 0.01f;
 
 private: 
 

@@ -1,4 +1,5 @@
 #include "GameObject/Player/Player.h"
+#include "GameObject/Stage/Stage.h"
 
 void Player::Initialize()
 {
@@ -7,19 +8,22 @@ void Player::Initialize()
 	playerIdleAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerIdle", "PlayerIdle.gltf");
 	playerWalkAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerWalk", "PlayerWalk.gltf");
 	playerSprintAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerSprint", "PlayerSprint.gltf");
-	playerGrabAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerGrab", "PlayerGrab.gltf");
 	playerPunchAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerPunch", "PlayerPunch.gltf");
 	playerJumpAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerJump", "PlayerJump.gltf");
+
+	playerGrabAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerGrab", "PlayerGrab.gltf");
+	playerGrabStartAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerGrabStart", "PlayerGrabStart.gltf");
+	playerGrabStopAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerGrabStop", "PlayerGrabStop.gltf");
 
 	player_.reset(AnimationModel::Create(playerModelHandle_));
 	
 	playerWorldTransform_.Initialize();
-	playerWorldTransform_.translate_.x = 0.0f;
-	playerWorldTransform_.translate_.y = -0.3f;
+	playerWorldTransform_.translate_.x = -2.2f;
+	playerWorldTransform_.translate_.y = -0.2f;
 	playerWorldTransform_.rotate_.y = 1.4f;
 	
 	playerAnimationTime_ = 0;
-
+	
 	playerSkeleton.Create(ModelManager::GetInstance()->GetModelData(playerModelHandle_).rootNode);
 
 	playerSkinCluster_.Create(playerSkeleton, ModelManager::GetInstance()->GetModelData(playerModelHandle_));
@@ -34,6 +38,10 @@ void Player::Update()
 
 	ImGui::Begin("Controller");
 	ImGui::DragFloat("Left X", &Input::GetInstance()->GetJoyLStickPos().x);
+	ImGui::End();
+
+	ImGui::Begin("AnimationTimer");
+	ImGui::DragFloat("Timer", &playerAnimationTime_, 0.01f);
 	ImGui::End();
 	
 	Control();
@@ -61,8 +69,6 @@ void Player::Control()
 
 	Vector3 move{};
 
-	playerWorldTransform_.translate_.x = 0.0f;
-
 	// 移動処理
 	if (Input::GetInstance()->GetJoystickState(joyState))
 	{
@@ -72,13 +78,17 @@ void Player::Control()
 		{
 			playerWorldTransform_.rotate_.y = 1.4f;
 			move = { (float)joyState.Gamepad.sThumbLX / SHRT_MAX,0.0f,0.0f };
-			behaviorRequest_ = Behavior::kSprint;
+			behaviorRequest_ = Behavior::kWalk;
 		}
 		else if ((float)joyState.Gamepad.sThumbLX / SHRT_MAX < -0.5f)
 		{
 			playerWorldTransform_.rotate_.y = -1.4f;
 			move = { (float)joyState.Gamepad.sThumbLX / SHRT_MAX ,0.0f,0.0f };
-			behaviorRequest_ = Behavior::kSprint;
+			behaviorRequest_ = Behavior::kWalk;
+		}
+		else
+		{
+			behaviorRequest_ = Behavior::kIdle;
 		}
 
 		move = Multiply(kCharacterSpeed, Normalize(move));
@@ -126,6 +136,13 @@ void Player::AnimationUpdate()
 	playerSkinCluster_.Update(playerSkeleton);
 }
 
+void Player::SetCollision()
+{
+	playerCollision_.center = playerWorldTransform_.GetWorldPosition();
+	GetOrientations(MakeRotateXYZMatrix(playerWorldTransform_.rotate_.x, playerWorldTransform_.rotate_.y, playerWorldTransform_.rotate_.z), playerCollision_.orientation);
+	playerCollision_.size = { 2.0f,2.0f,2.0f };
+}
+
 void Player::BehaviorIdleInitialize()
 {
 
@@ -153,7 +170,7 @@ void Player::BehaviorSprintInitialize()
 
 void Player::BehaviorSprintUpdate()
 {
-	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerSprintAnimationHandle_, playerModelHandle_, playerAnimationTime_);
+	/*AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerSprintAnimationHandle_, playerModelHandle_, playerAnimationTime_);*/
 }
 
 void Player::BehaviorGrabInitialize()
@@ -164,6 +181,35 @@ void Player::BehaviorGrabInitialize()
 void Player::BehaviorGrabUpdate()
 {
 	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerGrabAnimationHandle_, playerModelHandle_, playerAnimationTime_);
+
+	/*if (playerAnimationTime_ < 2.42 && num == 0) 
+	{
+		AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerGrabAnimationHandle_, playerModelHandle_, playerAnimationTime_);
+	}
+	if (playerAnimationTime_ < 1.9 && num == 1)
+	{
+		AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerGrabStopAnimationHandle_, playerModelHandle_, playerAnimationTime_);
+	}*/
+	/*if (playerAnimationTime_ < 1.9 && num == 2)
+	{
+		AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerGrabStopAnimationHandle_, playerModelHandle_, playerAnimationTime_);
+	}*/
+
+	/*if (playerAnimationTime_ > 2.5 && num == 0)
+	{
+		playerAnimationTime_ = 0.0;
+		num = 1;
+	}*/
+	//if (playerAnimationTime_ > 2.0 && num == 1)
+	//{
+	//	playerAnimationTime_ = 0.0;
+	//	num = 0;
+	//	//playerWorldTransform_.translate_.x = 2.1f;
+	//}
+	/*if (playerAnimationTime_ > 2.0 && num == 2)
+	{
+		behaviorRequest_ = Behavior::kIdle;
+	}*/
 }
 
 void Player::BehaviorPunchInitialize()
@@ -173,18 +219,17 @@ void Player::BehaviorPunchInitialize()
 
 void Player::BehaviorPunchUpdate()
 {
-	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerPunchAnimationHandle_, playerModelHandle_, playerAnimationTime_);
+	/*AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerPunchAnimationHandle_, playerModelHandle_, playerAnimationTime_);*/
 }
 
 void Player::BehaviorJumpInitialize()
 {
-	playerAnimationTime_ = 22.5;
-	//playerAnimationTime_ = 60;
+	playerAnimationTime_ = 0;
 }
 
 void Player::BehaviorJumpUpdate()
 {
-	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerJumpAnimationHandle_, playerModelHandle_, playerAnimationTime_);
+	/*AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerJumpAnimationHandle_, playerModelHandle_, playerAnimationTime_);*/
 }
 
 void Player::BehaviorUpdate()
