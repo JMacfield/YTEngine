@@ -17,6 +17,7 @@
 #include "GameObject/Stage/Stage.h"
 
 #include <memory>
+#include <WinSock2.h>
 
 enum class Behavior
 {

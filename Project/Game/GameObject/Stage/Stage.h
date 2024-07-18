@@ -46,5 +46,13 @@ private:
 	uint32_t grabObjectHandle_;
 	WorldTransform grabObjectTransform_;
 
+	std::unique_ptr<Model> testStage2_;
+	uint32_t testStageHandle2_;
+	WorldTransform testStageTransform2_;
+
+	std::unique_ptr<Model> testStage3_;
+	uint32_t testStageHandle3_;
+	WorldTransform testStageTransform3_;
+
 	OBB testStageCollision_;
 };

@@ -31,6 +31,12 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	if (playerWorldTransform_.translate_.x > -1.0f && playerWorldTransform_.translate_.x < 1.0f)
+	{
+		playerWorldTransform_.translate_.y -= 0.09f;
+	}
+
+
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Rotate", &playerWorldTransform_.rotate_.x, 0.01f);
 	ImGui::DragFloat3("Translate", &playerWorldTransform_.translate_.x, 0.01f);
@@ -43,7 +49,7 @@ void Player::Update()
 	ImGui::Begin("AnimationTimer");
 	ImGui::DragFloat("Timer", &playerAnimationTime_, 0.01f);
 	ImGui::End();
-	
+
 	Control();
 
 	AnimationUpdate();
@@ -110,6 +116,8 @@ void Player::Control()
 	{
 		BehaviorJumpInitialize();
 		behaviorRequest_ = Behavior::kJump;
+
+		playerWorldTransform_.translate_.y = 2.0f;
 	}
 
 	// パンチ

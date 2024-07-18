@@ -38,6 +38,11 @@ void GameScene::Update(GameManager* gameManager)
 		gameManager->ChangeScene(new TitleScene);
 	}
 
+	if (player_->GetWorldTransform().translate_.y < -3.0f) 
+	{
+		gameManager->ChangeScene(new TitleScene);
+	}
+
 #ifdef _DEBUG
 	ImGui::Begin("Camera");
 	ImGui::DragFloat3("Translate", &camera_.translate_.x, 0.01f);
