@@ -1,82 +1,44 @@
 #include "AnimationObject3D.hlsli"
 
-///PixelShader
-//ここからの出力は色で、OutputManagerに送られて
-//ブレンド処理も行い画面に色が打ち込まれる
- 
- 
-//テクスチャを張り付けたり、ライティングを行ったり出来る。
-//最も重要なShader
-
-//ラスタライザー
-//		↓VertexShadeOutput
-//ピクセルシェーダー
-//		↓PixelShadeOutput
-//	 出力結合
-
-
-
-//Material...色など三角形の表面の材質を決定するもの
-struct Material {
+struct Material 
+{
 	float4 color;
 	int enableLighting;
 	float4x4 uvTransform;
-    //光沢度
-	float shininess;
+    float shininess;
 };
 
-
 struct DirectionalLight {
-	//ライトの色
 	float4 color;
-	//ライトの向き
 	float3 direction;
-	//ライトの輝度
 	float intensity;
 };
 
-struct PointLight{
-	//ライトの色
-    float4 color;
-	//ライトの位置
-    float3 position;
-	//ライトの輝度
-    float intensity;
-	
-	//ライトに届く最大距離
-    float radius;
-	//減衰率
-    float decay;
-
+struct PointLight
+{
+	float4 color;
+	float3 position;
+	float intensity;
+	float radius;
+	float decay;
 };
 
-
-//カメラの位置を送る
-struct Camera{
+struct Camera
+{
     float3 worldPosition;
 };
 
-//
-struct SpotLight{
-	//ライトの色
-    float4 color;
-	//ライトの位置
-    float3 position;
-	//輝度
-    float intensity;
+struct SpotLight
+{
+	float4 color;
+	float3 position;
+	float intensity;
 
-	//スポットライトの方向
-    float3 direction;
-	//ライトの届く最大距離
-    float distance;
-	//減衰率
-    float decay;
-	//Fallowoffを制御する
-    float cosFallowoffStart;
-	//スポットライトの余弦
-    float cosAngle;
-
-
+	float3 direction;
+	float distance;
+	float decay;
+	float cosFallowoffStart;
+	float cosAngle;
 };
 
 //
