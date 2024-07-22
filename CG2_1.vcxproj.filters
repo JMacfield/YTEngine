@@ -335,6 +335,8 @@
     <FxCompile Include="Resources\Shader\AnimationObject3D\AnimationObject3D.VS.hlsl">
       <Filter>YTEngine\Resource File\AnimationObject3D</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shader\HSVFilter\HSVFilter.VS.hlsl" />
+    <FxCompile Include="Resources\Shader\HSVFilter\HSVFilter.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="YTEngine\Math\Vector\Vector3.h">
@@ -579,5 +581,6 @@
     <None Include="Resources\Shader\AnimationObject3D\AnimationObject3D.hlsli">
       <Filter>YTEngine\Resource File\AnimationObject3D</Filter>
     </None>
+    <None Include="Resources\Shader\HSVFilter\HSVFilter.hlsli" />
   </ItemGroup>
 </Project>
