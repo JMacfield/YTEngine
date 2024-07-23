@@ -56,7 +56,6 @@ void Sprite::Initialize(uint32_t textureHandle,Vector2 position) {
 	
 	//ここでBufferResourceを作る
 	//Sprite用の頂点リソースを作る
-	//以前三角形二枚にしてたけど結合して四角一枚で良くなったので4で良いよね
 	vertexResource_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(VertexData) * 6).Get();
 	//index用のリソースを作る
 	indexResource_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(uint32_t) * 6).Get();
@@ -87,8 +86,6 @@ void Sprite::Initialize(uint32_t textureHandle,Vector2 position) {
 Sprite* Sprite::Create(uint32_t textureHandle,Vector2 position) {
 	Sprite* sprite = new Sprite();
 	
-	//初期化の所でやってね、Update,Drawでやるのが好ましいけど凄く重くなった。
-	//ブレンドモードの設定
 	PipelineManager::GetInstance()->SetSpriteBlendMode(sprite->blendModeNumber_);
 	PipelineManager::GetInstance()->GenerateSpritePSO();
 	sprite->Initialize(textureHandle,position);
@@ -99,8 +96,6 @@ Sprite* Sprite::Create(uint32_t textureHandle,Vector2 position) {
 //描画
 void Sprite::Draw() {
 	
-	//参考
-	//assert(device_ != nullptr);
 
 
 	//非表示にするかどうか
@@ -127,7 +122,6 @@ void Sprite::Draw() {
 	float texTop= 0.0f;
 	float texBottom= 1.0f;
 
-	//UVをいじりたいときにオンにして設定するもの
 	if (isUVSetting_ == true) {
 		//uv
 		texLeft = textureLeftTop_.x / resourceDesc_.Width;
@@ -182,13 +176,12 @@ void Sprite::Draw() {
 
 
 
-	//サイズに注意を払ってね！！！！！
-	//どれだけのサイズが必要なのか考えよう
+	
 
 	transformationMatrixResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixData_));
 	
 
-	//新しく引数作った方が良いかも
+	
 	//3x3x3
 	Matrix4x4 worldMatrixSprite = MakeAffineMatrix({ scale_.x,scale_.y,1.0f }, { 0.0f,0.0f,rotate_ }, {position_.x,position_.y,0.0f});
 	//遠視投影行列
@@ -204,14 +197,10 @@ void Sprite::Draw() {
 
 
 
-	//マテリアルにデータを書き込む
-	//書き込むためのアドレスを取得
-	//reinterpret_cast...char* から int* へ、One_class* から Unrelated_class* へなどの変換に使用
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	materialData_->color = color_;
 	//ライティングしない
 	materialData_->enableLighting = false;
-	//materialDataSprite_->uvTransform = MakeIdentity4x4();
 	
 
 	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransformSprite_.scale);
@@ -220,8 +209,7 @@ void Sprite::Draw() {
 	materialData_->uvTransform = uvTransformMatrix;
 
 
-	//コマンドを積む
-	//パイプラインはここに引っ越したい
+	
 
 	//参考
 	DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipelineManager::GetInstance()->GetSpriteRootSignature().Get());
@@ -249,7 +237,7 @@ void Sprite::Draw() {
 
 	}
 	
-	//今度はこっちでドローコールをするよ
+	
 	//描画(DrawCall)6個のインデックスを使用し1つのインスタンスを描画。
 	DirectXCommon::GetInstance()->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 

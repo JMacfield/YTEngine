@@ -5,14 +5,16 @@ void TitleScene::Initialize()
 {
 	titleSprite_ = std::make_unique<Sprite>();
 
-	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/Title.png");
+	titleSpriteHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/Title/Title.png");
 	titleSprite_->Create(titleSpriteHandle_, titleSpriteTransform_);
 
 	titleSprite_->SetInvisible(true);
-	titleSprite_->SetColor({ 0.0f,0.0f,0.0f,1.0f });
+	titleSprite_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 
 	//titleSprite_->SetTextureSize({ 1280.0f,720.0f });
 	//titleSprite_->SetAnchorPoint({ 0.5f,0.5f });
+
+	titleSpriteTransform_ = { 0.0f,0.0f };
 }
 
 void TitleScene::Update(GameManager* gameManager)
