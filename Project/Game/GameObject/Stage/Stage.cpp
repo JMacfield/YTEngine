@@ -54,10 +54,11 @@ void Stage::Update()
 	ImGui::Begin("Stage");
 	ImGui::DragFloat3("Translate", &testStageTransform_.translate_.x, 0.01f);
 	ImGui::DragFloat3("Rotate", &testStageTransform_.translate_.x, 0.01f);
-	ImGui::DragFloat3("st1Translate", &testStageTransform2_.translate_.x, 0.01f);
+	ImGui::DragFloat3("st1Translate", &goalObjectTransform_.translate_.x, 0.01f);
 	ImGui::DragFloat3("st2Translate", &testStageTransform3_.translate_.x, 0.01f);
 	ImGui::End();
 
+	SetCollision();
 	testStageTransform_.Update();
 	testStageTransform2_.Update();
 	testStageTransform3_.Update();
@@ -104,5 +105,5 @@ void Stage::SetCollision()
 {
 	testStageCollision_.center = testStageTransform_.GetWorldPosition();
 	GetOrientations(MakeRotateXYZMatrix(testStageTransform_.rotate_.x, testStageTransform_.rotate_.y, testStageTransform_.rotate_.z), testStageCollision_.orientation);
-	testStageCollision_.size = { 8.0f,2.0f,2.0f };
+	testStageCollision_.size = { 7.0f,1.4f,1.5f };
 };

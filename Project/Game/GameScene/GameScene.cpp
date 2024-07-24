@@ -49,6 +49,15 @@ void GameScene::Update(GameManager* gameManager)
 	ImGui::DragFloat3("Rotate", &camera_.rotate_.x, 0.01f);
 	ImGui::End();
 #endif
+
+	if (IsCollision(player_->GetCollision(), stage_->GetCollision()))
+	{
+		stage_->SetGoalColor({ 0.0f,1.0f,0.0f,1.0f });
+	}
+	else
+	{
+		stage_->SetGoalColor({ 1.0f,0.0f,0.0f,1.0f });
+	}
 }
 
 void GameScene::Draw() 

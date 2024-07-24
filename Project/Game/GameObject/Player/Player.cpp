@@ -56,6 +56,8 @@ void Player::Update()
 
 	BehaviorUpdate();
 
+	SetCollision();
+
 	if (Input::GetInstance()->IsPushKey(DIK_1)) { behaviorRequest_ = Behavior::kIdle; }
 	if (Input::GetInstance()->IsPushKey(DIK_2)) { behaviorRequest_ = Behavior::kWalk; }
 	if (Input::GetInstance()->IsPushKey(DIK_3)) { behaviorRequest_ = Behavior::kSprint; }
@@ -148,7 +150,7 @@ void Player::SetCollision()
 {
 	playerCollision_.center = playerWorldTransform_.GetWorldPosition();
 	GetOrientations(MakeRotateXYZMatrix(playerWorldTransform_.rotate_.x, playerWorldTransform_.rotate_.y, playerWorldTransform_.rotate_.z), playerCollision_.orientation);
-	playerCollision_.size = { 2.0f,2.0f,2.0f };
+	playerCollision_.size = { 1.0f,1.0f,1.0f };
 }
 
 void Player::BehaviorIdleInitialize()

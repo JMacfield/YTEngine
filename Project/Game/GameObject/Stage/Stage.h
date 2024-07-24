@@ -28,6 +28,7 @@ public:
 	void Draw(Camera& camera);
 
 	void SetCollision();
+	void SetGoalColor(Vector4 color) { goalObject_->SetColor(color); }
 	void SetParent(const WorldTransform* parent) { grabObjectTransform_.parent_ = parent; }
 
 	OBB GetCollision() { return testStageCollision_; }
