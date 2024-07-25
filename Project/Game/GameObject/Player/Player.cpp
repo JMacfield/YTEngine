@@ -165,7 +165,7 @@ void Player::BehaviorIdleUpdate()
 
 void Player::BehaviorWalkInitialize()
 {
-
+	
 }
 
 void Player::BehaviorWalkUpdate()

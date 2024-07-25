@@ -35,7 +35,7 @@ public:
 	
 private:
 
-	std::unique_ptr<Model> testStage_;
+	std::unique_ptr<Model> testStage_; 
 	uint32_t testStageHandle_;
 	WorldTransform testStageTransform_;
 
