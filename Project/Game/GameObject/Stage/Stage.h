@@ -47,4 +47,12 @@ private:
 	WorldTransform grabObjectTransform_;
 
 	OBB testStageCollision_;
+
+	std::unique_ptr<Model> backObject_;
+	uint32_t backObjectHandle_;
+	WorldTransform backObjectTransform_;
+
+	std::unique_ptr<Sprite> object1_;
+	uint32_t object1Handle_;
+	Vector2 object1Transform_;
 };

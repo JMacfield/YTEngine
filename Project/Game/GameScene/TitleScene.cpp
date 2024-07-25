@@ -3,16 +3,11 @@
 
 void TitleScene::Initialize()
 {
-	titleSprite_ = std::make_unique<Sprite>();
-
 	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/Title.png");
-	titleSprite_->Create(titleSpriteHandle_, titleSpriteTransform_);
+	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
 
-	titleSprite_->SetInvisible(true);
-	titleSprite_->SetColor({ 0.0f,0.0f,0.0f,1.0f });
-
-	//titleSprite_->SetTextureSize({ 1280.0f,720.0f });
-	//titleSprite_->SetAnchorPoint({ 0.5f,0.5f });
+	selectSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/StageSelect.png");
+	selectSprite_.reset(Sprite::Create(selectSpriteHandle_, selectSpriteTransform_));
 }
 
 void TitleScene::Update(GameManager* gameManager)
@@ -25,9 +20,22 @@ void TitleScene::Update(GameManager* gameManager)
 	{
 		gameManager->ChangeScene(new GameScene);
 	}
+
+	if (Input::GetInstance()->IsTriggerKey(DIK_1))
+	{
+		isTrue = true;
+	}
 }
 
 void TitleScene::Draw()
 {
-	titleSprite_->Draw();
+	if (isTrue == false)
+	{
+		titleSprite_->Draw();
+	}
+
+	if (isTrue == true)
+	{
+		selectSprite_->Draw();
+	}
 }

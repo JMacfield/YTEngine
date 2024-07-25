@@ -28,4 +28,11 @@ private:
 	uint32_t titleSpriteHandle_;
 
 	Vector2 titleSpriteTransform_;
+
+	std::unique_ptr<Sprite> selectSprite_;
+	uint32_t selectSpriteHandle_;
+
+	Vector2 selectSpriteTransform_;
+
+	bool isTrue = false;
 };

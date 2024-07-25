@@ -31,6 +31,21 @@ void Stage::Initialize()
 	grabObjectTransform_.Initialize();
 	grabObjectTransform_.translate_ = { -3.7f,-0.0f,0.0f };
 	grabObjectTransform_.scale_ = { 0.5f,0.5f,0.5f };
+
+	backObjectHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Plane", "plane.obj");
+
+	backObject_.reset(Model::Create(backObjectHandle_));
+
+	backObjectTransform_.Initialize();
+	backObjectTransform_.translate_ = { 0.0f,0.0f,3.0f };
+	backObjectTransform_.scale_ = { 20.0f,20.0f,10.0f };
+
+	backObjectHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/Title/Object1.png");
+
+	object1Transform_ = { 10.0f,10.0f };
+
+	object1_.reset(Sprite::Create(backObjectHandle_,object1Transform_));
+
 }
 
 void Stage::Update()
@@ -44,6 +59,7 @@ void Stage::Update()
 	testStageTransform_.Update();
 	goalObjectTransform_.Update();
 	grabObjectTransform_.Update();
+	backObjectTransform_.Update();
 
 	Vector3 move{};
 	XINPUT_STATE joyState{};
@@ -77,6 +93,8 @@ void Stage::Draw(Camera& camera)
 	testStage_->Draw(testStageTransform_, camera);
 	goalObject_->Draw(goalObjectTransform_, camera);
 	grabObejct_->Draw(grabObjectTransform_, camera);
+	backObject_->Draw(backObjectTransform_, camera);
+	object1_->Draw();
 }
 
 void Stage::SetCollision()
