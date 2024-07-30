@@ -73,7 +73,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Network;$(ProjectDir)YTEngine\Project\GameObject;$(ProjectDir)YTEngine\ResourceManager\SrvManager;$(ProjectDir)YTEngine\Audio;$(ProjectDir)\YTEngine\Lighting;$(ProjectDir)YTEngine\Graphics\3D\ModelManager;$(ProjectDir)\External\assimp\include;$(ProjectDir)YTEngine\Utility\Globalvariables;$(ProjectDir)YTEngine\Input;$(ProjectDir)Project\Game;$(ProjectDir)YTEngine\Camera;$(ProjectDir)YTEngine\ResourceManager\TextureManager;$(ProjectDir)YTEngine\Graphics\2D\Sprite;$(ProjectDir)YTEngine\Graphics\3D\Model;$(ProjectDir)YTEngine\Graphics\3D\Particle3D;$(ProjectDir)YTEngine\EngineCore\DirectXCommon;$(ProjectDir)YTEngine\EngineCore\YTEngine;$(ProjectDir)YTEngine\EngineCore\WinApp;$(ProjectDir)YTEngine\Math\Vector;$(ProjectDir)YTEngine\ResourceManager\PipelineManager;$(ProjectDir)YTEngine\Math\Matrix;$(ProjectDir)YTEngine\Math\WorldTransform;$(ProjectDir)YTEngine\Math\Quaternion;$(ProjectDir)YTEngine\Math\Matrix\Calculation;$(ProjectDir)YTEngine\Conversion\ConvertLog;$(ProjectDir)YTEngine\Conversion\ConvertColor;$(ProjectDir)YTEngine\Conversion\CompileShader;$(ProjectDir)YTEngine\Math\Vector\Calculation;$(ProjectDir)YTEngine\SrvManager;$(ProjectDir)YTEngine\Math\Shape;$(ProjectDir)YTEngine\Graphics\3D\ModelData;$(ProjectDir)YTEngine\Graphics\3D\MaterialData;$(ProjectDir)YTEngine\ConvertFunction\CompileShader;$(ProjectDir)YTEngine\Math\Collision;$(ProjectDir)Project\AllGameScene\GameManager;$(ProjectDir)YTEngine\EngineCore\ImGuiManager;$(ProjectDir)YTEngine\Math\Transform;$(ProjectDir)YTEngine\Manager\AnimationManager;$(ProjectDir)YTEngine\Graphics\3D\AnimationModel</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)YTEngine\Utility;$(ProjectDir)Network;$(ProjectDir)YTEngine\Project\GameObject;$(ProjectDir)YTEngine\ResourceManager\SrvManager;$(ProjectDir)YTEngine\Audio;$(ProjectDir)\YTEngine\Lighting;$(ProjectDir)YTEngine\Graphics\3D\ModelManager;$(ProjectDir)\External\assimp\include;$(ProjectDir)YTEngine\Utility\Globalvariables;$(ProjectDir)YTEngine\Input;$(ProjectDir)Project\Game;$(ProjectDir)YTEngine\Camera;$(ProjectDir)YTEngine\ResourceManager\TextureManager;$(ProjectDir)YTEngine\Graphics\2D\Sprite;$(ProjectDir)YTEngine\Graphics\3D\Model;$(ProjectDir)YTEngine\Graphics\3D\Particle3D;$(ProjectDir)YTEngine\EngineCore\DirectXCommon;$(ProjectDir)YTEngine\EngineCore\YTEngine;$(ProjectDir)YTEngine\EngineCore\WinApp;$(ProjectDir)YTEngine\Math\Vector;$(ProjectDir)YTEngine\ResourceManager\PipelineManager;$(ProjectDir)YTEngine\Math\Matrix;$(ProjectDir)YTEngine\Math\WorldTransform;$(ProjectDir)YTEngine\Math\Quaternion;$(ProjectDir)YTEngine\Math\Matrix\Calculation;$(ProjectDir)YTEngine\Conversion\ConvertLog;$(ProjectDir)YTEngine\Conversion\ConvertColor;$(ProjectDir)YTEngine\Conversion\CompileShader;$(ProjectDir)YTEngine\Math\Vector\Calculation;$(ProjectDir)YTEngine\SrvManager;$(ProjectDir)YTEngine\Math\Shape;$(ProjectDir)YTEngine\Graphics\3D\ModelData;$(ProjectDir)YTEngine\Graphics\3D\MaterialData;$(ProjectDir)YTEngine\ConvertFunction\CompileShader;$(ProjectDir)YTEngine\Math\Collision;$(ProjectDir)Project\AllGameScene\GameManager;$(ProjectDir)YTEngine\EngineCore\ImGuiManager;$(ProjectDir)YTEngine\Math\Transform;$(ProjectDir)YTEngine\Manager\AnimationManager;$(ProjectDir)YTEngine\Graphics\3D\AnimationModel</AdditionalIncludeDirectories>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -171,6 +171,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="YTEngine\ResourceManager\TextureManager\TextureManager.cpp" />
     <ClCompile Include="Project\Game\GameManager\GameManager.cpp" />
     <ClCompile Include="Project\Game\GameScene\GameScene.cpp" />
+    <ClCompile Include="YTEngine\Utility\JsonLoader\JsonLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\AnimationObject3D\AnimationObject3D.PS.hlsl">
@@ -282,6 +283,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Project\Game\GameManager\GameManager.h" />
     <ClInclude Include="Project\Game\GameManager\IGameScene.h" />
     <ClInclude Include="Project\Game\GameScene\GameScene.h" />
+    <ClInclude Include="YTEngine\Utility\JsonLoader\JsonLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

@@ -3,6 +3,8 @@
 #include "GameManager/GameManager.h"
 #include "GameManager/IGameScene.h"
 
+#include "JsonLoader/JsonLoader.h"
+
 #include "Input.h"
 #include "Sprite.h"
 
@@ -24,8 +26,11 @@ public:
 
 private:
 
-	std::unique_ptr<Sprite> titleSprite_;
-	uint32_t titleSpriteHandle_;
+	Camera camera_ = {};
 
-	Vector2 titleSpriteTransform_;
+	JsonLoader* jsonLoader_ = nullptr;
+
+	std::unique_ptr<Model> testModel_;
+	uint32_t testModelHandle_;
+	WorldTransform testModelTransform_;
 };

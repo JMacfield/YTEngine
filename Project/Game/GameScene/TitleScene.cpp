@@ -3,25 +3,36 @@
 
 void TitleScene::Initialize()
 {
-	titleSpriteHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/Title/Title.png");
+	camera_.Initialize();
+	camera_.translate_.y = 4.0f;
+	camera_.translate_.z = -14.0f;
+	camera_.rotate_.x = 0.1f;
 
-	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
-	titleSpriteTransform_ = { 0.0f,0.0f };
+	testModelHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Editor/Test", "Test.obj");
+	testModel_.reset(Model::Create(testModelHandle_));
+
+	testModelTransform_.Initialize();
+	testModelTransform_.translate_ = { 0.0f,0.0f,0.0f };
+	testModelTransform_.scale_ = { 1.0f,1.0f,1.0f };
+
+	jsonLoader_ = new JsonLoader();
+	jsonLoader_->Load("Resources/Editor", "aaaa.json");
 }
 
 void TitleScene::Update(GameManager* gameManager)
 {
-	ImGui::Begin("Sprite");
-	ImGui::DragFloat2("Transform", &titleSpriteTransform_.x, 0.01f);
-	ImGui::End();
+	gameManager;
 
-	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE))
-	{
-		gameManager->ChangeScene(new GameScene);
-	}
+	camera_.Update();
+
+	testModelTransform_.Update();
+
+	jsonLoader_->Update();
 }
 
 void TitleScene::Draw()
 {
-	titleSprite_->Draw();
+	//testModel_->Draw(testModelTransform_, camera_);
+
+	jsonLoader_->Draw(camera_);
 }
