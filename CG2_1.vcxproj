@@ -101,7 +101,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Ellysia\Audio;$(ProjectDir)\Ellysia\Lighting;$(ProjectDir)Ellysia\Polygon\3D\ModelManager;$(ProjectDir)\External\assimp\include;$(ProjectDir)Ellysia\AdjustmentItems;$(ProjectDir)Ellysia\Input;$(ProjectDir)Project\AllGameScene;$(ProjectDir)Ellysia\Camera;$(ProjectDir)Ellysia\TextureManager;$(ProjectDir)Ellysia\Polygon\2D\Sprite;$(ProjectDir)Ellysia\Polygon\3D\Model;$(ProjectDir)Ellysia\Polygon\3D\Particle3D;$(ProjectDir)Ellysia\Common\DirectX;$(ProjectDir)Ellysia\Common\Windows;$(ProjectDir)Ellysia\Math\Vector;$(ProjectDir)Ellysia\PipelineManager;$(ProjectDir)Ellysia\Math\Matrix;$(ProjectDir)Ellysia\Math\WorldTransform;$(ProjectDir)Ellysia\Math\Quaternion;$(ProjectDir)Ellysia\Math\Matrix\Calculation;$(ProjectDir)Ellysia\ConvertFunction\ConvertLog;$(ProjectDir)Ellysia\Math\Vector\Calculation;$(ProjectDir)Ellysia\SrvManager;$(ProjectDir)Ellysia\Math\Shape;$(ProjectDir)Ellysia\Polygon\3D\ModelData;$(ProjectDir)Ellysia\Polygon\3D\MaterialData;$(ProjectDir)Ellysia\ConvertFunction\CompileShader;$(ProjectDir)Ellysia\Math\Collision;$(ProjectDir)Project\AllGameScene\GameManager;$(ProjectDir)Ellysia\ImGuiManager;$(ProjectDir)Ellysia\Math\Transform;$(ProjectDir)Ellysia\Manager\AnimationManager;$(ProjectDir)Ellysia\Polygon\3D\AnimationModel</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Project\GameObject;$(ProjectDir)YTEngine\Audio;$(ProjectDir)\YTEngine\Lighting;$(ProjectDir)YTEngine\Polygon\3D\ModelManager;$(ProjectDir)\External\assimp\include;$(ProjectDir)YTEngine\AdjustmentItems;$(ProjectDir)YTEngine\Input;$(ProjectDir)Project\AllGameScene;$(ProjectDir)YTEngine\Camera;$(ProjectDir)YTEngine\TextureManager;$(ProjectDir)YTEngine\Graphics\2D\Sprite;$(ProjectDir)YTEngine\Graphics\3D\Model;$(ProjectDir)YTEngine\Graphics\3D\Particle3D;$(ProjectDir)YTEngine\EngineCore\DirectX;$(ProjectDir)YTEngine\EngineCore\Windows;$(ProjectDir)YTEngine\Math\Vector;$(ProjectDir)YTEngine\PipelineManager;$(ProjectDir)YTEngine\Math\Matrix;$(ProjectDir)YTEngine\Math\WorldTransform;$(ProjectDir)YTEngine\Math\Quaternion;$(ProjectDir)YTEngine\Math\Matrix\Calculation;$(ProjectDir)YTEngine\ConvertFunction\ConvertLog;$(ProjectDir)YTEngine\Math\Vector\Calculation;$(ProjectDir)YTEngine\SrvManager;$(ProjectDir)YTEngine\Math\Shape;$(ProjectDir)YTEngine\Polygon\3D\ModelData;$(ProjectDir)YTEngine\Polygon\3D\MaterialData;$(ProjectDir)YTEngine\ConvertFunction\CompileShader;$(ProjectDir)YTEngine\Math\Collision;$(ProjectDir)Project\AllGameScene\GameManager;$(ProjectDir)YTEngine\ImGuiManager;$(ProjectDir)YTEngine\Math\Transform;$(ProjectDir)YTEngine\Manager\AnimationManager;$(ProjectDir)YTEngine\Polygon\3D\AnimationModel</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MaxSpeed</Optimization>
@@ -129,10 +129,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="Project\Game\GameObject\Player\Player.cpp" />
     <ClCompile Include="Project\Game\GameObject\Stage\Stage.cpp" />
+    <ClCompile Include="Project\Game\GameObject\Stage\Stage1.cpp" />
     <ClCompile Include="Project\Game\GameScene\ClearScene.cpp" />
     <ClCompile Include="Project\Game\GameScene\CopyGameScene.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Project\Game\GameScene\GameScene1.cpp" />
+    <ClCompile Include="Project\Game\GameScene\SelectScene.cpp" />
     <ClCompile Include="Project\Game\GameScene\TitleScene.cpp" />
     <ClCompile Include="YTEngine\Audio\Audio.cpp" />
     <ClCompile Include="YTEngine\Utility\GlobalVariables\GlobalVariables.cpp" />
@@ -211,7 +214,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="Project\Game\GameObject\Player\Player.h" />
     <ClInclude Include="Project\Game\GameObject\Stage\Stage.h" />
+    <ClInclude Include="Project\Game\GameObject\Stage\Stage1.h" />
     <ClInclude Include="Project\Game\GameScene\ClearScene.h" />
+    <ClInclude Include="Project\Game\GameScene\GameScene1.h" />
+    <ClInclude Include="Project\Game\GameScene\SelectScene.h" />
     <ClInclude Include="Project\Game\GameScene\TitleScene.h" />
     <ClInclude Include="YTEngine\Audio\Audio.h" />
     <ClInclude Include="YTEngine\Audio\AudioStruct.h" />

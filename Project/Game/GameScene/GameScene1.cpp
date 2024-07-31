@@ -1,7 +1,6 @@
-#include "GameScene/GameScene.h"
+#include "GameScene/GameScene1.h"
 #include "GameScene/ClearScene.h"
 #include "GameScene/TitleScene.h"
-#include "GameScene/GameScene1.h"
 
 #include <imgui.h>
 #include <Input.h>
@@ -10,21 +9,21 @@
 #include "ModelManager.h"
 #include "AnimationManager.h"
 
-void GameScene::Initialize() 
+void GameScene1::Initialize()
 {
 	camera_.Initialize();
 	camera_.translate_.y = 4.0f;
 	camera_.translate_.z = -14.0f;
 	camera_.rotate_.x = 0.1f;
-	
+
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
 
-	stage_ = std::make_unique<Stage>();
+	stage_ = std::make_unique<Stage1>();
 	stage_->Initialize();
 }
 
-void GameScene::Update(GameManager* gameManager) 
+void GameScene1::Update(GameManager* gameManager)
 {
 	gameManager;
 
@@ -34,9 +33,9 @@ void GameScene::Update(GameManager* gameManager)
 
 	stage_->Update();
 
-	if (player_->GetWorldTransform().translate_.x > 3.3f) 
+	if (player_->GetWorldTransform().translate_.x > 3.3f)
 	{
-		gameManager->ChangeScene(new GameScene1);
+		gameManager->ChangeScene(new TitleScene);
 	}
 
 #ifdef _DEBUG
@@ -47,7 +46,7 @@ void GameScene::Update(GameManager* gameManager)
 #endif
 }
 
-void GameScene::Draw() 
+void GameScene1::Draw()
 {
 	player_->Draw(camera_);
 

@@ -1,12 +1,12 @@
-#include "Stage.h"
+#include "Stage1.h"
 
-Stage* Stage::GetInstance()
+Stage1* Stage1::GetInstance()
 {
-	static Stage instance;
+	static Stage1 instance;
 	return &instance;
 }
 
-void Stage::Initialize() 
+void Stage1::Initialize()
 {
 	testStageHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
 
@@ -40,15 +40,17 @@ void Stage::Initialize()
 	backObjectTransform_.translate_ = { 0.0f,0.0f,3.0f };
 	backObjectTransform_.scale_ = { 20.0f,20.0f,10.0f };
 
-	backObjectHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/Title/Object1.png");
+	backObjectHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/Title/Object.png");
 
 	object1Transform_ = { 10.0f,10.0f };
 
-	object1_.reset(Sprite::Create(backObjectHandle_,object1Transform_));
+	object1_.reset(Sprite::Create(backObjectHandle_, object1Transform_));
 
+	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/StageSelect1.png");
+	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
 }
 
-void Stage::Update()
+void Stage1::Update()
 {
 	/*ImGui::Begin("Stage");
 	ImGui::DragFloat3("Translate", &testStageTransform_.translate_.x, 0.01f);
@@ -64,11 +66,11 @@ void Stage::Update()
 	Vector3 move{};
 	XINPUT_STATE joyState{};
 
-	
-		if (Input::GetInstance()->GetJoystickState(joyState))
+
+	if (Input::GetInstance()->GetJoystickState(joyState))
+	{
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
 		{
-			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
-			{
 			const float kCharacterSpeed = 0.03f;
 
 			if ((float)joyState.Gamepad.sThumbLX / SHRT_MAX > 0.5f)
@@ -85,19 +87,29 @@ void Stage::Update()
 
 			grabObjectTransform_.translate_ = Add(move, grabObjectTransform_.translate_);
 		}
+
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			isDraw_ = false;
+		}
 	}
 }
 
-void Stage::Draw(Camera& camera)
+void Stage1::Draw(Camera& camera)
 {
 	testStage_->Draw(testStageTransform_, camera);
 	goalObject_->Draw(goalObjectTransform_, camera);
-	//grabObejct_->Draw(grabObjectTransform_, camera);
+	grabObejct_->Draw(grabObjectTransform_, camera);
 	backObject_->Draw(backObjectTransform_, camera);
 	object1_->Draw();
+
+	if (isDraw_ == true)
+	{
+		titleSprite_->Draw();
+	}
 }
 
-void Stage::SetCollision()
+void Stage1::SetCollision()
 {
 	testStageCollision_.center = testStageTransform_.GetWorldPosition();
 	GetOrientations(MakeRotateXYZMatrix(testStageTransform_.rotate_.x, testStageTransform_.rotate_.y, testStageTransform_.rotate_.z), testStageCollision_.orientation);

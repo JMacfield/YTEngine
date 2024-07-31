@@ -27,11 +27,15 @@ void Player::Initialize()
 	playerSkeleton.Create(ModelManager::GetInstance()->GetModelData(playerModelHandle_).rootNode);
 
 	playerSkinCluster_.Create(playerSkeleton, ModelManager::GetInstance()->GetModelData(playerModelHandle_));
+
+	controlSpriteTransform_ = { 680.0f,480.0f };
+	controlSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/Control.png");
+	controlSprite_.reset(Sprite::Create(controlSpriteHandle_, controlSpriteTransform_));
 }
 
 void Player::Update()
 {
-	ImGui::Begin("Player");
+	/*ImGui::Begin("Player");
 	ImGui::DragFloat3("Rotate", &playerWorldTransform_.rotate_.x, 0.01f);
 	ImGui::DragFloat3("Translate", &playerWorldTransform_.translate_.x, 0.01f);
 	ImGui::End();
@@ -42,7 +46,7 @@ void Player::Update()
 
 	ImGui::Begin("AnimationTimer");
 	ImGui::DragFloat("Timer", &playerAnimationTime_, 0.01f);
-	ImGui::End();
+	ImGui::End();*/
 	
 	Control();
 
@@ -61,6 +65,7 @@ void Player::Update()
 void Player::Draw(Camera& camera)
 {
 	player_->Draw(playerWorldTransform_, camera, playerSkinCluster_);
+	controlSprite_->Draw();
 }
 
 void Player::Control()
@@ -93,24 +98,24 @@ void Player::Control()
 
 		move = Multiply(kCharacterSpeed, Normalize(move));
 
-		if (playerWorldTransform_.translate_.x > 4.0f)
+		if (playerWorldTransform_.translate_.x > 5.0f)
 		{
-			playerWorldTransform_.translate_.x = 3.9f;
+			playerWorldTransform_.translate_.x = 5.0;
 		}
-		else if (playerWorldTransform_.translate_.x < -4.0f)
+		else if (playerWorldTransform_.translate_.x < -5.0f)
 		{
-			playerWorldTransform_.translate_.x = -3.9f;
+			playerWorldTransform_.translate_.x = -5.0f;
 		}
 
 		playerWorldTransform_.translate_ = Add(move, playerWorldTransform_.translate_);
 	}
 
 	// ジャンプ
-	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+	/*if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 	{
 		BehaviorJumpInitialize();
 		behaviorRequest_ = Behavior::kJump;
-	}
+	}*/
 
 	// パンチ
 	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
@@ -121,6 +126,7 @@ void Player::Control()
 	// 掴む
 	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
 	{
+		playerWorldTransform_.rotate_.y = -1.4f;
 		behaviorRequest_ = Behavior::kGrab;
 	}
 }

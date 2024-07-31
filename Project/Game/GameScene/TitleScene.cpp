@@ -1,41 +1,27 @@
 #include "GameScene.h"
 #include "TitleScene.h"
+#include "SelectScene.h"
 
 void TitleScene::Initialize()
 {
 	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/Title.png");
 	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
-
-	selectSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/StageSelect.png");
-	selectSprite_.reset(Sprite::Create(selectSpriteHandle_, selectSpriteTransform_));
 }
 
 void TitleScene::Update(GameManager* gameManager)
 {
-	ImGui::Begin("Sprite");
-	ImGui::DragFloat2("Transform", &titleSpriteTransform_.x, 0.01f);
-	ImGui::End();
+	XINPUT_STATE joyState{};
 
-	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE))
+	if (Input::GetInstance()->GetJoystickState(joyState))
 	{
-		gameManager->ChangeScene(new GameScene);
-	}
-
-	if (Input::GetInstance()->IsTriggerKey(DIK_1))
-	{
-		isTrue = true;
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			gameManager->ChangeScene(new SelectScene);
+		}
 	}
 }
 
 void TitleScene::Draw()
 {
-	if (isTrue == false)
-	{
-		titleSprite_->Draw();
-	}
-
-	if (isTrue == true)
-	{
-		selectSprite_->Draw();
-	}
+	titleSprite_->Draw();
 }

@@ -102,4 +102,9 @@ private:
 	// ビヘイビア
 	Behavior behavior_ = Behavior::kIdle;
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+
+	std::unique_ptr<Sprite> controlSprite_;
+	uint32_t controlSpriteHandle_;
+
+	Vector2 controlSpriteTransform_;
 };
