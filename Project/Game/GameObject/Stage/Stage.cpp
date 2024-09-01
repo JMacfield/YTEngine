@@ -24,13 +24,14 @@ void Stage::Initialize()
 	goalObjectTransform_.translate_ = { 3.7f,-0.2f,0.0f };
 	goalObjectTransform_.scale_ = { 0.5f,0.5f,0.5f };
 
-	grabObjectHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/GrabObject", "GrabObject.obj");
+	grabObjectHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Touch", "Touch.obj");
 
 	grabObejct_.reset(Model::Create(grabObjectHandle_));
 
 	grabObjectTransform_.Initialize();
-	grabObjectTransform_.translate_ = { -3.7f,-0.0f,0.0f };
+	grabObjectTransform_.translate_ = { -3.7f,-0.2f,0.0f };
 	grabObjectTransform_.scale_ = { 0.5f,0.5f,0.5f };
+	grabObjectTransform_.rotate_ = { 0.0f,0.0f,1.54f };
 
 	backObjectHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Plane", "plane.obj");
 
@@ -64,11 +65,11 @@ void Stage::Update()
 	Vector3 move{};
 	XINPUT_STATE joyState{};
 
-	
-		if (Input::GetInstance()->GetJoystickState(joyState))
+
+	if (Input::GetInstance()->GetJoystickState(joyState))
+	{
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
 		{
-			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
-			{
 			const float kCharacterSpeed = 0.03f;
 
 			if ((float)joyState.Gamepad.sThumbLX / SHRT_MAX > 0.5f)
@@ -85,6 +86,26 @@ void Stage::Update()
 
 			grabObjectTransform_.translate_ = Add(move, grabObjectTransform_.translate_);
 		}
+
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+		{
+			grabObjectTransform_.translate_.y = 1.5f;
+			grabObjectTransform_.rotate_.z = 0.0f;
+		}
+		else
+		{
+			grabObjectTransform_.translate_.y = -0.2f;
+			grabObjectTransform_.rotate_.z = 1.54f;
+		}
+
+		if ((float)joyState.Gamepad.sThumbRX / SHRT_MAX > 0.2f)
+		{
+			grabObjectTransform_.rotate_.z += (float)joyState.Gamepad.sThumbRX / SHRT_MAX;
+		}
+		else if ((float)joyState.Gamepad.sThumbRX / SHRT_MAX < -0.2f)
+		{
+			grabObjectTransform_.rotate_.z += (float)joyState.Gamepad.sThumbRX / SHRT_MAX;
+		}
 	}
 }
 
@@ -92,7 +113,7 @@ void Stage::Draw(Camera& camera)
 {
 	testStage_->Draw(testStageTransform_, camera);
 	goalObject_->Draw(goalObjectTransform_, camera);
-	//grabObejct_->Draw(grabObjectTransform_, camera);
+	grabObejct_->Draw(grabObjectTransform_, camera);
 	backObject_->Draw(backObjectTransform_, camera);
 	object1_->Draw();
 }
