@@ -18,7 +18,7 @@ void Player::Initialize()
 	player_.reset(AnimationModel::Create(playerModelHandle_));
 	
 	playerWorldTransform_.Initialize();
-	playerWorldTransform_.translate_.x = -2.2f;
+	playerWorldTransform_.translate_.x = -5.2f;
 	playerWorldTransform_.translate_.y = -0.2f;
 	playerWorldTransform_.rotate_.y = 1.4f;
 	

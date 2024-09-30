@@ -13,15 +13,15 @@ void Stage::Initialize()
 	testStage_.reset(Model::Create(testStageHandle_));
 
 	testStageTransform_.Initialize();
-	testStageTransform_.translate_ = { 10.0f,-0.35f,0.0f };
-	testStageTransform_.scale_ = { 8.0f,3.0f,3.0f };
+	testStageTransform_.translate_ = { -3.0f,-0.8f,0.0f };
+	testStageTransform_.scale_ = { 0.1f,0.89f,3.0f };
 
 	testStageHandle2_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
 
 	testStage2_.reset(Model::Create(testStageHandle_));
 
 	testStageTransform2_.Initialize();
-	testStageTransform2_.translate_ = { 8.8f,-2.7f,0.0f };
+	testStageTransform2_.translate_ = { 11.0f,-2.7f,0.0f };
 	testStageTransform2_.scale_ = { 8.0f,3.0f,3.0f };
 
 	testStageHandle3_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
@@ -29,7 +29,7 @@ void Stage::Initialize()
 	testStage3_.reset(Model::Create(testStageHandle_));
 
 	testStageTransform3_.Initialize();
-	testStageTransform3_.translate_ = { -8.8f,-2.7f,0.0f };
+	testStageTransform3_.translate_ = { -11.0f,-2.7f,0.0f };
 	testStageTransform3_.scale_ = { 8.0f,3.0f,3.0f };
 
 	goalObjectHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/GoalObject", "GoalObject.obj");
@@ -53,9 +53,10 @@ void Stage::Update()
 {
 	ImGui::Begin("Stage");
 	ImGui::DragFloat3("Translate", &testStageTransform_.translate_.x, 0.01f);
-	ImGui::DragFloat3("Rotate", &testStageTransform_.translate_.x, 0.01f);
-	ImGui::DragFloat3("st1Translate", &goalObjectTransform_.translate_.x, 0.01f);
-	ImGui::DragFloat3("st2Translate", &testStageTransform3_.translate_.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &testStageTransform_.rotate_.x, 0.01f);
+	ImGui::DragFloat3("Scale", &testStageTransform_.scale_.x, 0.01f);
+	ImGui::DragFloat3("st1Translate", &testStageTransform_.translate_.x, 0.01f);
+	ImGui::DragFloat3("st2Translate", &testStageTransform2_.translate_.x, 0.01f);
 	ImGui::End();
 
 	SetCollision();
@@ -71,6 +72,12 @@ void Stage::Update()
 	
 		if (Input::GetInstance()->GetJoystickState(joyState))
 		{
+			if (Input::GetInstance()->IsPushKey(DIK_RIGHTARROW))
+			{
+				testStageTransform_.scale_.x += 0.04f;
+				testStageTransform_.translate_.x += 0.04f;
+			}
+
 			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
 			{
 			const float kCharacterSpeed = 0.03f;
@@ -97,7 +104,7 @@ void Stage::Draw(Camera& camera)
 	testStage_->Draw(testStageTransform_, camera);
 	testStage2_->Draw(testStageTransform2_, camera);
 	testStage3_->Draw(testStageTransform3_, camera);
-	goalObject_->Draw(goalObjectTransform_, camera);
+	//goalObject_->Draw(goalObjectTransform_, camera);
 	//grabObejct_->Draw(grabObjectTransform_, camera);
 }
 
