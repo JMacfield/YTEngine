@@ -8,9 +8,13 @@
 #include "YNet/Constants.h"
 #include "YNet/Packet.h"
 
-namespace YNet {
-	class Socket {
+namespace YNet 
+{
+	class Socket 
+	{
+
 	public:
+
 		Socket(IPVersion ipversion = IPVersion::IPv4, SocketHandle handle = INVALID_SOCKET);
 		
 		YResult Create();

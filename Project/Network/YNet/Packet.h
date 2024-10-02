@@ -8,8 +8,11 @@
 #include "YNet/PacketException.h"
 #include "YNet/PacketType.h"
 
-namespace YNet {
-	class Packet {
+namespace YNet 
+{
+	class Packet 
+	{
+
 	public:
 		Packet(PacketType packetType = PacketType::PT_Invalid);
 		PacketType GetPacketType();

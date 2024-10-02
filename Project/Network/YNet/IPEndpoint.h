@@ -6,9 +6,13 @@
 #include <vector>
 #include <WS2tcpip.h>
 
-namespace YNet {
-	class IPEndpoint {
+namespace YNet 
+{
+	class IPEndpoint 
+	{
+
 	public:
+
 		IPEndpoint() {};
 		IPEndpoint(const char* ip, unsigned short port);
 		IPEndpoint(sockaddr* addr);
@@ -27,6 +31,7 @@ namespace YNet {
 		void Print();
 
 	private:
+
 		IPVersion ip_version = IPVersion::Unknown;
 
 		std::string hostname = "";

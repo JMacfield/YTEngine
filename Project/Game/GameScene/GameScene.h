@@ -20,6 +20,10 @@
 
 #include "Input.h"
 
+#include "System/DrawSystem.h"
+
+#include "JsonLoader.h"
+
 class GameManager;
 
 class GameScene : public IGameScene {
@@ -38,4 +42,6 @@ private:
 	std::unique_ptr<Player> player_;
 
 	std::unique_ptr<Stage> stage_;
+
+	JsonLoader* jsonLoader_ = nullptr;
 };

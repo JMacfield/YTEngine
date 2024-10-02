@@ -6,6 +6,14 @@ void TitleScene::Initialize()
 {
 	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/Title.png");
 	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
+
+	camera_.Initialize();
+	camera_.translate_.y = 2.0f;
+	camera_.translate_.z = -10.0f;
+
+	AnimationInitialize();
+
+	SurfaceInitialize();
 }
 
 void TitleScene::Update(GameManager* gameManager)
@@ -19,9 +27,177 @@ void TitleScene::Update(GameManager* gameManager)
 			gameManager->ChangeScene(new SelectScene);
 		}
 	}
+
+	camera_.Update();
+
+	AnimationUpdate();
+
+	SurfaceUpdate();
+
+	ImGui::Begin("Debug");
+	ImGui::DragFloat3("Camera Translate", &camera_.translate_.x, 0.01f);
+	ImGui::DragFloat3("Ground Translate", &surfaceGroundTransform_.translate_.x, 0.01f);
+	ImGui::Text("");
+	ImGui::DragFloat3("Back Translate", &surfaceBackTransform_.translate_.x, 0.01f);
+	ImGui::DragFloat3("Back Rotate", &surfaceBackTransform_.rotate_.x, 0.01f);
+	ImGui::DragFloat3("Back Scale", &surfaceBackTransform_.scale_.x, 0.01f);
+	ImGui::Text("");
+	
+	ImGui::End();
 }
 
 void TitleScene::Draw()
 {
-	titleSprite_->Draw();
+	AnimationDraw();
+
+	SurfaceDraw();
+}
+
+void TitleScene::AnimationInitialize()
+{
+	playerGrabWalkingAnimation_ = AnimationManager::LoadFile("Resources/Player/PlayerGrabWalking", "PlayerGrabWalking.gltf");
+	playerModelHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/AssignmentModel/human", "walk.gltf");
+
+	for (int i = 0; i < 4; i++)
+	{
+		playerTransform_[i].Initialize();
+
+		player_[i].reset(AnimationModel::Create(playerGrabWalkingAnimation_));
+
+		playerSkeleton_[i].Create(ModelManager::GetInstance()->GetModelData(playerModelHandle_).rootNode);
+
+		playerSkinCluster_[i].Create(playerSkeleton_[i], ModelManager::GetInstance()->GetModelData(playerModelHandle_));
+
+		playerTransform_[i].rotate_.y = 1.4f;
+	}
+
+	playerAnimationTime_ = 0;
+
+	playerTransform_[0].translate_ = { -6.0f,0.0f,0.0f };
+	playerTransform_[1].translate_ = { 6.0f,0.0f,0.0f };
+	playerTransform_[2].translate_ = { -6.0f,0.0f,0.0f };
+	playerTransform_[3].translate_ = { 6.0f,0.0f,0.0f };
+}
+
+void TitleScene::AnimationUpdate()
+{
+	playerAnimationTime_ += 1.0f / 60.0f;
+
+	for (int i = 0; i < 4; i++)
+	{
+		playerTransform_[i].Update();
+
+		playerSkeleton_[i].Update();
+
+		playerSkinCluster_[i].Update(playerSkeleton_[i]);
+
+		AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton_[i], playerGrabWalkingAnimation_, playerModelHandle_, playerAnimationTime_);
+	}
+
+	if (repeatCount_ == 0)
+	{
+		playerTransform_[0].translate_.x += 0.04f;
+
+		if (playerTransform_[0].translate_.x > 9.0f)
+		{
+			repeatCount_ = 1;
+			playerTransform_[0].translate_.x = 6.0f;
+			playerTransform_[1].translate_.x = 7.0f;
+			playerTransform_[0].rotate_.y = -1.4f;
+			playerTransform_[1].rotate_.y = -1.4f;
+		}
+	}
+		
+	if (repeatCount_ == 1)
+	{
+		playerTransform_[0].translate_.x -= 0.04f;
+		playerTransform_[1].translate_.x -= 0.04f;
+
+		if (playerTransform_[0].translate_.x < -9.0f)
+		{
+			repeatCount_ = 2;
+			playerTransform_[0].translate_.x = -6.0f;
+			playerTransform_[1].translate_.x = -7.0f;
+			playerTransform_[2].translate_.x = -8.0f;
+			playerTransform_[0].rotate_.y = 1.4f;
+			playerTransform_[1].rotate_.y = 1.4f;
+			playerTransform_[2].rotate_.y = 1.4f;
+		}
+	}
+
+	if (repeatCount_ == 2)
+	{
+		playerTransform_[0].translate_.x += 0.04f;
+		playerTransform_[1].translate_.x += 0.04f;
+		playerTransform_[2].translate_.x += 0.04f;
+
+		if (playerTransform_[0].translate_.x > 9.0f)
+		{
+			repeatCount_ = 3;
+			playerTransform_[0].translate_.x = 6.0f;
+			playerTransform_[1].translate_.x = 7.0f;
+			playerTransform_[2].translate_.x = 8.0f;
+			playerTransform_[3].translate_.x = 9.0f;
+			playerTransform_[0].rotate_.y = -1.4f;
+			playerTransform_[1].rotate_.y = -1.4f;
+			playerTransform_[2].rotate_.y = -1.4f;
+			playerTransform_[3].rotate_.y = -1.4f;
+		}
+	}
+
+	if (repeatCount_ == 3)
+	{
+		playerTransform_[0].translate_.x -= 0.04f;
+		playerTransform_[1].translate_.x -= 0.04f;
+		playerTransform_[2].translate_.x -= 0.04f;
+		playerTransform_[3].translate_.x -= 0.04f;
+
+		if (playerTransform_[0].translate_.x < -9.0f)
+		{
+			repeatCount_ = 0;
+			playerTransform_[0].translate_.x = -6.0f;
+			playerTransform_[0].rotate_.y = 1.4f;
+		}
+	}
+}
+
+void TitleScene::AnimationDraw()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		player_[i]->Draw(playerTransform_[i], camera_, playerSkinCluster_[i]);
+	}
+}
+
+void TitleScene::SurfaceInitialize()
+{
+	// 地面 //
+	surfaceGroundHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
+	surfaceGround_.reset(Model::Create(surfaceGroundHandle_));
+
+	surfaceGroundTransform_.Initialize();
+	surfaceGroundTransform_.translate_ = { 0.0f,-2.4f,0.0f };
+	surfaceGroundTransform_.scale_ = { 8.0f,3.0f,3.0f };
+
+	// 背景 //
+	surfaceBackHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Plane", "Plane.gltf");
+	surfaceBack_.reset(Model::Create(surfaceBackHandle_));
+
+	surfaceBackTransform_.Initialize();
+	surfaceBackTransform_.translate_ = { 0.0f,0.0f,0.8f };
+	surfaceBackTransform_.rotate_ = { -1.44f,0.0f,0.0f };
+	surfaceBackTransform_.scale_ = { 10.260f,6.140f,7.630f };
+	surfaceBack_->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+}
+
+void TitleScene::SurfaceUpdate()
+{
+	surfaceGroundTransform_.Update();
+	surfaceBackTransform_.Update();
+}
+
+void TitleScene::SurfaceDraw()
+{
+	surfaceGround_->Draw(surfaceGroundTransform_, camera_);
+	surfaceBack_->Draw(surfaceBackTransform_,camera_);
 }

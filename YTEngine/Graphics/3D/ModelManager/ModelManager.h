@@ -31,12 +31,9 @@ private:
 	//モデルデータの読み込み
 	static ModelData LoadFile(const std::string& directoryPath, const std::string& fileName);
 
+	ModelData LoadFileForLeveldata(const std::string& fileNameFolder, const std::string& fileName);
 
 public:
-
-	
-
-
 
 	/// <summary>
 	/// モデルデータの読み込み(ハンドルを登録する)
@@ -46,19 +43,10 @@ public:
 	/// <returns></returns>
 	static uint32_t LoadModelFile(const std::string& directoryPath, const std::string& fileName);
 
-	/// <summary>
-	/// アニメーション付きのglTFを読み込みたいときはこっちで
-	/// falseにすればobjも読み込めるよ
-	/// </summary>
-	/// <param name="directoryPath">パス</param>
-	/// <param name="fileName">ファイル名</param>
-	/// <param name="isAnimationLoad">アニメーションを読み込むかどうか</param>
-	/// <returns></returns>
+	
 	static uint32_t LoadModelFile(const std::string& directoryPath, const std::string& fileName,bool isAnimationLoad);
 
-
-
-
+	uint32_t LoadModelFileForLevelData(const std::string& directoryPath, const std::string& fileName);
 
 public:
 
@@ -88,6 +76,8 @@ private:
 		//ファイル名など
 		std::string directoryPath;
 		std::string filePath;
+
+		std::string folderName;
 	};
 
 

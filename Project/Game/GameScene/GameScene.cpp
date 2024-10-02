@@ -22,6 +22,9 @@ void GameScene::Initialize()
 
 	stage_ = std::make_unique<Stage>();
 	stage_->Initialize();
+
+	jsonLoader_ = new JsonLoader();
+	jsonLoader_->Load("Resources/Editor", "aaaa.json");
 }
 
 void GameScene::Update(GameManager* gameManager) 
@@ -34,16 +37,21 @@ void GameScene::Update(GameManager* gameManager)
 
 	stage_->Update();
 
+	jsonLoader_->Update();
+
 	if (player_->GetWorldTransform().translate_.x > 3.3f) 
 	{
 		gameManager->ChangeScene(new GameScene1);
 	}
 
+	if (IsCollision(player_->GetCollision(), stage_->GetCollision()))
+	{
+		return;
+	}
+
 #ifdef _DEBUG
-	/*ImGui::Begin("Camera");
-	ImGui::DragFloat3("Translate", &camera_.translate_.x, 0.01f);
-	ImGui::DragFloat3("Rotate", &camera_.rotate_.x, 0.01f);
-	ImGui::End();*/
+	
+
 #endif
 }
 
@@ -52,4 +60,6 @@ void GameScene::Draw()
 	player_->Draw(camera_);
 
 	stage_->Draw(camera_);
+
+	jsonLoader_->Draw(camera_);
 }

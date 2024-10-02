@@ -4,9 +4,13 @@
 
 #include <WinSock2.h>
 
-namespace YNet {
-	class Network {
+namespace YNet 
+{
+	class Network 
+	{
+
 	public:
+
 		static bool Initialize();
 		static void Shutdown();
 	};

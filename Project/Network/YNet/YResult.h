@@ -1,7 +1,9 @@
 #pragma once
 
-namespace YNet {
-	enum YResult {
+namespace YNet 
+{
+	enum YResult 
+	{
 		Y_Success,
 		Y_GenericError
 	};

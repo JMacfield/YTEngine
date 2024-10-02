@@ -54,12 +54,12 @@ void Player::Update()
 
 	BehaviorUpdate();
 
-	if (Input::GetInstance()->IsPushKey(DIK_1)) { behaviorRequest_ = Behavior::kIdle; }
+	/*if (Input::GetInstance()->IsPushKey(DIK_1)) { behaviorRequest_ = Behavior::kIdle; }
 	if (Input::GetInstance()->IsPushKey(DIK_2)) { behaviorRequest_ = Behavior::kWalk; }
 	if (Input::GetInstance()->IsPushKey(DIK_3)) { behaviorRequest_ = Behavior::kSprint; }
 	if (Input::GetInstance()->IsPushKey(DIK_4)) { behaviorRequest_ = Behavior::kGrab; }
 	if (Input::GetInstance()->IsPushKey(DIK_5)) { behaviorRequest_ = Behavior::kPunch; }
-	if (Input::GetInstance()->IsPushKey(DIK_6)) { behaviorRequest_ = Behavior::kJump; }
+	if (Input::GetInstance()->IsPushKey(DIK_6)) { behaviorRequest_ = Behavior::kJump; }*/
 }
 
 void Player::Draw(Camera& camera)
@@ -126,7 +126,7 @@ void Player::Control()
 	// 掴む
 	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
 	{
-		playerWorldTransform_.rotate_.y = -1.4f;
+		//playerWorldTransform_.rotate_.y = -1.4f;
 		behaviorRequest_ = Behavior::kGrab;
 	}
 }

@@ -4,6 +4,7 @@
 
 #include <WinSock2.h>
 
-namespace YNet {
+namespace YNet 
+{
 	typedef SOCKET SocketHandle;
 }

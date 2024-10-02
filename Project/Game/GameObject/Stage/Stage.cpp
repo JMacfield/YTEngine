@@ -115,7 +115,7 @@ void Stage::Draw(Camera& camera)
 	goalObject_->Draw(goalObjectTransform_, camera);
 	grabObejct_->Draw(grabObjectTransform_, camera);
 	backObject_->Draw(backObjectTransform_, camera);
-	object1_->Draw();
+	//object1_->Draw();
 }
 
 void Stage::SetCollision()

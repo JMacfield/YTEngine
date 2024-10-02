@@ -1,5 +1,6 @@
 #pragma once
 
-namespace YNet {
+namespace YNet 
+{
 	const int g_MaxPacketSize = 8192;
 }

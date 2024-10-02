@@ -2,9 +2,13 @@
 
 #include "YNet/Socket.h"
 
-namespace YNet {
-	class TCPConnection {
+namespace YNet 
+{
+	class TCPConnection 
+	{
+
 	public:
+
 		TCPConnection(Socket socket, IPEndpoint endpoint);
 		void Close();
 		
@@ -13,6 +17,7 @@ namespace YNet {
 		Socket socket;
 
 	private:
+
 		IPEndpoint endpoint;
 		std::string stringRepresentation = "";
 	};

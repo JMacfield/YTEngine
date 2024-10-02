@@ -321,6 +321,9 @@
     <ClCompile Include="Project\Game\System\DrawSystem.cpp">
       <Filter>YTEngine\Source File</Filter>
     </ClCompile>
+    <ClCompile Include="YTEngine\Utility\JsonLoader\JsonLoader.cpp">
+      <Filter>YTEngine\Source File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Particle3D\Particle3d.PS.hlsl">
@@ -578,6 +581,9 @@
       <Filter>YTEngine\Header File</Filter>
     </ClInclude>
     <ClInclude Include="Project\Game\System\DrawSystem.h">
+      <Filter>YTEngine\Header File</Filter>
+    </ClInclude>
+    <ClInclude Include="YTEngine\Utility\JsonLoader\JsonLoader.h">
       <Filter>YTEngine\Header File</Filter>
     </ClInclude>
   </ItemGroup>

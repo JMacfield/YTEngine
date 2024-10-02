@@ -1,43 +1,51 @@
 #include "YNet/Packet.h"
 #include "YNet/Constants.h"
 
-namespace YNet {
-	Packet::Packet(PacketType packetType) {
+namespace YNet 
+{
+	Packet::Packet(PacketType packetType) 
+	{
 		Clear();
 		AssignPacketType(packetType);
 	}
 
-	PacketType Packet::GetPacketType() {
+	PacketType Packet::GetPacketType() 
+	{
 		PacketType* packetTypePtr = reinterpret_cast<PacketType*> (&buffer[0]);
 
 		return static_cast<PacketType>(ntohl(*packetTypePtr));
 	}
 
-	void Packet::AssignPacketType(PacketType packetType) {
+	void Packet::AssignPacketType(PacketType packetType) 
+	{
 		PacketType* packetTypePtr = reinterpret_cast<PacketType*>(&buffer[0]);
 		*packetTypePtr = static_cast<PacketType>(ntohs(packetType));
 	}
 
-	void Packet::Clear() {
+	void Packet::Clear() 
+	{
 		buffer.resize(sizeof(PacketType));
 		AssignPacketType(PacketType::PT_Invalid);
 		extractionOffset = sizeof(PacketType);
 	}
 
-	void Packet::Append(const void* data, uint32_t size) {
+	void Packet::Append(const void* data, uint32_t size) 
+	{
 		if ((buffer.size() + size) > YNet::g_MaxPacketSize)
 			throw PacketException("[Packet::Append(const void*, uint32_t)] - Packet size exceeded max packet size.");
 
 		buffer.insert(buffer.end(), (char*)data, (char*)data + size);
 	}
 
-	Packet& Packet::operator<<(uint32_t data) {
+	Packet& Packet::operator<<(uint32_t data) 
+	{
 		data = htonl(data);
 		Append(&data, sizeof(uint32_t));
 		return *this;
 	}
 
-	Packet& Packet::operator>>(uint32_t& data) {
+	Packet& Packet::operator>>(uint32_t& data) 
+	{
 		if ((extractionOffset + sizeof(uint32_t)) > buffer.size())
 			throw PacketException("[Packet::operator >>(uint32_t &)] - Extraction offset exceeded buffer size.");
 
@@ -47,13 +55,15 @@ namespace YNet {
 		return *this;
 	}
 
-	Packet& Packet::operator<<(const std::string& data) {
+	Packet& Packet::operator<<(const std::string& data) 
+	{
 		*this << (uint32_t)data.size();
 		Append(data.data(), data.size());
 		return *this;
 	}
 
-	Packet& Packet::operator>>(std::string& data) {
+	Packet& Packet::operator>>(std::string& data) 
+	{
 		data.clear();
 
 		uint32_t stringSize = 0;

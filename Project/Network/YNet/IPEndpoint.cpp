@@ -3,16 +3,20 @@
 #include <assert.h>
 #include <iostream>
 
-namespace YNet {
-	IPEndpoint::IPEndpoint(const char* ip, unsigned short port) {
+namespace YNet 
+{
+	IPEndpoint::IPEndpoint(const char* ip, unsigned short port) 
+	{
 		this->port = port;
 
 		// IPv4
 		in_addr addr;
 		int result = inet_pton(AF_INET, ip, &addr);
 
-		if (result == 1) {
-			if (addr.S_un.S_addr != INADDR_NONE) {
+		if (result == 1) 
+		{
+			if (addr.S_un.S_addr != INADDR_NONE) 
+			{
 				ip_string = ip;
 				hostname = ip;
 
@@ -32,7 +36,8 @@ namespace YNet {
 		addrinfo* hostinfo = nullptr;
 		result = getaddrinfo(ip, NULL, &hints, &hostinfo);
 
-		if (result == 0) {
+		if (result == 0) 
+		{
 			sockaddr_in* host_addr = reinterpret_cast<sockaddr_in*>(hostinfo->ai_addr);
 
 			ip_string.resize(16);
@@ -55,7 +60,8 @@ namespace YNet {
 		in6_addr addr6; // 場所をIPv6アドレスへ格納
 		result = inet_pton(AF_INET, ip, &addr6);
 
-		if (result == 1) {
+		if (result == 1) 
+		{
 			ip_string = ip;
 			hostname = ip;
 
@@ -74,7 +80,8 @@ namespace YNet {
 		addrinfo* hostinfov6 = nullptr;
 		result = getaddrinfo(ip, NULL, &hintsv6, &hostinfov6);
 
-		if (result == 0) {
+		if (result == 0) 
+		{
 			sockaddr_in6* host_addr = reinterpret_cast<sockaddr_in6*>(hostinfov6->ai_addr);
 
 			ip_string.resize(46);
@@ -93,10 +100,12 @@ namespace YNet {
 		}
 	}
 
-	IPEndpoint::IPEndpoint(sockaddr* addr) {
+	IPEndpoint::IPEndpoint(sockaddr* addr)
+	{
 		assert(addr->sa_family == AF_INET || addr->sa_family == AF_INET6);
 
-			if (addr->sa_family == AF_INET) { // IPv4
+			if (addr->sa_family == AF_INET) 
+			{ // IPv4
 				sockaddr_in* addrv4 = reinterpret_cast<sockaddr_in*>(addr);
 				ip_version = IPVersion::IPv4;
 				port = ntohs(addrv4->sin_port);
@@ -105,7 +114,8 @@ namespace YNet {
 				ip_string.resize(16);
 				inet_ntop(AF_INET, &addrv4->sin_addr, &ip_string[0], 16);
 				hostname = ip_string;
-			} else {
+			} else 
+			{
 				sockaddr_in6* addrv6 = reinterpret_cast<sockaddr_in6*>(addr);
 				ip_version = IPVersion::IPv4;
 				port = ntohs(addrv6->sin6_port);
@@ -117,27 +127,33 @@ namespace YNet {
 		}
 	}
 
-	IPVersion IPEndpoint::GetIPVersion() {
+	IPVersion IPEndpoint::GetIPVersion() 
+	{
 		return ip_version;
 	}
 
-	std::vector<uint8_t> IPEndpoint::GetIPBytes() {
+	std::vector<uint8_t> IPEndpoint::GetIPBytes() 
+	{
 		return ip_bytes;
 	}
 
-	std::string IPEndpoint::GetHostName() {
+	std::string IPEndpoint::GetHostName() 
+	{
 		return hostname;
 	}
 
-	std::string IPEndpoint::GetIPString() {
+	std::string IPEndpoint::GetIPString() 
+	{
 		return ip_string;
 	}
 
-	unsigned short IPEndpoint::GetPort() {
+	unsigned short IPEndpoint::GetPort() 
+	{
 		return port;
 	}
 
-	sockaddr_in IPEndpoint::GetSockaddrIPv4() {
+	sockaddr_in IPEndpoint::GetSockaddrIPv4() 
+	{
 		assert(ip_version == IPVersion::IPv4);
 
 		sockaddr_in addr = {};
@@ -148,7 +164,8 @@ namespace YNet {
 		return addr;
 	}
 
-	sockaddr_in6 IPEndpoint::GetSockaddrIPv6() {
+	sockaddr_in6 IPEndpoint::GetSockaddrIPv6() 
+	{
 		assert(ip_version == IPVersion::IPv6);
 
 		sockaddr_in6 addr = {};
@@ -159,8 +176,10 @@ namespace YNet {
 		return addr;
 	}
 
-	void IPEndpoint::Print() {
-		switch (ip_version) {
+	void IPEndpoint::Print() 
+	{
+		switch (ip_version) 
+		{
 		case IPVersion::IPv4:
 			std::cout << "IP Version: IPv4" << std::endl;
 			break;
@@ -178,7 +197,8 @@ namespace YNet {
 		std::cout << "Port: " << port << std::endl;
 		std::cout << "IP bytes..." << std::endl;
 
-		for (auto& digit : ip_bytes) {
+		for (auto& digit : ip_bytes)
+		{
 			std::cout << (int)digit << std::endl;
 		}
 	}

@@ -55,4 +55,6 @@ private:
 	std::unique_ptr<Sprite> object1_;
 	uint32_t object1Handle_;
 	Vector2 object1Transform_;
+
+	
 };
