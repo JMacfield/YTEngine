@@ -92,7 +92,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -124,6 +124,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;USE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Ellysia\Audio;$(ProjectDir)\Ellysia\Lighting;$(ProjectDir)Ellysia\Polygon\3D\ModelManager;$(ProjectDir)\External\assimp\include;$(ProjectDir)Ellysia\AdjustmentItems;$(ProjectDir)Ellysia\Input;$(ProjectDir)Project\AllGameScene;$(ProjectDir)Ellysia\Camera;$(ProjectDir)Ellysia\TextureManager;$(ProjectDir)Ellysia\Polygon\2D\Sprite;$(ProjectDir)Ellysia\Polygon\3D\Model;$(ProjectDir)Ellysia\Polygon\3D\Particle3D;$(ProjectDir)Ellysia\Common\DirectX;$(ProjectDir)Ellysia\Common\Windows;$(ProjectDir)Ellysia\Math\Vector;$(ProjectDir)Ellysia\PipelineManager;$(ProjectDir)Ellysia\Math\Matrix;$(ProjectDir)Ellysia\Math\WorldTransform;$(ProjectDir)Ellysia\Math\Quaternion;$(ProjectDir)Ellysia\Math\Matrix\Calculation;$(ProjectDir)Ellysia\ConvertFunction\ConvertLog;$(ProjectDir)Ellysia\Math\Vector\Calculation;$(ProjectDir)Ellysia\SrvManager;$(ProjectDir)Ellysia\Math\Shape;$(ProjectDir)Ellysia\Polygon\3D\ModelData;$(ProjectDir)Ellysia\Polygon\3D\MaterialData;$(ProjectDir)Ellysia\ConvertFunction\CompileShader;$(ProjectDir)Ellysia\Math\Collision;$(ProjectDir)Project\AllGameScene\GameManager;$(ProjectDir)Ellysia\ImGuiManager;$(ProjectDir)Ellysia\Math\Transform;$(ProjectDir)Ellysia\Manager\AnimationManager;$(ProjectDir)Ellysia\Polygon\3D\AnimationModel</AdditionalIncludeDirectories>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -131,9 +133,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Project\Game\GameObject\Stage\Stage.cpp" />
     <ClCompile Include="Project\Game\GameObject\Stage\Stage1.cpp" />
     <ClCompile Include="Project\Game\GameScene\ClearScene.cpp" />
-    <ClCompile Include="Project\Game\GameScene\CopyGameScene.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Project\Game\GameScene\GameScene1.cpp" />
     <ClCompile Include="Project\Game\GameScene\SelectScene.cpp" />
     <ClCompile Include="Project\Game\GameScene\TitleScene.cpp" />
@@ -187,6 +186,18 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Line\Line.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Line\Line.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\Shader\Object2D\Object2d.PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -298,6 +309,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="Resources\Shader\AnimationObject3D\AnimationObject3D.hlsli" />
+    <None Include="Resources\Shader\Line\Line.hlsli" />
     <None Include="Resources\Shader\Object2D\Object2d.hlsli" />
     <None Include="Resources\Shader\Object3D\Object3d.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

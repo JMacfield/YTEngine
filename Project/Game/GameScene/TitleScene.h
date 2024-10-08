@@ -3,6 +3,7 @@
 #include "GameManager/GameManager.h"
 #include "GameManager/IGameScene.h"
 
+#include "Audio.h"
 #include "Input.h"
 #include "Sprite.h"
 
@@ -53,7 +54,7 @@ private:
 	uint32_t playerGrabWalkingAnimation_;
 
 	Skeleton playerSkeleton_[4] = {};
-	float playerAnimationTime_;
+	float playerAnimationTime_[4];
 	SkinCluster playerSkinCluster_[4] = {};
 
 	// カメラ //
@@ -72,4 +73,14 @@ private:
 	std::unique_ptr<Model> surfaceBack_;
 	uint32_t surfaceBackHandle_;
 	WorldTransform surfaceBackTransform_;
+
+	Vector2 playerIconTransform_[4];
+	std::unique_ptr<Sprite> playerIcon_[4];
+	uint32_t playerIconHandle_[4];
+
+	Vector2 titleIconTransform_;
+	std::unique_ptr<Sprite> titleIcon_;
+	uint32_t titleIconHandle_;
+
+	uint32_t titleBGMHandle_;
 };

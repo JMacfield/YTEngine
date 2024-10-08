@@ -44,4 +44,6 @@ private:
 	std::unique_ptr<Stage> stage_;
 
 	JsonLoader* jsonLoader_ = nullptr;
+
+	std::unique_ptr<DrawSystem> line_;
 };
