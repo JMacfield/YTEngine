@@ -51,7 +51,7 @@ public:
 
 	PipelineManager& operator=(const PipelineManager& pipelineManager) = delete;
 
-#pragma region Getter
+#pragma region Getter Setter
 	ComPtr<ID3D12RootSignature> GetLineRootSignature() { return linePSO_.rootSignature_; }
 
 	ComPtr<ID3D12PipelineState> GetLineGraphicsPipelineState() { return linePSO_.graphicsPipelineState_; }
@@ -63,7 +63,7 @@ public:
 	ComPtr<ID3D12RootSignature> GetModelRootSignature() { return modelPSO_.rootSignature_; }
 
 	ComPtr<ID3D12PipelineState> GetModelGraphicsPipelineState() { return modelPSO_.graphicsPipelineState_; }
-
+	 
 	ComPtr<ID3D12RootSignature> GetAnimationModelRootSignature() { return animationModelPSO_.rootSignature_; }
 
 	ComPtr<ID3D12PipelineState> GetAnimationModelGraphicsPipelineState() { return animationModelPSO_.graphicsPipelineState_; }
@@ -79,6 +79,7 @@ public:
 
 public:
 
+	// パイプライン系の生成
 	static void GenaratedLinePSO();
 
 	static void GenerateSpritePSO();

@@ -84,7 +84,7 @@ void YTEngine::EndFrame()
 	DirectXCommon::GetInstance()->EndFrame();			
 }
 
-void YTEngine::Operate()
+void YTEngine::Execute()
 {
 	Initialize();
 	

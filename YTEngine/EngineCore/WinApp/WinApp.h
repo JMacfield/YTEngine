@@ -32,16 +32,21 @@ public:
 
 private:
 
+	// ウィンドウクラスの登録
 	void RegisterWindowsClass();
 
+	// ウィンドウを表示
 	void DisplayWindow();
 
 public:
 
+	// 初期化
 	void Initialize(const wchar_t* title, int32_t clientWidth,int32_t clientHeight);
 
+	// ウィンドウメッセージ
 	void WindowsMSG(MSG& msg);
 
+	// ウィンドウを閉じる
 	void Close();
 
 #pragma region Getter

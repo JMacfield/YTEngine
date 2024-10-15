@@ -4,8 +4,6 @@
 #include <Vector3.h>
 #include "Matrix4x4.h"
 
-//Vector3
-
 //足し算
 Vector3 Add(Vector3 v1, Vector3 v2);
 
@@ -69,7 +67,13 @@ float Cot(float theta);
 //外積
 Vector3 Cross(const Vector3 v1, const Vector3 v2);
 
-
+/// <summary>
+/// 射影
+/// </summary>
+/// <param name="v1">ベクトル1</param>
+/// <param name="v2">ベクトル2</param>
+/// <returns></returns>
 Vector3 Project(const Vector3 v1, const Vector3 v2);
 
+// トランスフォームの計算
 Vector3 TransformCalculation(const Vector3 vector, const Matrix4x4 matrix);

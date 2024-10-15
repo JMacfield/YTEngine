@@ -6,6 +6,9 @@
 #include <cstdint>
 #include "Matrix4x4.h"
 
+/// <summary>
+/// マテリアル
+/// </summary>
 struct Material {
 	Vector4 color;
 	int32_t enableLighting;

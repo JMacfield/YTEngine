@@ -4,6 +4,9 @@
 
 #include "Vector3.h"
 
+/// <summary>
+/// OBB形状構造体
+/// </summary>
 struct OBB {
 	Vector3 center;
 	Vector3 orientation[3];

@@ -7,6 +7,7 @@
 
 #include "DirectXCommon.h"
 
+// ワールドトランスフォームの構造体
 struct WorldTransformData {
 	Matrix4x4 world;
 	Matrix4x4 normal;
@@ -18,20 +19,31 @@ struct WorldTransform {
 public:
 #pragma region メンバ関数
 
-	//初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// glTFを使う時
+	/// 初期化 glTFを使う時
 	/// </summary>
 	void Initialize(bool isUseGLTF,Matrix4x4 matrix4x4);
 
-	//行列を計算・転送する
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// 更新 行列を使う時
+	/// </summary>
+	/// <param name="animationLocalMatrix">行列</param>
 	void Update(Matrix4x4 animationLocalMatrix);
 
-	//ペアレントの設定
+	/// <summary>
+	/// ペアレントの設定
+	/// </summary>
+	/// <param name="parent">ペアレントする物</param>
 	void SetParent(const WorldTransform* parent) {
 		parent = parent_;
 	}
@@ -41,10 +53,17 @@ public:
 		this->rootNodeLocalMatrix_ = matrix4x4;
 	}
 
+	/// <summary>
+	/// ワールドトランスフォームの取得
+	/// </summary>
+	/// <returns></returns>
 	Vector3 GetWorldPosition();
 
 private:
-	//転送
+	
+	/// <summary>
+	/// 取得
+	/// </summary>
 	void Transfer();
 
 

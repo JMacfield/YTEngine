@@ -30,12 +30,27 @@ public:
 
 public:
 	
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	static void Initialize();
 
+	/// <summary>
+	/// テクスチャの読み込み
+	/// </summary>
+	/// <param name="filePath">テクスチャのパス</param>
+	/// <returns></returns>
 	static uint32_t LoadTexture(const std::string& filePath);
 
+	/// <summary>
+	/// グラフィックのコマンド
+	/// </summary>
+	/// <param name="texHandle">テクスチャハンドル</param>
 	static void GraphicsCommand(uint32_t texHandle);
 
+	/// <summary>
+	/// テクスチャの解放
+	/// </summary>
 	void Release();
 
 	const D3D12_RESOURCE_DESC GetResourceDesc(uint32_t textureHandle);

@@ -23,29 +23,35 @@ public:
 	//代入演算子を無効にする
 	SrvManager& operator=(const SrvManager& rvHeapManager) = delete;
 
-	
-
-
-
 public:
-	//初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
 
+	// 許可
 	uint32_t Allocate();
 
+	/// <summary>
+	/// 事前描画
+	/// </summary>
 	void PreDraw();
 
+	// シェーダーリソースビューの作成
 	void CreateSRVForTexture2D(uint32_t srvIndex, ID3D12Resource* pResource, DXGI_FORMAT format, UINT mipLevels);
 	void CreateSRVForStructuredBuffer(uint32_t srvIndex, ID3D12Resource* pResource, UINT numElements, UINT structureByteStride);
 
+	// グラフィックをディスクリプタテーブルへ
 	void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, uint32_t srvIndex);
 	
 
 public:
 
+	// 各ディスクリプタを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(uint32_t index);
 
+	// シェーダーリソースビューのヒープを取得
 	ComPtr<ID3D12DescriptorHeap> GetSrvDescriptorHeap() {
 		return  descriptorHeap_;
 	}

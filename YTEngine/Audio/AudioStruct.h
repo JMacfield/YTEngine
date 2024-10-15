@@ -8,8 +8,8 @@
 
 #include <mfreadwrite.h>
 
-//チャンク...データの塊みたいなもの
-	//チャンクヘッダ
+
+//チャンクヘッダ
 struct ChunkHeader {
 	//チャンク毎のID
 	char id[4];

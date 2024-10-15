@@ -17,10 +17,11 @@ public:
 	//インスタンス
 	static ReadNode* GetInstance();
 
-	//コピーコンストラクタ禁止
+	// コピーコンストラクタ禁止
+	// ノードの読み込み
 	ReadNode(const ReadNode& readNode) = delete;
 
-	//代入演算子を無効にする
+	// 代入演算子を無効にする
 	ReadNode& operator=(const ReadNode& readNode) = delete;
 
 

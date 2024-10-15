@@ -42,32 +42,43 @@ public:
 
 public:
 
+	/// <summary>
+	/// グループの作成
+	/// </summary>
+	/// <param name="groupName">グループの名前</param>
 	void CreateGroup(const std::string& groupName);
 
+	// 値のセット
 	void SetValue(const std::string& groupName, const std::string& key, int32_t value);
 
 	void SetValue(const std::string& groupName, const std::string& key, float value);
 
 	void SetValue(const std::string& groupName, const std::string& key, const Vector3 value);
 
+	// 値の追加
 	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
 
 	void AddItem(const std::string& groupName, const std::string& key, float value);
 
 	void AddItem(const std::string& groupName, const std::string& key, const Vector3 value);
 	
+	// 値を取得
 	int32_t GetIntValue(const std::string groupName, const std::string& key);
 
 	float GetFloatValue(const std::string groupName, const std::string& key);
 
 	Vector3 GetVector3Value(const std::string groupName, const std::string& key);
 
+	// ファイルのセーブ・ロード
 	void SaveFile(const std::string& groupName);
 
 	void LoadFile();
 
 	void LoadFile(const std::string& groupName);
 	
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
 
 private:

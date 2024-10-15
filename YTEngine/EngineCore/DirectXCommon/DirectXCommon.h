@@ -91,22 +91,28 @@ private:
 
 private:
 
+	// FPS固定化
 	static void InitializeFPS();
 
 	static void UpdateFPS();
 
 public:
 
+	// 初期化
 	static void Initialize();
 
 	ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 
+	// フレームの開始
 	void BeginFrame();
 
+	// フレームの終了
 	void EndFrame();
 
+	// 解放
 	void Release();
 
+	// 解放のチェック
 	void CheckRelease();
 	
 #pragma region Getter
