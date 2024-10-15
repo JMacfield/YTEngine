@@ -1,3 +1,5 @@
+/// ジョイントクラス
+
 #include "Joint.h"
 #include <Matrix4x4Calculation.h>
 

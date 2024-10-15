@@ -1,3 +1,5 @@
+/// Windowsアプリケーションクラス
+
 #pragma once
 
 #include <Windows.h>

@@ -1,3 +1,5 @@
+/// 3Dパーティクルを描画するクラス
+
 #include "Particle3D.h" 
 #include <Camera.h>
 #include <TextureManager.h>

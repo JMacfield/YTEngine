@@ -1,3 +1,5 @@
+/// アニメーション　アニメーションの計算
+
 #include "Animation.h"
 #include <cassert>
 #include <vector>

@@ -12,6 +12,8 @@
 #include "Camera.h"
 
 #include "GameObject/Player/Player.h"
+/// テストシーン
+
 #include "GameObject/Stage/Stage.h"
 
 #include <memory>

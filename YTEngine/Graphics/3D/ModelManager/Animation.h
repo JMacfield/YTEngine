@@ -1,3 +1,5 @@
+/// アニメーション　アニメーションの計算
+
 #pragma once
 
 #include <map>

@@ -1,3 +1,5 @@
+/// 色の変換
+
 #pragma once
 
 #include "Vector4.h"

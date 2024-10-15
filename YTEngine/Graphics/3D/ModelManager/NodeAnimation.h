@@ -1,3 +1,5 @@
+/// ノードアニメーションクラス
+
 #pragma once
 #include <vector>
 #include "KeyFrame.h"

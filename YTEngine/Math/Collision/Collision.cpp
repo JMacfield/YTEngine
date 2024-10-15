@@ -1,3 +1,5 @@
+/// 当たり判定クラス
+
 #include "Collision.h"
 
 //AABBとPointの当たり判定

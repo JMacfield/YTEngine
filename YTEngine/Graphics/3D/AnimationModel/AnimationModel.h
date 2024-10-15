@@ -1,3 +1,5 @@
+/// 3Dモデル（アニメーション用）
+
 #pragma once
 #include <cstdint>
 #include <ModelData.h>

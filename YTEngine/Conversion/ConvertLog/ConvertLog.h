@@ -1,3 +1,5 @@
+/// ログの文字列変換
+
 #pragma once
 
 #include <cstdint>

@@ -1,3 +1,5 @@
+/// AABB形状
+
 #pragma once
 #include "Vector3.h"
 

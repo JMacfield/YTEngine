@@ -1,3 +1,5 @@
+/// スケルトンクラス
+
 #include "Skeleton.h"
 #include <Matrix4x4Calculation.h>
 

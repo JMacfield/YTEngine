@@ -1,3 +1,5 @@
+/// Vector2
+
 #pragma once
 
 struct Vector2 {

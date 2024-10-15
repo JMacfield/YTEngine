@@ -1,3 +1,5 @@
+/// DirectXクラス
+
 #include "DirectXCommon.h"
 
 #include <thread>

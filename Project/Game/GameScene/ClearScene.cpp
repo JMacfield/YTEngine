@@ -1,3 +1,5 @@
+/// クリアシーン
+
 #include "ClearScene.h"
 
 void ClearScene::Initialize()

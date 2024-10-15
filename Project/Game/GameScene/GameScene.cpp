@@ -1,3 +1,5 @@
+/// ゲームシーン
+
 #include "GameScene/GameScene.h"
 #include "GameScene/ClearScene.h"
 #include "GameScene/TitleScene.h"

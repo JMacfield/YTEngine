@@ -1,3 +1,5 @@
+/// 三角形描画クラス
+
 #include "Triangle.h"
 #include "Transform.h"
 

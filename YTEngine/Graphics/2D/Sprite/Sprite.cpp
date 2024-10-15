@@ -1,3 +1,5 @@
+/// スプライト描画クラス
+
 #include "Sprite.h"
 
 #include "TextureManager.h"

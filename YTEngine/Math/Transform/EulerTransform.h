@@ -1,3 +1,5 @@
+/// オイラー角トランスフォーム
+
 #pragma once
 #include <Vector3.h>
 

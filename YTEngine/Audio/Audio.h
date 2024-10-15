@@ -1,3 +1,5 @@
+/// 音関連のクラス
+
 #pragma once
 
 
@@ -162,114 +164,13 @@ public:
 
 #pragma region ピッチ系
 
-	/// <summary>
-	/// 音の高さの変更(滑らか版)
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="値"></param>
-	void ChangeFrequency(uint32_t audioHandle, float ratio);
-
-
-	/// <summary>
-	/// ピッチの変更
-	/// シンセのように出来るよ
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="値"></param>
-	void ChangePitch(uint32_t audioHandle, int32_t scale);
-
-	void StretchAndPitch(uint32_t audioHandle, float timeRatio, float pitchRatio);
-
-#pragma endregion
-
-	/// <summary>
-	/// Pan振り
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="Panの値"></param>
-	void SetPan(uint32_t audioHandle, float_t pan);
-
-	
-#pragma region フィルター
-
-	//単極は必要無いかな
-
-	/// <summary>
-	/// ローパスフィルター
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="CutOffの値"></param>
-	void SetLowPassFilter(uint32_t audioHandle, float cutOff);
-
-	/// <summary>
-	/// ローパスフィルター(Qあり)
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="CutOffの値"></param>
-	/// <param name="oneOverQ"></param>
-	void SetLowPassFilter(uint32_t audioHandle, float cutOff,float oneOverQ);
-
-
-
-	/// <summary>
-	/// ハイパスフィルター
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="CutOffの値"></param>
-	void SetHighPassFilter(uint32_t audioHandle, float cutOff);
-
-	/// <summary>
-	/// ハイパスフィルター(Qあり)
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="CutOffの値"></param>
-	/// <param name="oneOverQ"></param>
-	void SetHighPassFilter(uint32_t audioHandle, float cutOff, float oneOverQ);
-
-	/// <summary>
-	/// バンドパス
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="CutOffの値"></param>
-	void SetBandPassFilter(uint32_t audioHandle, float cutOff);
-
-	/// <summary>
-	/// バンドパス(Qあり)
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="CutOffの値"></param>
-	void SetBandPassFilter(uint32_t audioHandle, float cutOff, float oneOverQ);
-
-
-	/// <summary>
-	/// ノッチフィルター
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="CutOffの値"></param>
-	void SetNotchFilter(uint32_t audioHandle, float cutOff);
-
-	/// <summary>
-	/// ノッチフィルター
-	/// </summary>
-	/// <param name="ハンドル名"></param>
-	/// <param name="CutOffの値"></param>
-	void SetNotchFilter(uint32_t audioHandle, float cutOff, float oneOverQ);
 
 #pragma endregion
 
 
 	static void CreateSubmixVoice(uint32_t channel);
 
-	void SendChannels(uint32_t audioHandle,uint32_t channelNumber);
 
-	//リバーブ
-	void CreateReverb(uint32_t audioHandle, uint32_t channel);
-
-	//エフェクトの効果を無効にする
-	void OffEffect(uint32_t audioHandle);
-
-	//エフェクトの効果を有効にする
-	void OnEffect(uint32_t audioHandle);
 
 
 	//解放
@@ -296,9 +197,6 @@ private:
 
 
 
-	//Reverb
-	IUnknown* pXAPO_ = nullptr;
-
 
 
 
@@ -318,41 +216,7 @@ private:
 
 
 
-	//自分のエンジンではA4は442Hz基準にする
-	//もちろん12段階で1オクターブ
-	static const int SCALE_AMOUNT_ = 13;
-	const float SEMITONE_RATIO_[SCALE_AMOUNT_] = {
-		1.00000f, //C4
-		1.05946f, //C#4
-		1.12246f, //D4
-		1.18921f, //D#4
-		1.25992f, //E4
-		1.33483f, //F4
-		1.41421f, //F#4
-		1.49831f, //G4
-		1.58740f, //G#4
-		1.68179f, //A4
-		1.78180f, //A#4
-		1.88775f, //B4
-		2.00000f  //C5
-	};
-
-	//低い方
-	const float MINUS_SEMITONE_RATION[SCALE_AMOUNT_] = {
-		1.00000f,	//C4
-		0.94387f,	//B3
-		0.89090f,	//A3#
-		0.84090f,	//A3
-		0.79370f,	//G#3
-		0.74915f,	//G3
-		0.70711f,	//F#3
-		0.66742f,	//F3
-		0.62996f,	//E3
-		0.59460f,	//D#3
-		0.56123f,	//D3
-		0.52973f,	//C#3
-		0.50000f,	//C3
-	};
+	
 
 
 };

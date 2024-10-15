@@ -1,3 +1,5 @@
+/// テクスチャ全般を管理するクラス
+
 #pragma once
 
 #include <d3d12.h>

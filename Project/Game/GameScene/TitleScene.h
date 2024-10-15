@@ -1,3 +1,5 @@
+/// タイトルシーン
+
 #pragma once
 
 #include "GameManager/GameManager.h"

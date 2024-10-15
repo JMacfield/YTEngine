@@ -1,3 +1,5 @@
+/// シェーダーの変換管理クラス
+
 #pragma once
 
 #include <string>

@@ -1,3 +1,5 @@
+/// ノードの読み込みクラス
+
 #pragma once
 #include <Node.h>
 

@@ -271,9 +271,6 @@
     <ClCompile Include="YTEngine\ResourceManager\PipelineManager\PipelineManager.cpp">
       <Filter>YTEngine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Game\System\DrawSystem.cpp">
-      <Filter>YTEngine\Line</Filter>
-    </ClCompile>
     <ClCompile Include="YTEngine\Graphics\3D\AnimationModel\AnimationModel.cpp">
       <Filter>YTEngine\Manager</Filter>
     </ClCompile>
@@ -539,9 +536,6 @@
     </ClInclude>
     <ClInclude Include="YTEngine\Math\Collision\Collision.h">
       <Filter>YTEngine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\Game\System\DrawSystem.h">
-      <Filter>YTEngine\Line</Filter>
     </ClInclude>
     <ClInclude Include="YTEngine\Math\Shape\OBB.h">
       <Filter>YTEngine\Math</Filter>

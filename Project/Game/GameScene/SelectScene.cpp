@@ -1,3 +1,5 @@
+/// セレクトシーン
+
 #include "GameScene.h"
 #include "SelectScene.h"
 

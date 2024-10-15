@@ -1,3 +1,5 @@
+/// ワールドトランスフォームを管理するクラス
+
 #include "WorldTransform.h"
 #include "Matrix4x4Calculation.h"
 

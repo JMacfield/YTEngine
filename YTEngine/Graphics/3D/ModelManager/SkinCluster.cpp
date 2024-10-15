@@ -1,3 +1,5 @@
+/// スキンクラスタークラス
+
 #include "SkinCluster.h"
 #include <SrvManager.h>
 #include <Matrix4x4Calculation.h>

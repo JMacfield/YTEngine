@@ -1,3 +1,5 @@
+/// マテリアルデータ
+
 #pragma once
 #include <string>
 

@@ -1,3 +1,5 @@
+/// ゲームシーンの管理クラス
+
 #include "GameManager.h"
 #include "GameScene/GameScene.h"
 #include "GameScene/TitleScene.h"

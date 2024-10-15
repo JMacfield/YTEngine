@@ -1,3 +1,5 @@
+/// 3Dパーティクルを描画するクラス
+
 #pragma once
 #include <string>
 #include <cassert>

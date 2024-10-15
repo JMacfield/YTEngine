@@ -1,3 +1,5 @@
+/// 球体描画クラス
+
 #pragma once
 
 #include "DirectXCommon.h"

@@ -1,3 +1,5 @@
+/// シェーダーの変換管理クラス
+
 #include "CompileShaderManager.h"
 
 #include "DirectXCommon.h"

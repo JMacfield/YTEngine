@@ -1,3 +1,5 @@
+/// ImGui管理クラス
+
 #pragma once
 
 class ImGuiManager final

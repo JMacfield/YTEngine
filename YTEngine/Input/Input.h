@@ -1,3 +1,5 @@
+/// 入力全般についてのクラス
+
 #pragma once
 
 //ここでDirectXInputのバージョン設定をする

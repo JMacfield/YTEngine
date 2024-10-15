@@ -8,6 +8,8 @@
 
 #include "Matrix4x4.h"
 
+/// 当たり判定クラス
+
 #include <array>
 #include <algorithm>
 #include <cmath>

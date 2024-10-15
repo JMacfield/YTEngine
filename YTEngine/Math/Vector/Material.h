@@ -1,4 +1,7 @@
+/// マテリアル
+
 #pragma once
+
 #include "Vector4.h"
 #include <cstdint>
 #include "Matrix4x4.h"

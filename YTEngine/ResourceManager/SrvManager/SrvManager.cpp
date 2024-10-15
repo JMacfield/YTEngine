@@ -1,3 +1,5 @@
+// シェーダーリソースビューを管理するクラス
+
 #include "SrvManager.h"
 
 const uint32_t SrvManager::MAX_SRV_COUNT_ = 512;

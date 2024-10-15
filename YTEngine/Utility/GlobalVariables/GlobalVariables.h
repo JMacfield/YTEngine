@@ -1,4 +1,7 @@
+/// ImGuiで調整したものを保存するクラス
+
 #pragma once
+
 #include <iostream>
 #include <variant>
 #include <string>

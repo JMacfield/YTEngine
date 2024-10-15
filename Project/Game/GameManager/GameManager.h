@@ -1,3 +1,5 @@
+/// ゲームシーンの管理クラス
+
 #pragma once
 
 #include "IGameScene.h"

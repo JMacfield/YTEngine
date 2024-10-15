@@ -1,3 +1,5 @@
+/// DirectXクラス
+
 #pragma once
 
 #include "ConvertLog.h"

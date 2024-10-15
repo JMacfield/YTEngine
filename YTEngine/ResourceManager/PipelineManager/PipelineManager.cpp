@@ -1,3 +1,5 @@
+/// グラフィックのパイプラインを管理するクラス
+
 #include "PipelineManager.h"
 
 #include <array>

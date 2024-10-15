@@ -1,3 +1,5 @@
+/// パーティクル構造体
+
 #pragma once
 #include <Transform.h>
 #include "Vector4.h"

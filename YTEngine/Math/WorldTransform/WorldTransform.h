@@ -1,3 +1,5 @@
+/// ワールドトランスフォームを管理するクラス
+
 #pragma once
 
 #include "Matrix4x4.h"

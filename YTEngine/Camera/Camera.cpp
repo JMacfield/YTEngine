@@ -1,3 +1,5 @@
+/// カメラのクラス
+
 #include "Camera.h"
 #include <Matrix4x4Calculation.h>
 #include "WinApp.h"

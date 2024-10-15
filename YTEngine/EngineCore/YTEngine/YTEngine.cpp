@@ -1,3 +1,5 @@
+/// エンジン基底クラス
+
 #include "YTEngine.h"
 
 #include "PipelineManager.h"

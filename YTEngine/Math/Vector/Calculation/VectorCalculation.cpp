@@ -4,6 +4,8 @@
 #include <Matrix4x4.h>
 #include <cassert>
 #include <numbers>
+/// ベクトルの計算クラス
+
 #include <corecrt_math.h>
 #include <cmath>
 

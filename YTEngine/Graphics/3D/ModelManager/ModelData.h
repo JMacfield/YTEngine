@@ -1,3 +1,5 @@
+/// 3Dモデルの情報定義
+
 #pragma once
 #include <vector>
 #include <VertexData.h>

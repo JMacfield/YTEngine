@@ -1,3 +1,5 @@
+/// ノードの読み込みクラス
+
 #include "ReadNode.h"
 #include <Matrix4x4Calculation.h>
 

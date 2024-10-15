@@ -1,8 +1,11 @@
+// シェーダーリソースビューを管理するクラス
+
 #pragma once
+
 #include "DirectXCommon.h"
 
-
-class SrvManager final{
+class SrvManager final
+{
 private:
 	//コンストラクタ
 	SrvManager() = default;

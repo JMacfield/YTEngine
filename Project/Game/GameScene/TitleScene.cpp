@@ -1,3 +1,5 @@
+/// タイトルシーン
+
 #include "GameScene.h"
 #include "TitleScene.h"
 #include "SelectScene.h"

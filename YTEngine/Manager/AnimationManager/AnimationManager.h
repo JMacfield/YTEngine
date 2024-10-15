@@ -1,3 +1,5 @@
+/// アニメーションを管理するクラス
+
 #pragma once
 #include "Animation.h"
 #include <array>

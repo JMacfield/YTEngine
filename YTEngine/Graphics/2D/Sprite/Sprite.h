@@ -1,3 +1,5 @@
+/// スプライト描画クラス
+
 #pragma once
 #include "DirectXCommon.h"
 #include "ConvertLog.h"

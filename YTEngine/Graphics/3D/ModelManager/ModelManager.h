@@ -1,3 +1,5 @@
+/// 3Dモデルを管理するクラス
+
 #pragma once
 #include <string>
 #include <array>

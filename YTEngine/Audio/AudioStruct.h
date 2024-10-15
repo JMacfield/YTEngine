@@ -1,3 +1,5 @@
+/// 音関連の構造体
+
 #pragma once
 #include <cstdint>
 #include <xaudio2.h>
@@ -56,7 +58,6 @@ struct AudioInformation {
 	IXAudio2SourceVoice* pSourceVoice_ = nullptr;
 
 	//mp3版
-	//こうじゃないとダメだった
 
 	const WCHAR* mp3FileName_ = {};
 

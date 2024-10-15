@@ -1,3 +1,5 @@
+/// 3Dモデルクラス
+
 #pragma once
 #include <string>
 #include <cassert>

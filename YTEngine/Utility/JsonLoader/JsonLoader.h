@@ -1,4 +1,7 @@
+/// レベルエディタJSONを読み込むクラス
+
 #pragma once
+
 #include <string>
 #include <Vector3.h>
 #include <vector>
@@ -58,8 +61,10 @@ public:
 
 private:
 
-	struct LevelData {
-		struct ObjectData {
+	struct LevelData 
+	{
+		struct ObjectData 
+		{
 			//ファイル名
 			std::string fileName;
 			//Transform

@@ -1,3 +1,5 @@
+/// クオータニオン　クオータニオンの計算
+
 #include "Quaternion.h"
 
 #include <cmath>

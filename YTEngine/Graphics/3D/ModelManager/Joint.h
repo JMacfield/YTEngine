@@ -1,3 +1,5 @@
+/// ジョイントクラス
+
 #pragma once
 #include <QuaternionTransform.h>
 #include "Matrix4x4.h"

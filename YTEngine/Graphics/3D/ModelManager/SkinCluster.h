@@ -1,3 +1,5 @@
+/// スキンクラスタークラス
+
 #pragma once
 #include <vector>
 

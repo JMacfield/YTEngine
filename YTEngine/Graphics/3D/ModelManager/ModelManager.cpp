@@ -1,3 +1,5 @@
+/// 3Dモデルを管理するクラス
+
 #include "Modelmanager.h"
 #include <cassert>
 

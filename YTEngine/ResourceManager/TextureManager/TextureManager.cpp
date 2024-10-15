@@ -1,3 +1,5 @@
+/// テクスチャ全般を管理するクラス
+
 #include "TextureManager.h"
 #include "SrvManager.h"
 

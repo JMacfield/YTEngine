@@ -1,3 +1,5 @@
+/// 頂点の影響
+
 #pragma once
 #include <cstdint>
 

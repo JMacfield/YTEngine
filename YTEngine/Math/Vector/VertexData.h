@@ -1,3 +1,5 @@
+/// 頂点データ
+
 #pragma once
 #include "Vector4.h"
 #include "Vector2.h"

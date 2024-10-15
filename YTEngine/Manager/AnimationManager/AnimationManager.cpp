@@ -1,3 +1,5 @@
+/// アニメーションを管理するクラス
+
 #include "AnimationManager.h"
 
 #include <cassert>

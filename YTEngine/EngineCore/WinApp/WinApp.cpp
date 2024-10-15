@@ -1,3 +1,5 @@
+/// Windowsアプリケーションクラス
+
 #include "WinApp.h"
 
 #pragma comment(lib,"winmm.lib")

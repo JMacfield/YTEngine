@@ -1,3 +1,5 @@
+/// レベルエディタJSONを読み込むクラス
+
 #include "JsonLoader.h"
 #include <cassert>
 

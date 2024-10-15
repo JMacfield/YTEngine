@@ -1,3 +1,5 @@
+/// ImGui管理クラス
+
 #include "ImGuiManager.h"
 #include "WinApp.h"
 #include "DirectXCommon.h"

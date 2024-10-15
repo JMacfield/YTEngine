@@ -1,3 +1,5 @@
+/// 色の変換
+
 #include "ConvertColor.h"
 
 Vector4 ColorAdapter(unsigned int color)

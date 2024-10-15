@@ -1,3 +1,5 @@
+/// ログの文字列変換
+
 #include "ConvertLog.h"
 
 void Log(const std::string& message) 

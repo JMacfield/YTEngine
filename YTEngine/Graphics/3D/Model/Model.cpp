@@ -1,3 +1,5 @@
+/// 3Dモデルクラス
+
 #include "Model.h"
 #include <Camera.h>
 #include <TextureManager.h>

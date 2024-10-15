@@ -1,3 +1,5 @@
+/// ImGuiで調整したものを保存するクラス
+
 #include "GlobalVariables.h"
 #include <ImGuiManager.h>
 #include <imgui.h>

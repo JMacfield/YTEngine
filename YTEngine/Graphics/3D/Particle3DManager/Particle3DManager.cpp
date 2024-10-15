@@ -1,3 +1,5 @@
+/// 3Dパーティクル描画を管理するクラス
+
 #include "Particle3DManager.h"
 
 

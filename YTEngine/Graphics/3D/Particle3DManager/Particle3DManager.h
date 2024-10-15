@@ -1,3 +1,5 @@
+/// 3Dパーティクル描画を管理するクラス
+
 #pragma once
 #include <unordered_map>
 #include <string>

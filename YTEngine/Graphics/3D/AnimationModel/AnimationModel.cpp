@@ -1,3 +1,5 @@
+/// 3Dモデル（アニメーション用）
+
 #include "AnimationModel.h"
 #include <PipelineManager.h>
 #include <TextureManager.h>

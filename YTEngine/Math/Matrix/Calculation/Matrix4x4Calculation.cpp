@@ -1,3 +1,5 @@
+/// 行列計算クラス
+
 #include "Matrix4x4Calculation.h"
 
 
