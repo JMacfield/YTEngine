@@ -21,7 +21,7 @@ public:
 	void Initialize() override;
 
 	void Update(GameManager* gameManager) override;
-	
+
 	void Draw() override;
 
 	// アニメーション //
@@ -83,4 +83,14 @@ private:
 	uint32_t titleIconHandle_;
 
 	uint32_t titleBGMHandle_;
+
+	std::unique_ptr<Sprite> white_;
+	Vector2 whiteTransform_;
+	uint32_t whiteHandle_;
+
+	bool isScreenDown_;
+
+	bool isTitleStart_;
+
+	bool isTitleReset_;
 };

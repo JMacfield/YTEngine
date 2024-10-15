@@ -135,6 +135,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Project\Game\GameScene\ClearScene.cpp" />
     <ClCompile Include="Project\Game\GameScene\GameScene1.cpp" />
     <ClCompile Include="Project\Game\GameScene\SelectScene.cpp" />
+    <ClCompile Include="Project\Game\GameScene\TestScene.cpp" />
     <ClCompile Include="Project\Game\GameScene\TitleScene.cpp" />
     <ClCompile Include="Project\Game\System\DrawSystem.cpp" />
     <ClCompile Include="YTEngine\Audio\Audio.cpp" />
@@ -231,6 +232,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Project\Game\GameScene\ClearScene.h" />
     <ClInclude Include="Project\Game\GameScene\GameScene1.h" />
     <ClInclude Include="Project\Game\GameScene\SelectScene.h" />
+    <ClInclude Include="Project\Game\GameScene\TestScene.h" />
     <ClInclude Include="Project\Game\GameScene\TitleScene.h" />
     <ClInclude Include="Project\Game\System\DrawSystem.h" />
     <ClInclude Include="YTEngine\Audio\Audio.h" />

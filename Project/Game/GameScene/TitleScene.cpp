@@ -1,6 +1,8 @@
 #include "GameScene.h"
 #include "TitleScene.h"
 #include "SelectScene.h"
+#include "TestScene.h"
+#include "ClearScene.h"
 
 void TitleScene::Initialize()
 {
@@ -20,9 +22,9 @@ void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
 
-	//XINPUT_STATE joyState{};
+	/*XINPUT_STATE joyState{};
 
-	/*if (Input::GetInstance()->GetJoystickState(joyState))
+	if (Input::GetInstance()->GetJoystickState(joyState))
 	{
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 		{
@@ -30,9 +32,41 @@ void TitleScene::Update(GameManager* gameManager)
 		}
 	}*/
 
+	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE) && isScreenDown_ == false)
+	{
+		isScreenDown_ = true;
+	}
+
+	if (isScreenDown_ == true)
+	{
+		whiteTransform_.y += 5.0f;
+	}
+
+	if (whiteTransform_.y == 0.0f)
+	{
+		isScreenDown_ = false;
+		AnimationInitialize();
+		isTitleStart_ = false;
+		isTitleReset_ = true;
+	}
+
+	if (isTitleReset_ == true)
+	{
+		whiteTransform_.y -= 5.0f;
+	}
+
+	if (whiteTransform_.y == -720.0f && isTitleReset_ == true)
+	{
+		isTitleReset_ = false;
+		isTitleStart_ = true;
+	}
+
 	camera_.Update();
 
-	AnimationUpdate();
+	if (isTitleStart_ == true)
+	{
+		AnimationUpdate();
+	}
 
 	SurfaceUpdate();
 
@@ -82,6 +116,15 @@ void TitleScene::AnimationInitialize()
 	playerTransform_[1].translate_ = { 6.0f,0.0f,0.0f };
 	playerTransform_[2].translate_ = { -6.0f,0.0f,0.0f };
 	playerTransform_[3].translate_ = { 6.0f,0.0f,0.0f };
+
+	repeatCount_ = 0;
+	isRepeat_ = true;
+	repeatTimer_ = 0;
+
+	playerIconTransform_[0].x = -440.0f;
+	playerIconTransform_[1].x = 1520.0f;
+	playerIconTransform_[2].x = -740.0f;
+	playerIconTransform_[3].x = 1820.0f;
 }
 
 void TitleScene::AnimationUpdate()
@@ -242,11 +285,6 @@ void TitleScene::SurfaceInitialize()
 	playerIconHandle_[2] = TextureManager::LoadTexture("Resources/Player/PlayerIcon/3p.png");
 	playerIconHandle_[3] = TextureManager::LoadTexture("Resources/Player/PlayerIcon/4p.png");
 
-	playerIconTransform_[0].x = -440.0f;
-	playerIconTransform_[1].x = 1520.0f;
-	playerIconTransform_[2].x = -740.0f;
-	playerIconTransform_[3].x = 1820.0f;
-
 	playerIcon_[0].reset(Sprite::Create(playerIconHandle_[0], playerIconTransform_[0]));
 	playerIcon_[1].reset(Sprite::Create(playerIconHandle_[1], playerIconTransform_[1]));
 	playerIcon_[2].reset(Sprite::Create(playerIconHandle_[2], playerIconTransform_[2]));
@@ -261,6 +299,15 @@ void TitleScene::SurfaceInitialize()
 	titleBGMHandle_ = Audio::GetInstance()->LoadMP3(L"Resources/Title/title.mp3");
 
 	Audio::GetInstance()->ChangeVolume(titleBGMHandle_, 0.05f);
+
+	whiteHandle_ = TextureManager::LoadTexture("Resources/white.png");
+	whiteTransform_ = { 0.0f,-720.0f };
+
+	white_.reset(Sprite::Create(whiteHandle_, whiteTransform_));
+
+	isScreenDown_ = false;
+	isTitleStart_ = true;
+	isTitleReset_ = false;
 }
 
 void TitleScene::SurfaceUpdate()
@@ -272,6 +319,8 @@ void TitleScene::SurfaceUpdate()
 	playerIcon_[1]->SetPosition({ playerIconTransform_[1].x, 270 });
 	playerIcon_[2]->SetPosition({ playerIconTransform_[2].x, 270 });
 	playerIcon_[3]->SetPosition({ playerIconTransform_[3].x, 270 });
+
+	white_->SetPosition({ whiteTransform_.x,whiteTransform_.y });
 
 	titleIcon_->SetPosition({ titleIconTransform_.x,titleIconTransform_.y });
 
@@ -289,4 +338,6 @@ void TitleScene::SurfaceDraw()
 	playerIcon_[3]->Draw();
 
 	titleIcon_->Draw();
+
+	white_->Draw();
 }

@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "GameScene/GameScene.h"
 #include "GameScene/TitleScene.h"
+#include "GameScene/TestScene.h"
 
 //コンストラクタ
 GameManager::GameManager() {
