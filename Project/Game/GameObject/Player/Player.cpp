@@ -65,17 +65,47 @@ void Player::Update()
 void Player::Draw(Camera& camera)
 {
 	player_->Draw(playerWorldTransform_, camera, playerSkinCluster_);
-	controlSprite_->Draw();
+	//controlSprite_->Draw();
 }
 
 void Player::Control()
 {
-	XINPUT_STATE joyState;
+	//XINPUT_STATE joyState;
 
 	Vector3 move{};
 
+	if (Input::GetInstance()->IsPushKey(DIK_D))
+	{
+		playerWorldTransform_.rotate_.y = 1.4f;
+		move = { 0.4f / SHRT_MAX,0.0f,0.0f };
+		behaviorRequest_ = Behavior::kWalk;
+	}
+	else if (Input::GetInstance()->IsPushKey(DIK_A))
+	{
+		playerWorldTransform_.rotate_.y = -1.4f;
+		move = { -0.4f / SHRT_MAX ,0.0f,0.0f };
+		behaviorRequest_ = Behavior::kWalk;
+	}
+	else
+	{
+		behaviorRequest_ = Behavior::kIdle;
+	}
+
+	move = Multiply(kCharacterSpeed, Normalize(move));
+
+	if (playerWorldTransform_.translate_.x > 5.0f)
+	{
+		playerWorldTransform_.translate_.x = 5.0;
+	}
+	else if (playerWorldTransform_.translate_.x < -5.0f)
+	{
+		playerWorldTransform_.translate_.x = -5.0f;
+	}
+
+	playerWorldTransform_.translate_ = Add(move, playerWorldTransform_.translate_);
+
 	// 移動処理
-	if (Input::GetInstance()->GetJoystickState(joyState))
+	/*if (Input::GetInstance()->GetJoystickState(joyState))
 	{
 		const float kCharacterSpeed = 0.03f;
 
@@ -108,7 +138,7 @@ void Player::Control()
 		}
 
 		playerWorldTransform_.translate_ = Add(move, playerWorldTransform_.translate_);
-	}
+	}*/
 
 	// ジャンプ
 	/*if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
@@ -118,17 +148,17 @@ void Player::Control()
 	}*/
 
 	// パンチ
-	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
-	{
-		behaviorRequest_ = Behavior::kPunch;
-	}
+	//if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+	//{
+	//	behaviorRequest_ = Behavior::kPunch;
+	//}
 
-	// 掴む
-	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
-	{
-		//playerWorldTransform_.rotate_.y = -1.4f;
-		behaviorRequest_ = Behavior::kGrab;
-	}
+	//// 掴む
+	//if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+	//{
+	//	//playerWorldTransform_.rotate_.y = -1.4f;
+	//	behaviorRequest_ = Behavior::kGrab;
+	//}
 }
 
 void Player::AnimationUpdate()

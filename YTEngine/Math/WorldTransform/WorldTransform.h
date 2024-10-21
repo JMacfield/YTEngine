@@ -62,7 +62,7 @@ public:
 private:
 	
 	/// <summary>
-	/// 取得
+	/// 送信
 	/// </summary>
 	void Transfer();
 

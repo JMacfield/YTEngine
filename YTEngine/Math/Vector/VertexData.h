@@ -5,7 +5,9 @@
 #include "Vector2.h"
 #include "Vector3.h"
 
-//頂点データの拡張
+/// <summary>
+/// 頂点データ
+/// </summary>
 struct VertexData {
 	Vector4 position;
 	Vector2 texCoord;

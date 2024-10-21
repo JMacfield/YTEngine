@@ -50,6 +50,8 @@ void TitleScene::Update(GameManager* gameManager)
 		AnimationInitialize();
 		isTitleStart_ = false;
 		isTitleReset_ = true;
+
+		gameManager->ChangeScene(new GameScene);
 	}
 
 	if (isTitleReset_ == true)

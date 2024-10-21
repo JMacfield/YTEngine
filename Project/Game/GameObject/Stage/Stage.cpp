@@ -47,6 +47,14 @@ void Stage::Initialize()
 
 	object1_.reset(Sprite::Create(backObjectHandle_,object1Transform_));
 
+	surfaceBackHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Plane", "Plane.gltf");
+	surfaceBack_.reset(Model::Create(surfaceBackHandle_));
+
+	surfaceBackTransform_.Initialize();
+	surfaceBackTransform_.translate_ = { 0.0f,0.0f,0.8f };
+	surfaceBackTransform_.rotate_ = { -1.44f,0.0f,0.0f };
+	surfaceBackTransform_.scale_ = { 10.260f,6.140f,7.630f };
+	surfaceBack_->SetColor({ 1.0f,1.0f,0.0f,1.0f });
 }
 
 void Stage::Update()
@@ -61,6 +69,7 @@ void Stage::Update()
 	goalObjectTransform_.Update();
 	grabObjectTransform_.Update();
 	backObjectTransform_.Update();
+	surfaceBackTransform_.Update();
 
 	Vector3 move{};
 	XINPUT_STATE joyState{};
@@ -113,9 +122,11 @@ void Stage::Draw(Camera& camera)
 {
 	testStage_->Draw(testStageTransform_, camera);
 	goalObject_->Draw(goalObjectTransform_, camera);
-	grabObejct_->Draw(grabObjectTransform_, camera);
+	//grabObejct_->Draw(grabObjectTransform_, camera);
 	backObject_->Draw(backObjectTransform_, camera);
 	//object1_->Draw();
+
+	surfaceBack_->Draw(surfaceBackTransform_, camera);
 }
 
 void Stage::SetCollision()
