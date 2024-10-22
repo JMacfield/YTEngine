@@ -18,6 +18,13 @@ void TitleScene::Initialize()
 	AnimationInitialize();
 
 	SurfaceInitialize();
+
+	testPlayer_ = std::make_unique<Player>();
+	testPlayer_->Initialize();
+
+	testStage_ = std::make_unique<Stage>();
+	testStage_->Initialize();
+	
 }
 
 void TitleScene::Update(GameManager* gameManager)
@@ -34,7 +41,7 @@ void TitleScene::Update(GameManager* gameManager)
 		}
 	}*/
 
-	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE) && isScreenDown_ == false)
+	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE) && isScreenDown_ == false && isTestStart_ == false)
 	{
 		isScreenDown_ = true;
 	}
@@ -51,7 +58,21 @@ void TitleScene::Update(GameManager* gameManager)
 		isTitleStart_ = false;
 		isTitleReset_ = true;
 
-		gameManager->ChangeScene(new GameScene);
+		TestInitialize();
+
+		if (isTestStart_ == false)
+		{
+			isTestStart_ = true;
+		}
+		else if (isTestStart_ == true)
+		{
+			isTestStart_ = false;
+			camera_.translate_.y = 2.0f;
+			camera_.translate_.z = -10.0f;
+			camera_.rotate_.x = 0.0f;
+		}
+
+		//gameManager->ChangeScene(new GameScene);
 	}
 
 	if (isTitleReset_ == true)
@@ -85,15 +106,43 @@ void TitleScene::Update(GameManager* gameManager)
 	ImGui::DragFloat3("Player", &playerTransform_[0].translate_.x, 0.01f);
 	ImGui::DragFloat2("1 P", &titleIconTransform_.x, 0.01f);
 	ImGui::End();*/
+
+	if (isTestStart_ == true)
+	{
+		testPlayer_->Update();
+
+		testStage_->Update();
+
+
+		if (testPlayer_->GetWorldTransform().translate_.x > 3.3f)
+		{
+			isScreenDown_ = true;
+
+			testPlayer_->SetPosition({ -2.2f,-0.2f,0.0f });
+			testPlayer_->SetRotate({ 0.0f,1.4f,0.0f });
+		}
+	}
 }
 
 void TitleScene::Draw()
 {
 	//titleSprite_->Draw();
 
-	AnimationDraw();
+	if (isTestStart_ == false) 
+	{
+		AnimationDraw();
 
-	SurfaceDraw();
+		SurfaceDraw();
+	}
+
+	if (isTestStart_ == true)
+	{
+		testPlayer_->Draw(camera_);
+
+		testStage_->Draw(camera_);
+	}
+
+	white_->Draw();
 }
 
 void TitleScene::AnimationInitialize()
@@ -342,6 +391,21 @@ void TitleScene::SurfaceDraw()
 	playerIcon_[3]->Draw();
 
 	titleIcon_->Draw();
+}
 
-	white_->Draw();
+void TitleScene::TestInitialize()
+{
+	camera_.translate_.y = 4.0f;
+	camera_.translate_.z = -14.0f;
+	camera_.rotate_.x = 0.1f;
+}
+
+void TitleScene::TestUpdate()
+{
+	
+}
+
+void TitleScene::TestDraw()
+{
+
 }

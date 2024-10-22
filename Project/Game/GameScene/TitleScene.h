@@ -40,6 +40,10 @@ public:
 
 	void SurfaceDraw();
 
+	void TestInitialize();
+	void TestUpdate();
+	void TestDraw();
+
 private:
 
 	// タイトル画像 //
@@ -95,4 +99,10 @@ private:
 	bool isTitleStart_;
 
 	bool isTitleReset_;
+
+	std::unique_ptr<Player> testPlayer_;
+
+	std::unique_ptr<Stage> testStage_;
+
+	bool isTestStart_;
 };
