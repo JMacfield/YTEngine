@@ -2,7 +2,6 @@
 
 #pragma once
 
-//ここでDirectXInputのバージョン設定をする
 #define DIRECTINPUT_VERSION	0x0800
 
 #include "Vector2.h"
@@ -10,8 +9,8 @@
 #include <dinput.h>
 #include <Xinput.h>
 #include <wrl.h>
-using namespace Microsoft::WRL;
 
+using namespace Microsoft::WRL;
 
 #include "WinApp.h"
 
@@ -35,7 +34,6 @@ private:
 	~Input();
 
 public:
-	//シングルインスタンスにするための関数
 	
 	//コピーコンストラクタ禁止
 	Input(const Input& input) = delete;
@@ -66,9 +64,6 @@ public:
 
 	//Trigger状態
 	bool IsTriggerKey(uint8_t keyNumber);
-
-	//Releaseいるかな・・・
-	//必要になったら追加する
 
 #pragma endregion
 

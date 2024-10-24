@@ -48,32 +48,93 @@ public:
 	/// <param name="groupName">グループの名前</param>
 	void CreateGroup(const std::string& groupName);
 
-	// 値のセット
+	/// <summary>
+	/// 値のセット int32_t型
+	/// </summary>
+	/// <param name="groupName">グループネーム</param>
+	/// <param name="key">キー</param>
+	/// <param name="value">値</param>
 	void SetValue(const std::string& groupName, const std::string& key, int32_t value);
 
+	/// <summary>
+	/// 値のセット float型
+	/// </summary>
+	/// <param name="groupName">グループネーム</param>
+	/// <param name="key">キー</param>
+	/// <param name="value">値</param>
 	void SetValue(const std::string& groupName, const std::string& key, float value);
 
+	/// <summary>
+	/// 値のセット Vector3型
+	/// </summary>
+	/// <param name="groupName">グループネーム</param>
+	/// <param name="key">キー</param>
+	/// <param name="value">値</param>
 	void SetValue(const std::string& groupName, const std::string& key, const Vector3 value);
 
-	// 値の追加
+	/// <summary>
+	/// 追加する物 int32_t型
+	/// </summary>
+	/// <param name="groupName">グループネーム</param>
+	/// <param name="key">キー</param>
+	/// <param name="value">値</param>
 	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
 
+	/// <summary>
+	/// 追加する物 float型
+	/// </summary>
+	/// <param name="groupName">グループネーム</param>
+	/// <param name="key">キー</param>
+	/// <param name="value">値</param>
 	void AddItem(const std::string& groupName, const std::string& key, float value);
 
+	/// <summary>
+	/// 追加する物 Vector3型
+	/// </summary>
+	/// <param name="groupName">グループネーム</param>
+	/// <param name="key">キー</param>
+	/// <param name="value">値</param>
 	void AddItem(const std::string& groupName, const std::string& key, const Vector3 value);
 	
-	// 値を取得
+	/// <summary>
+	/// Intの値を取得
+	/// </summary>
+	/// <param name="groupName">グループネーム</param>
+	/// <param name="key">キー</param>
+	/// <returns>Int</returns>
 	int32_t GetIntValue(const std::string groupName, const std::string& key);
 
+	/// <summary>
+	/// Floatの値を取得
+	/// </summary>
+	/// <param name="groupName">グループネーム</param>
+	/// <param name="key">キー</param>
+	/// <returns>Float</returns>
 	float GetFloatValue(const std::string groupName, const std::string& key);
 
+	/// <summary>
+	/// Vector3の値を取得
+	/// </summary>
+	/// <param name="groupName">グループネーム</param>
+	/// <param name="key">キー</param>
+	/// <returns>Vector3</returns>
 	Vector3 GetVector3Value(const std::string groupName, const std::string& key);
 
-	// ファイルのセーブ・ロード
+	/// <summary>
+	/// ファイルのセーブ
+	/// </summary>
+	/// <param name="groupName">ファイルの名前</param>
 	void SaveFile(const std::string& groupName);
 
+	/// <summary>
+	/// ファイルの読み込み
+	/// </summary>
 	void LoadFile();
 
+	/// <summary>
+	/// ファイルの読み込み
+	/// </summary>
+	/// <param name="groupName">ファイルの名前</param>
 	void LoadFile(const std::string& groupName);
 	
 	/// <summary>

@@ -15,18 +15,24 @@
 
 
 
-class Line {
+class Line 
+{
 public:
 	//コンストラクタ
 	Line();
 
-	//初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
 
-	//描画
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="start">開始点</param>
+	/// <param name="end">終了点</param>
+	/// <param name="camera">カメラ</param>
 	void Draw(Vector3 start,Vector3 end, Camera& camera);
-
-
 
 	~Line();
 
@@ -34,9 +40,6 @@ public:
 	void SetColor(Vector4 color) {
 		this->color_ = color;
 	}
-
-
-
 
 private:
 	struct LineMaterial {
