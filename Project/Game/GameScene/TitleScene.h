@@ -105,4 +105,8 @@ private:
 	std::unique_ptr<Stage> testStage_;
 
 	bool isTestStart_;
+
+	std::unique_ptr<Model> titleSign_;
+	uint32_t titleSignHandle_;
+	WorldTransform titleSignTransform_;
 };

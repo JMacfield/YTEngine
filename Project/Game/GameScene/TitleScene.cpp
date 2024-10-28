@@ -178,10 +178,22 @@ void TitleScene::AnimationInitialize()
 	playerIconTransform_[1].x = 1520.0f;
 	playerIconTransform_[2].x = -740.0f;
 	playerIconTransform_[3].x = 1820.0f;
+
+	titleSignHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/TitleSign", "TitleSign.gltf");
+
+	titleSign_.reset(Model::Create(titleSignHandle_));
+
+	titleSignTransform_.Initialize();
+	titleSignTransform_.translate_ = { 0.0f,0.0f,0.0f };
 }
 
 void TitleScene::AnimationUpdate()
 {
+	ImGui::Begin("Debug");
+	ImGui::DragFloat3("SignTransform", &titleSignTransform_.translate_.x, 0.01f);
+	ImGui::DragFloat3("Camera", &camera_.translate_.x, 0.01f);
+	ImGui::End();
+
 	playerAnimationTime_[0] += 1.0f / 60.0f;
 
 	for (int i = 0; i < 4; i++)
@@ -311,6 +323,8 @@ void TitleScene::AnimationDraw()
 	{
 		player_[i]->Draw(playerTransform_[i], camera_, playerSkinCluster_[i]);
 	}
+
+	titleSign_->Draw(titleSignTransform_, camera_);
 }
 
 void TitleScene::SurfaceInitialize()
