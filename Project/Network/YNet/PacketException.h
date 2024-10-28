@@ -9,6 +9,9 @@ namespace YNet
 	
 	public:
 		
+		/// <summary>
+		/// パケットのエラーを検出する
+		/// </summary>
 		PacketException(std::string exception) : exception(exception) {}
 		
 		const char* what() 

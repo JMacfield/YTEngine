@@ -2,6 +2,9 @@
 
 namespace YNet 
 {
+	/// <summary>
+	/// IPバージョンの選択
+	/// </summary>
 	enum SocketOption 
 	{
 		TCP_NoDelay, // trueの時アルゴリズムを無効化

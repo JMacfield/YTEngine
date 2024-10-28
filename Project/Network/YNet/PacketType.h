@@ -4,6 +4,9 @@
 
 namespace YNet 
 {
+	/// <summary>
+	/// パケットタイプ
+	/// </summary>
 	enum PacketType : uint16_t 
 	{
 		PT_Invalid,
