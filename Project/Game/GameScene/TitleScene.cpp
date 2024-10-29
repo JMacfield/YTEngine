@@ -24,12 +24,17 @@ void TitleScene::Initialize()
 
 	testStage_ = std::make_unique<Stage>();
 	testStage_->Initialize();
-	
 }
 
 void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
+
+	/*ImGui::Begin("Debug");
+	ImGui::DragFloat2("BTS", &blackTransform_.x, 1.0f);
+	ImGui::DragFloat2("Scale", &blackSize_.x, 1.0f);
+	ImGui::End();*/
+	black_->SetPosition(blackTransform_);
 
 	/*XINPUT_STATE joyState{};
 
@@ -82,8 +87,17 @@ void TitleScene::Update(GameManager* gameManager)
 
 	if (whiteTransform_.y == -720.0f && isTitleReset_ == true)
 	{
-		isTitleReset_ = false;
-		isTitleStart_ = true;
+		
+	/*	isTitleReset_ = false;
+		isTitleStart_ = true;*/
+	}
+
+	if (isZoom_ == true)
+	{
+		black_->SetScale(blackSize_);
+		blackSize_.x += 2.0f;
+		blackSize_.y += 1.5f;
+	
 	}
 
 	camera_.Update();
@@ -116,11 +130,41 @@ void TitleScene::Update(GameManager* gameManager)
 
 		if (testPlayer_->GetWorldTransform().translate_.x > 3.3f)
 		{
-			isScreenDown_ = true;
+			//isScreenDown_ = true;
+			isZoom_ = true;
+			isGameOver_ = true;
 
 			testPlayer_->SetPosition({ -2.2f,-0.2f,0.0f });
 			testPlayer_->SetRotate({ 0.0f,1.4f,0.0f });
 		}
+	}
+
+	if (blackSize_.x > 240.0f)
+	{
+		isZoom_ = false;
+		isGameOverDraw_ = true;
+	}
+
+	if (isGameOverDraw_ == true)
+	{
+		color_ += 0.001f;
+		gameOverSprite_->SetColor({ 1.0f,1.0f,1.0f,color_ });
+	}
+
+	if (isGameOverDraw_ == true && Input::GetInstance()->IsTriggerKey(DIK_SPACE))
+	{
+		AnimationInitialize();
+		//TestInitialize();
+		isTestStart_ = false;
+		//isTitleReset_ = true;
+		isScreenDown_ = false;
+		isTitleStart_ = true;
+
+		camera_.translate_.y = 2.0f;
+		camera_.translate_.z = -10.0f;
+		camera_.rotate_.x = 0.0f;
+
+		Initialize();
 	}
 }
 
@@ -143,6 +187,18 @@ void TitleScene::Draw()
 	}
 
 	white_->Draw();
+
+	titleSign_->Draw(titleSignTransform_, camera_);
+
+	if (isGameOver_ == true)
+	{
+		black_->Draw();
+	}
+
+	if (isGameOverDraw_ == true)
+	{
+		gameOverSprite_->Draw();
+	}
 }
 
 void TitleScene::AnimationInitialize()
@@ -185,14 +241,34 @@ void TitleScene::AnimationInitialize()
 
 	titleSignTransform_.Initialize();
 	titleSignTransform_.translate_ = { 0.0f,0.0f,0.0f };
+	titleSignTransform_.scale_ = { 10.0f,10.0f,10.0f };
+
+	blackHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/black.png");
+	blackTransform_ = { 1055.0f,628.0f };
+	blackSize_ = { 1.0f,1.0f };
+	black_.reset(Sprite::Create(blackHandle_, blackTransform_));
+	black_->SetAnchorPoint({ 0.5f,0.5f });
+
+	isGameOver_ = false;
+
+	isZoom_ = false;
+	isGameOverDraw_ = false;
+
+	gameOverHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/gameover.png");
+	gameOverTransform_ = { 0.0f,0.0f };
+	gameOverSprite_.reset(Sprite::Create(gameOverHandle_, gameOverTransform_));
+
+	color_ = 0.0f;
+
+	gameOverSprite_->SetColor({ 1.0f,1.0f,1.0f,color_ });
 }
 
 void TitleScene::AnimationUpdate()
 {
-	ImGui::Begin("Debug");
+	/*ImGui::Begin("Debug");
 	ImGui::DragFloat3("SignTransform", &titleSignTransform_.translate_.x, 0.01f);
 	ImGui::DragFloat3("Camera", &camera_.translate_.x, 0.01f);
-	ImGui::End();
+	ImGui::End();*/
 
 	playerAnimationTime_[0] += 1.0f / 60.0f;
 
@@ -324,7 +400,7 @@ void TitleScene::AnimationDraw()
 		player_[i]->Draw(playerTransform_[i], camera_, playerSkinCluster_[i]);
 	}
 
-	titleSign_->Draw(titleSignTransform_, camera_);
+	//titleSign_->Draw(titleSignTransform_, camera_);
 }
 
 void TitleScene::SurfaceInitialize()

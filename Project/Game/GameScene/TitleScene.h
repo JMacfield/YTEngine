@@ -109,4 +109,20 @@ private:
 	std::unique_ptr<Model> titleSign_;
 	uint32_t titleSignHandle_;
 	WorldTransform titleSignTransform_;
+
+	std::unique_ptr<Sprite> black_;
+	Vector2 blackTransform_;
+	uint32_t blackHandle_;
+
+	Vector2 blackSize_;
+
+	bool isGameOver_;
+	bool isZoom_;
+	bool isGameOverDraw_;
+
+	std::unique_ptr<Sprite> gameOverSprite_;
+	uint32_t gameOverHandle_;
+	Vector2 gameOverTransform_;
+
+	float color_;
 };
