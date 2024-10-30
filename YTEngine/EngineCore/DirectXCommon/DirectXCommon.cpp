@@ -19,7 +19,7 @@ ComPtr<ID3D12DescriptorHeap> DirectXCommon::GenarateDescriptorHeap(D3D12_DESCRIP
 	descriptorHeapDesc.NumDescriptors = numDescriptors;
 	descriptorHeapDesc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	
-	HRESULT hr = DirectXCommon::GetInstance()->m_device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
+	[[maybe_unused]] HRESULT hr = DirectXCommon::GetInstance()->m_device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
 	
 	assert(SUCCEEDED(hr));
 	
@@ -96,7 +96,7 @@ ComPtr<ID3D12Resource> DirectXCommon::CreateDepthStencilTextureResource(const in
 
 	//Resourceの作成
 	ComPtr<ID3D12Resource> resource = nullptr;
-	HRESULT hr = DirectXCommon::GetInstance()->m_device_->CreateCommittedResource(
+	[[maybe_unused]]HRESULT hr = DirectXCommon::GetInstance()->m_device_->CreateCommittedResource(
 		&heapProperties,					//Heapの設定 
 		D3D12_HEAP_FLAG_NONE,				//Heapの特殊な設定。特になし。
 		&resourceDesc,						//Resourceの設定
