@@ -30,6 +30,11 @@ void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
 
+	if (Input::GetInstance()->IsTriggerKey(DIK_1))
+	{
+		gameManager->ChangeScene(new GameScene);
+	}
+
 	/*ImGui::Begin("Debug");
 	ImGui::DragFloat2("BTS", &blackTransform_.x, 1.0f);
 	ImGui::DragFloat2("Scale", &blackSize_.x, 1.0f);

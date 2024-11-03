@@ -278,6 +278,7 @@
       <Filter>YTEngine</Filter>
     </ClCompile>
     <ClCompile Include="Project\Game\GameScene\TestScene.cpp" />
+    <ClCompile Include="Project\Game\GameObject\Player\PlayerTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Particle3D\Particle3d.PS.hlsl">
@@ -544,6 +545,7 @@
       <Filter>YTEngine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Project\Game\GameScene\TestScene.h" />
+    <ClInclude Include="Project\Game\GameObject\Player\PlayerTest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Particle3D\Particle3D.hlsli">
