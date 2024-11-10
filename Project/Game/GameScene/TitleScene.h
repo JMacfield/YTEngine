@@ -11,6 +11,8 @@
 
 #include "TextureManager.h"
 
+#include "GameObject/Player/Player2.h"
+
 #include <memory>
 
 class GameManager;
@@ -125,4 +127,8 @@ private:
 	Vector2 gameOverTransform_;
 
 	float color_;
+
+	std::unique_ptr<Player2> testPlayer2_;
+
+	bool isPlayerInvisible_;
 };

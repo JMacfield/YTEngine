@@ -22,13 +22,23 @@ void TitleScene::Initialize()
 	testPlayer_ = std::make_unique<Player>();
 	testPlayer_->Initialize();
 
+	testPlayer2_ = std::make_unique<Player2>();
+	testPlayer2_->Initialize();
+
 	testStage_ = std::make_unique<Stage>();
 	testStage_->Initialize();
+
+	isPlayerInvisible_ = false;
 }
 
 void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
+
+	if (Input::GetInstance()->IsTriggerKey(DIK_8))
+	{
+		isPlayerInvisible_ = true;
+	}
 
 	if (Input::GetInstance()->IsTriggerKey(DIK_1))
 	{
@@ -129,6 +139,7 @@ void TitleScene::Update(GameManager* gameManager)
 	if (isTestStart_ == true)
 	{
 		testPlayer_->Update();
+		testPlayer2_->Update();
 
 		testStage_->Update();
 
@@ -187,6 +198,11 @@ void TitleScene::Draw()
 	if (isTestStart_ == true)
 	{
 		testPlayer_->Draw(camera_);
+
+		if (isPlayerInvisible_ == true)
+		{
+			testPlayer2_->Draw(camera_);
+		}
 
 		testStage_->Draw(camera_);
 	}

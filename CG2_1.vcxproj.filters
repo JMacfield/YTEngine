@@ -279,6 +279,7 @@
     </ClCompile>
     <ClCompile Include="Project\Game\GameScene\TestScene.cpp" />
     <ClCompile Include="Project\Game\GameObject\Player\PlayerTest.cpp" />
+    <ClCompile Include="Project\Game\GameObject\Player\Player2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Particle3D\Particle3d.PS.hlsl">
@@ -546,6 +547,7 @@
     </ClInclude>
     <ClInclude Include="Project\Game\GameScene\TestScene.h" />
     <ClInclude Include="Project\Game\GameObject\Player\PlayerTest.h" />
+    <ClInclude Include="Project\Game\GameObject\Player\Player2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Particle3D\Particle3D.hlsli">

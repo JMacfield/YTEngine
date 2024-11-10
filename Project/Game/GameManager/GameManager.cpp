@@ -12,7 +12,7 @@ GameManager::GameManager() {
 	
 void GameManager::Initialize() {
 	
-	currentGamaScene_ = new TestScene();
+	currentGamaScene_ = new TitleScene();
 	currentGamaScene_->Initialize();
 
 }

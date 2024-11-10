@@ -36,5 +36,5 @@ void TestScene::Update(GameManager* gameManager)
 
 void TestScene::Draw()
 {
-	white_->Draw();
+	//white_->Draw();
 }
