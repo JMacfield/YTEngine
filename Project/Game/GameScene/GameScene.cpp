@@ -22,6 +22,15 @@ void GameScene::Initialize()
 
 	stage_ = std::make_unique<Stage>();
 	stage_->Initialize();
+
+	/*surfaceBackHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Plane", "Plane.gltf");
+	surfaceBack_.reset(Model::Create(surfaceBackHandle_));
+
+	surfaceBackTransform_.Initialize();
+	surfaceBackTransform_.translate_ = { 0.0f,0.0f,0.8f };
+	surfaceBackTransform_.rotate_ = { -1.44f,0.0f,0.0f };
+	surfaceBackTransform_.scale_ = { 10.260f,6.140f,7.630f };
+	surfaceBack_->SetColor({ 1.0f,1.0f,0.0f,1.0f });*/
 }
 
 void GameScene::Update(GameManager* gameManager) 
@@ -33,6 +42,8 @@ void GameScene::Update(GameManager* gameManager)
 	player_->Update();
 
 	stage_->Update();
+
+	//surfaceBackTransform_.Update();
 
 	if (player_->GetWorldTransform().translate_.x > 3.3f) 
 	{
@@ -52,4 +63,6 @@ void GameScene::Draw()
 	player_->Draw(camera_);
 
 	stage_->Draw(camera_);
+
+	//surfaceBack_->Draw(surfaceBackTransform_, camera_);
 }

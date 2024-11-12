@@ -55,4 +55,8 @@ private:
 	std::unique_ptr<Sprite> object1_;
 	uint32_t object1Handle_;
 	Vector2 object1Transform_;
+
+	WorldTransform surfaceBackTransform_;
+	std::unique_ptr<Model> surfaceBack_;
+	uint32_t surfaceBackHandle_;
 };

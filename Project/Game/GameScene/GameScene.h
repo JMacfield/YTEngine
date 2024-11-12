@@ -38,4 +38,8 @@ private:
 	std::unique_ptr<Player> player_;
 
 	std::unique_ptr<Stage> stage_;
+
+	WorldTransform surfaceBackTransform_;
+	std::unique_ptr<Model> surfaceBack_;
+	uint32_t surfaceBackHandle_;
 };

@@ -47,28 +47,37 @@ void Stage::Initialize()
 
 	object1_.reset(Sprite::Create(backObjectHandle_,object1Transform_));
 
+	surfaceBackHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Plane", "plane.obj");
+	surfaceBack_.reset(Model::Create(surfaceBackHandle_));
+
+	surfaceBackTransform_.Initialize();
+	surfaceBackTransform_.translate_ = { 0.0f,0.0f,0.8f };
+	surfaceBackTransform_.rotate_ = { -3.00f,0.0f,0.0f };
+	surfaceBackTransform_.scale_ = { 10.260f,6.140f,7.630f };
+	surfaceBack_->SetColor({ 1.0f,1.0f,0.0f,1.0f });
 }
 
 void Stage::Update()
 {
 	/*ImGui::Begin("Stage");
-	ImGui::DragFloat3("Translate", &testStageTransform_.translate_.x, 0.01f);
-	ImGui::DragFloat3("Rotate", &testStageTransform_.translate_.x, 0.01f);
-	ImGui::DragFloat3("GoalTranslate", &grabObjectTransform_.translate_.x, 0.01f);
+	ImGui::DragFloat3("Translate", &surfaceBackTransform_.scale_.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &surfaceBackTransform_.rotate_.x, 0.01f);
+	ImGui::DragFloat3("GoalTranslate", &surfaceBackTransform_.translate_.x, 0.01f);
 	ImGui::End();*/
 
 	testStageTransform_.Update();
 	goalObjectTransform_.Update();
 	grabObjectTransform_.Update();
 	backObjectTransform_.Update();
+	surfaceBackTransform_.Update();
 
 	Vector3 move{};
 	XINPUT_STATE joyState{};
 
 
-	if (Input::GetInstance()->GetJoystickState(joyState))
-	{
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+	//if (Input::GetInstance()->GetJoystickState(joyState))
+	//{
+		if (Input::GetInstance()->IsTriggerKey(DIK_SPACE))
 		{
 			const float kCharacterSpeed = 0.03f;
 
@@ -106,16 +115,17 @@ void Stage::Update()
 		{
 			grabObjectTransform_.rotate_.z += (float)joyState.Gamepad.sThumbRX / SHRT_MAX;
 		}
-	}
+	//}
 }
 
 void Stage::Draw(Camera& camera)
 {
 	testStage_->Draw(testStageTransform_, camera);
 	goalObject_->Draw(goalObjectTransform_, camera);
-	grabObejct_->Draw(grabObjectTransform_, camera);
-	backObject_->Draw(backObjectTransform_, camera);
-	object1_->Draw();
+	//grabObejct_->Draw(grabObjectTransform_, camera);
+	//backObject_->Draw(backObjectTransform_, camera);
+	//object1_->Draw();
+	surfaceBack_->Draw(surfaceBackTransform_, camera);
 }
 
 void Stage::SetCollision()

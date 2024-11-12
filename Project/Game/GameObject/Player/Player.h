@@ -107,4 +107,6 @@ private:
 	uint32_t controlSpriteHandle_;
 
 	Vector2 controlSpriteTransform_;
+
+	const float kCharacterSpeed = 0.03f;
 };

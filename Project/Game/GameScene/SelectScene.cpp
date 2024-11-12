@@ -21,6 +21,11 @@ void SelectScene::Update(GameManager* gameManager)
 {
 	XINPUT_STATE joyState{};
 	
+	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE))
+	{
+		gameManager->ChangeScene(new GameScene);
+	}
+
 	// ステージ選択操作
 	if (Input::GetInstance()->GetJoystickState(joyState))
 	{

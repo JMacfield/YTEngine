@@ -12,6 +12,11 @@ void TitleScene::Update(GameManager* gameManager)
 {
 	XINPUT_STATE joyState{};
 
+	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE))
+	{
+		gameManager->ChangeScene(new SelectScene);
+	}
+
 	if (Input::GetInstance()->GetJoystickState(joyState))
 	{
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)

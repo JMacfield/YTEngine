@@ -62,4 +62,8 @@ private:
 	Vector2 titleSpriteTransform_;
 
 	bool isDraw_ = true;
+
+	WorldTransform surfaceBackTransform_;
+	std::unique_ptr<Model> surfaceBack_;
+	uint32_t surfaceBackHandle_;
 };

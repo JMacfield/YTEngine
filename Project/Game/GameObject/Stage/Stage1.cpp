@@ -48,6 +48,15 @@ void Stage1::Initialize()
 
 	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/StageSelect1.png");
 	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
+
+	surfaceBackHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Plane", "plane.obj");
+	surfaceBack_.reset(Model::Create(surfaceBackHandle_));
+
+	surfaceBackTransform_.Initialize();
+	surfaceBackTransform_.translate_ = { 0.0f,0.0f,0.8f };
+	surfaceBackTransform_.rotate_ = { -3.0f,0.0f,0.0f };
+	surfaceBackTransform_.scale_ = { 10.260f,6.140f,7.630f };
+	surfaceBack_->SetColor({ 1.0f,1.0f,0.0f,1.0f });
 }
 
 void Stage1::Update()
@@ -62,14 +71,15 @@ void Stage1::Update()
 	goalObjectTransform_.Update();
 	grabObjectTransform_.Update();
 	backObjectTransform_.Update();
+	surfaceBackTransform_.Update();
 
 	Vector3 move{};
 	XINPUT_STATE joyState{};
 
 
-	if (Input::GetInstance()->GetJoystickState(joyState))
-	{
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+	//if (Input::GetInstance()->GetJoystickState(joyState))
+	//{
+		if (Input::GetInstance()->IsPushKey(DIK_SPACE))
 		{
 			const float kCharacterSpeed = 0.03f;
 
@@ -88,11 +98,21 @@ void Stage1::Update()
 			grabObjectTransform_.translate_ = Add(move, grabObjectTransform_.translate_);
 		}
 
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		if (Input::GetInstance()->IsPushKey(DIK_SPACE) && Input::GetInstance()->IsPushKey(DIK_A))
+		{
+			grabObjectTransform_.translate_.x -= 0.03f;
+		}
+
+		if (Input::GetInstance()->IsPushKey(DIK_SPACE) && Input::GetInstance()->IsPushKey(DIK_D))
+		{
+			grabObjectTransform_.translate_.x += 0.03f;
+		}
+
+		if (Input::GetInstance()->IsTriggerKey(DIK_SPACE))
 		{
 			isDraw_ = false;
 		}
-	}
+	//}
 }
 
 void Stage1::Draw(Camera& camera)
@@ -101,7 +121,8 @@ void Stage1::Draw(Camera& camera)
 	goalObject_->Draw(goalObjectTransform_, camera);
 	grabObejct_->Draw(grabObjectTransform_, camera);
 	backObject_->Draw(backObjectTransform_, camera);
-	object1_->Draw();
+	//object1_->Draw();
+	surfaceBack_->Draw(surfaceBackTransform_, camera);
 
 	if (isDraw_ == true)
 	{
