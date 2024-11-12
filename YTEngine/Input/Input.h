@@ -35,8 +35,7 @@ private:
 	~Input();
 
 public:
-	//シングルインスタンスにするための関数
-	
+
 	//コピーコンストラクタ禁止
 	Input(const Input& input) = delete;
 
