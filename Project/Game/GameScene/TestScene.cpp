@@ -16,10 +16,7 @@ void TestScene::Initialize()
 	camera_.translate_.z = -14.0f;
 	camera_.rotate_.x = 0.1f;
 
-	whiteHandle_ = TextureManager::LoadTexture("Resources/white.png");
-	whiteTransform_ = { 0.0f,0.0f };
-
-	white_.reset(Sprite::Create(whiteHandle_, whiteTransform_));
+	
 }
 
 void TestScene::Update(GameManager* gameManager)

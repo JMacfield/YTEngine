@@ -11,7 +11,7 @@
 #include "TextureManager.h"
 #include "Camera.h"
 
-#include "GameObject/Player/Player.h"
+#include "GameObject/Player/PlayerTest.h"
 /// テストシーン
 
 #include "GameObject/Stage/Stage.h"
@@ -37,7 +37,6 @@ private:
 
 	Camera camera_ = {};
 
-	std::unique_ptr<Sprite> white_;
-	Vector2 whiteTransform_;
-	uint32_t whiteHandle_;
+	std::unique_ptr<NewPlayer> player_;
+
 };
