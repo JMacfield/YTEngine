@@ -29,6 +29,11 @@ void TitleScene::Initialize()
 void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
+ 
+	ImGui::Begin("Frame");
+	float frame = ImGui::GetIO().Framerate;
+	ImGui::DragFloat("Frame", &frame);
+	ImGui::End();
 
 	/*ImGui::Begin("Debug");
 	ImGui::DragFloat2("BTS", &blackTransform_.x, 1.0f);
@@ -147,7 +152,7 @@ void TitleScene::Update(GameManager* gameManager)
 
 	if (isGameOverDraw_ == true)
 	{
-		color_ += 0.001f;
+		color_ += 0.01f;
 		gameOverSprite_->SetColor({ 1.0f,1.0f,1.0f,color_ });
 	}
 
