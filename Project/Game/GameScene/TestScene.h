@@ -22,6 +22,8 @@
 
 #include "Input.h"
 
+using namespace YTEngine;
+
 class GameManager;
 
 class TestScene : public IGameScene {

@@ -5,6 +5,8 @@
 #include "DirectXCommon.h"
 #include "SrvManager.h"
 
+using namespace YTEngine;
+
 ImGuiManager::ImGuiManager() 
 {
 	

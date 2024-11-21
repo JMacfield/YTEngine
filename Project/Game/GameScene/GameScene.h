@@ -22,6 +22,8 @@
 
 #include "JsonLoader.h"
 
+using namespace YTEngine;
+
 class GameManager;
 
 class GameScene : public IGameScene {

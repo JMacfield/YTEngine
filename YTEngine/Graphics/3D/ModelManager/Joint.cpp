@@ -3,6 +3,8 @@
 #include "Joint.h"
 #include <Matrix4x4Calculation.h>
 
+using namespace YTEngine;
+
 int32_t CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints){
     Joint joint = {};
     joint.name = node.name;
@@ -16,7 +18,7 @@ int32_t CreateJoint(const Node& node, const std::optional<int32_t>& parent, std:
     joints.push_back(joint);
     for (const Node& child : node.children) {
         //子Jointを作成し、そのIndexを登録
-        int32_t childIndex = CreateJoint(child, joint.index, joints);
+        int32_t childIndex = YTEngine::CreateJoint(child, joint.index, joints);
         joints[joint.index].cheldren.push_back(childIndex);
     }
 

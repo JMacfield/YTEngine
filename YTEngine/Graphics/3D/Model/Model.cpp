@@ -8,6 +8,7 @@
 #include <numbers>
 #include <SrvManager.h>
 
+using namespace YTEngine;
 
 Model* Model::Create(uint32_t modelHandle) {
 	//新たなModel型のインスタンスのメモリを確保

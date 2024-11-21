@@ -6,66 +6,69 @@
 #include "Vector3.h"
 #include "DirectXCommon.h"
 
-struct CameraMatrixData 
+namespace YTEngine
 {
-	Matrix4x4 viewMatrix_;
-	
-	Matrix4x4 projectionMatrix_;
-	Matrix4x4 orthographicMatrix_;
-};
+	struct CameraMatrixData
+	{
+		Matrix4x4 viewMatrix_;
 
-struct CameraForGPU 
-{
-	Vector3 worldPosition;
-};
+		Matrix4x4 projectionMatrix_;
+		Matrix4x4 orthographicMatrix_;
+	};
+
+	struct CameraForGPU
+	{
+		Vector3 worldPosition;
+	};
 
 
-struct Camera 
-{
-public:
+	struct Camera
+	{
+	public:
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Initialize();
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		void Initialize();
 
-	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update();
+		/// <summary>
+		/// 更新
+		/// </summary>
+		void Update();
 
-	/// <summary>
-	/// 送信
-	/// </summary>
-	void Transfer();
+		/// <summary>
+		/// 送信
+		/// </summary>
+		void Transfer();
 
-public:
+	public:
 
-	ComPtr<ID3D12Resource> bufferResource_;
+		ComPtr<ID3D12Resource> bufferResource_;
 
-	float fov_ = 0.45f;
-	
-	float aspectRatio_ = 0.0f;
+		float fov_ = 0.45f;
 
-	float nearClip_ = 0.1f;
-	float farClip_ = 1000.0f;
+		float aspectRatio_ = 0.0f;
 
-	Vector3 rotate_ = { 0.0f,0.0f,0.0f };
-	
-	Vector3 translate_ = { 0.0f,0.0f,0.0f };
+		float nearClip_ = 0.1f;
+		float farClip_ = 1000.0f;
 
-	//アフィン行列
-	Matrix4x4 worldMatrix_ = {};
-	//ビュー行列
-	Matrix4x4 viewMatrix_ = {};
-	//射影行列
-	Matrix4x4 projectionMatrix_ = {};
-	//正射影行列
-	Matrix4x4 orthographicMatrix_{};
+		Vector3 rotate_ = { 0.0f,0.0f,0.0f };
 
-	CameraMatrixData* cameraMatrixData_ = nullptr;
+		Vector3 translate_ = { 0.0f,0.0f,0.0f };
 
-private:
+		//アフィン行列
+		Matrix4x4 worldMatrix_ = {};
+		//ビュー行列
+		Matrix4x4 viewMatrix_ = {};
+		//射影行列
+		Matrix4x4 projectionMatrix_ = {};
+		//正射影行列
+		Matrix4x4 orthographicMatrix_{};
 
-	Vector3 scale_ = { 1.0f,1.0f,1.0f };
-};
+		CameraMatrixData* cameraMatrixData_ = nullptr;
+
+	private:
+
+		Vector3 scale_ = { 1.0f,1.0f,1.0f };
+	};
+}

@@ -2,7 +2,7 @@
 
 #include "Matrix4x4Calculation.h"
 
-
+using namespace YTEngine;
 
 //コタンジェント
 float Cot(float theta) {
@@ -190,13 +190,13 @@ Matrix4x4 MakeRotateZMatrix(float radian) {
 Matrix4x4 MakeRotateXYZMatrix(float radianX, float radianY, float radianZ) {
 	Matrix4x4 result;
 
-	Matrix4x4 rotateMatrixX = MakeRotateXMatrix(radianX);
-	Matrix4x4 rotateMatrixY = MakeRotateYMatrix(radianY);
-	Matrix4x4 rotateMatrixZ = MakeRotateZMatrix(radianZ);
+	Matrix4x4 rotateMatrixX = YTEngine::MakeRotateXMatrix(radianX);
+	Matrix4x4 rotateMatrixY = YTEngine::MakeRotateYMatrix(radianY);
+	Matrix4x4 rotateMatrixZ = YTEngine::MakeRotateZMatrix(radianZ);
 
 
 
-	result = Multiply(rotateMatrixX, Multiply(rotateMatrixY, rotateMatrixZ));
+	result = YTEngine::Multiply(rotateMatrixX, YTEngine::Multiply(rotateMatrixY, rotateMatrixZ));
 
 	return result;
 
@@ -243,17 +243,17 @@ Matrix4x4 MakeAffineMatrix(const Vector3 scale, const Vector3 rotate, const Vect
 
 	//S
 	Matrix4x4 scaleMatrix;
-	scaleMatrix = MakeScaleMatrix(scale);
+	scaleMatrix = YTEngine::MakeScaleMatrix(scale);
 
 	//R
 	Matrix4x4 rotateMatrix;
-	rotateMatrix = MakeRotateXYZMatrix(rotate.x, rotate.y, rotate.z);
+	rotateMatrix = YTEngine::MakeRotateXYZMatrix(rotate.x, rotate.y, rotate.z);
 
 	Matrix4x4 translateMatrix;
-	translateMatrix = MakeTranslateMatrix(translate);
+	translateMatrix = YTEngine::MakeTranslateMatrix(translate);
 
 
-	result = Multiply(scaleMatrix, Multiply(rotateMatrix, translateMatrix));
+	result = YTEngine::Multiply(scaleMatrix, YTEngine::Multiply(rotateMatrix, translateMatrix));
 
 	return result;
 }
@@ -446,13 +446,13 @@ Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip
 	Matrix4x4 result = {};
 	float theta = fovY / 2.0f;
 
-	result.m[0][0] = (1.0f / aspectRatio) * Cot(theta);
+	result.m[0][0] = (1.0f / aspectRatio) * YTEngine::Cot(theta);
 	result.m[0][1] = 0;
 	result.m[0][2] = 0;
 	result.m[0][3] = 0;
 
 	result.m[1][0] = 0;
-	result.m[1][1] = Cot(theta);
+	result.m[1][1] = YTEngine::Cot(theta);
 	result.m[1][2] = 0;
 	result.m[1][3] = 0;
 

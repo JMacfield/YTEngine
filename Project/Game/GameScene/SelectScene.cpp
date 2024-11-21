@@ -3,6 +3,8 @@
 #include "GameScene.h"
 #include "SelectScene.h"
 
+using namespace YTEngine;
+
 void SelectScene::Initialize()
 {
 	// ステージの画像

@@ -2,6 +2,8 @@
 
 #include "ClearScene.h"
 
+using namespace YTEngine;
+
 void ClearScene::Initialize()
 {
 

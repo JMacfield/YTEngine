@@ -2,12 +2,15 @@
 
 #pragma once
 
-/// <summary>
-/// 光源の種類の配列
-/// </summary>
-enum LightingType {
-	None,
-	Directional,
-	Point,
-	Spot,
-};
+namespace YTEngine
+{
+	/// <summary>
+	/// 光源の種類の配列
+	/// </summary>
+	enum LightingType {
+		None,
+		Directional,
+		Point,
+		Spot,
+	};
+}

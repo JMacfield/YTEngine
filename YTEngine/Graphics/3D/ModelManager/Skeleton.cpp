@@ -3,6 +3,8 @@
 #include "Skeleton.h"
 #include <Matrix4x4Calculation.h>
 
+using namespace YTEngine;
+
 void Skeleton::Create(const Node& rootNode){
     root_ = CreateJoint(rootNode, {}, joints_);
 

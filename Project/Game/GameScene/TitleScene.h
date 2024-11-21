@@ -15,6 +15,8 @@
 
 #include <memory>
 
+using namespace YTEngine;
+
 class GameManager;
 
 class TitleScene : public IGameScene

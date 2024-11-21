@@ -8,6 +8,8 @@
 #include <Matrix4x4Calculation.h>
 #include "DirectXCommon.h"
 
+using namespace YTEngine;
+
 void Camera::Initialize() 
 {
 	//Resource作成

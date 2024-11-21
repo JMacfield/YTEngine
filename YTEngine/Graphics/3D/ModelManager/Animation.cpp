@@ -8,6 +8,8 @@
 #include <assimp/postprocess.h>
 #include <VectorCalculation.h>
 
+using namespace YTEngine;
+
 Animation LoadAnimationFile(const std::string& directoryPath, const std::string& fileName){
     Animation animation = {};
     Assimp::Importer importer;
@@ -122,9 +124,9 @@ void ApplyAnimation(Skeleton& skeleton, const Animation& animation, float animat
         if (auto it = animation.nodeAnimations.find(joint.name); it != animation.nodeAnimations.end()) {
             //NodeAnimation& rootNodeAnimation=std::fmodf(animation.nodeAnimations[])
             const NodeAnimation& rootNodeAnimation = (*it).second;
-            joint.transform.translate = CalculationValue(rootNodeAnimation.translate.keyFrames, animationTime);
-            joint.transform.rotate = CalculationValue(rootNodeAnimation.rotate.keyFrames, animationTime);
-            joint.transform.scale = CalculationValue(rootNodeAnimation.scale.keyFrames, animationTime);
+            joint.transform.translate = YTEngine::CalculationValue(rootNodeAnimation.translate.keyFrames, animationTime);
+            joint.transform.rotate = YTEngine::CalculationValue(rootNodeAnimation.rotate.keyFrames, animationTime);
+            joint.transform.scale = YTEngine::CalculationValue(rootNodeAnimation.scale.keyFrames, animationTime);
         }
 
     }

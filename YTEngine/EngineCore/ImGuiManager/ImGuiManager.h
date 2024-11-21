@@ -2,45 +2,48 @@
 
 #pragma once
 
-class ImGuiManager final
+namespace YTEngine
 {
-private:
+	class ImGuiManager final
+	{
+	private:
 
-	ImGuiManager();
+		ImGuiManager();
 
-	~ImGuiManager();
+		~ImGuiManager();
 
-public:
-	
-	ImGuiManager(const ImGuiManager& imGui) = delete;
+	public:
 
-	ImGuiManager& operator=(const ImGuiManager& imGui) = delete;
+		ImGuiManager(const ImGuiManager& imGui) = delete;
 
-	static ImGuiManager* GetInstance();
+		ImGuiManager& operator=(const ImGuiManager& imGui) = delete;
 
-public:
+		static ImGuiManager* GetInstance();
 
-	// 初期化
-	void Initialize();
+	public:
 
-	// フレームの開始
-	void BeginFrame();
+		// 初期化
+		void Initialize();
 
-	// 更新
-	void Update();
+		// フレームの開始
+		void BeginFrame();
 
-	// 前描画
-	void PreDraw();
+		// 更新
+		void Update();
 
-	// 描画
-	void Draw();
+		// 前描画
+		void PreDraw();
 
-	// フレームの終了
-	void EndFrame();
+		// 描画
+		void Draw();
 
-	// 解放
-	void Release();
+		// フレームの終了
+		void EndFrame();
 
-private:
+		// 解放
+		void Release();
 
-};
+	private:
+
+	};
+}

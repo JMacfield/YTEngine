@@ -17,6 +17,8 @@
 
 #include <memory>
 
+using namespace YTEngine;
+
 class Stage1
 {
 public:

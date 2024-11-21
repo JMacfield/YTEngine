@@ -11,6 +11,8 @@
 
 #include "Matrix4x4Calculation.h"
 
+using namespace YTEngine;
+
 static uint32_t modelhandle;
 
 ModelManager* ModelManager::GetInstance() {

@@ -8,6 +8,7 @@
 #include <numbers>
 #include <Matrix4x4Calculation.h>
 
+using namespace YTEngine;
 
 AnimationModel* AnimationModel::Create(uint32_t modelHandle){
 	AnimationModel* model = new AnimationModel();

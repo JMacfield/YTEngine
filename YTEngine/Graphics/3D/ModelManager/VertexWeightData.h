@@ -3,7 +3,10 @@
 #pragma once
 #include <cstdint>
 
-struct VertexWeightData {
-	float weight;
-	uint32_t vertexIndex;
-};
+namespace YTEngine
+{
+	struct VertexWeightData {
+		float weight;
+		uint32_t vertexIndex;
+	};
+}

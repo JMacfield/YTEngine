@@ -7,27 +7,30 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-class ReadNode final{
-private:
-	ReadNode()=default;
-	
-	~ReadNode() = default;
+namespace YTEngine
+{
+	class ReadNode final {
+	private:
+		ReadNode() = default;
 
-public:
-	//インスタンス
-	static ReadNode* GetInstance();
+		~ReadNode() = default;
 
-	// コピーコンストラクタ禁止
-	// ノードの読み込み
-	ReadNode(const ReadNode& readNode) = delete;
+	public:
+		//インスタンス
+		static ReadNode* GetInstance();
 
-	// 代入演算子を無効にする
-	ReadNode& operator=(const ReadNode& readNode) = delete;
+		// コピーコンストラクタ禁止
+		// ノードの読み込み
+		ReadNode(const ReadNode& readNode) = delete;
+
+		// 代入演算子を無効にする
+		ReadNode& operator=(const ReadNode& readNode) = delete;
 
 
-public:
+	public:
 
-	Node Read(aiNode* node);
+		Node Read(aiNode* node);
 
-};
+	};
 
+}

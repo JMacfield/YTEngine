@@ -4,11 +4,14 @@
 
 #include "Vector3.h"
 
-/// <summary>
-/// トランスフォーム
-/// </summary>
-struct Transform {
-	Vector3 scale;
-	Vector3 rotate;
-	Vector3 translate;
-};
+namespace YTEngine
+{
+	/// <summary>
+	/// トランスフォーム
+	/// </summary>
+	struct Transform {
+		Vector3 scale;
+		Vector3 rotate;
+		Vector3 translate;
+	};
+}

@@ -6,6 +6,8 @@
 #include "TestScene.h"
 #include "ClearScene.h"
 
+using namespace YTEngine;
+
 void TitleScene::Initialize()
 {
 	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/Title.png");

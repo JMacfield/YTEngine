@@ -3,6 +3,8 @@
 #include "ReadNode.h"
 #include <Matrix4x4Calculation.h>
 
+using namespace YTEngine;
+
 ReadNode* ReadNode::GetInstance(){
     static ReadNode instance;
 
@@ -11,11 +13,6 @@ ReadNode* ReadNode::GetInstance(){
 
 Node ReadNode::Read(aiNode* node){
     Node result = {};
-
-  
-
-
-
 
     aiVector3D scale = {};
     aiVector3D translate = {};

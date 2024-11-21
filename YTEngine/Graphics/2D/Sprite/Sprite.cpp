@@ -8,16 +8,12 @@
 //動的配列
 #include <vector>
 
-
-
-
+using namespace YTEngine;
 
 //コンストラクタ
 Sprite::Sprite(){
 
 }
-
-
 
 //Vertex
 void Sprite::CreateVertexBufferView() {

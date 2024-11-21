@@ -9,6 +9,8 @@
 #include <vector>
 #include <TextureManager.h>
 
+using namespace YTEngine;
+
 Triangle::Triangle() {
 	
 }

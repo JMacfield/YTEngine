@@ -12,89 +12,91 @@
 #include "WorldTransform.h"
 #include "ModelManager.h"
 
-class JsonLoader
+namespace YTEngine
 {
-
-public:
-
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	JsonLoader() = default;
-
-private:
-
-	/// <summary>
-	/// 再帰的な読み込み
-	/// </summary>
-	void RecursiveLoad(nlohmann::json& objects);
-
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	/// <param name="directoryPath"></param>
-	void Initialize(const std::string& directoryPath);
-
-public:
-
-	/// <summary>
-	/// Leveldataの読み込み
-	/// </summary>
-	/// <param name="directoryPath">ResourcesのLevelData</param>
-	/// <param name="fileName">jsonファイル</param>
-	void Load(const std::string& directoryPath, const std::string& fileName);
-
-	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update();
-
-	/// <summary>
-	/// 描画
-	/// </summary>
-	void Draw(Camera& camera);
-
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	~JsonLoader();
-
-private:
-
-	struct LevelData 
+	class JsonLoader
 	{
-		struct ObjectData 
-		{
-			//ファイル名
-			std::string fileName;
-			//Transform
-			Vector3 translation;
-			Vector3 rotation;
-			Vector3 scaling;
 
-			//コライダー
-			std::string colliderType;
-			Vector3 center;
-			Vector3 size;
+	public:
+
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		JsonLoader() = default;
+
+	private:
+
+		/// <summary>
+		/// 再帰的な読み込み
+		/// </summary>
+		void RecursiveLoad(nlohmann::json& objects);
+
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="directoryPath"></param>
+		void Initialize(const std::string& directoryPath);
+
+	public:
+
+		/// <summary>
+		/// Leveldataの読み込み
+		/// </summary>
+		/// <param name="directoryPath">ResourcesのLevelData</param>
+		/// <param name="fileName">jsonファイル</param>
+		void Load(const std::string& directoryPath, const std::string& fileName);
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		void Update();
+
+		/// <summary>
+		/// 描画
+		/// </summary>
+		void Draw(Camera& camera);
+
+		/// <summary>
+		/// デストラクタ
+		/// </summary>
+		~JsonLoader();
+
+	private:
+
+		struct LevelData
+		{
+			struct ObjectData
+			{
+				//ファイル名
+				std::string fileName;
+				//Transform
+				Vector3 translation;
+				Vector3 rotation;
+				Vector3 scaling;
+
+				//コライダー
+				std::string colliderType;
+				Vector3 center;
+				Vector3 size;
+			};
+
+			//オブジェクト
+			std::vector<ObjectData> objects;
+
+			//ファイルパス
+			std::string filePath;
 		};
 
-		//オブジェクト
-		std::vector<ObjectData> objects;
+		//モデルのコンテナ
+		std::map<std::string, Model*> models_;
 
-		//ファイルパス
-		std::string filePath;
+		std::vector<WorldTransform*> worldTransforms_;
+		LevelData* levelData = nullptr;
+
+	private:
+
+		static const uint32_t LEVEL_DATA_MAX_AMOUNT_ = 128;
+
+		std::array<LevelData, LEVEL_DATA_MAX_AMOUNT_> levelData_{};
 	};
-
-	//モデルのコンテナ
-	std::map<std::string, Model*> models_;
-
-	std::vector<WorldTransform*> worldTransforms_;
-	LevelData* levelData = nullptr;
-
-private:
-
-	static const uint32_t LEVEL_DATA_MAX_AMOUNT_ = 128;
-
-	std::array<LevelData, LEVEL_DATA_MAX_AMOUNT_> levelData_
-	{};
-};
+}

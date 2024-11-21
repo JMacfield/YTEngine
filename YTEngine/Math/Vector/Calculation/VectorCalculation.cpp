@@ -9,6 +9,8 @@
 #include <corecrt_math.h>
 #include <cmath>
 
+using namespace YTEngine;
+
 Vector3 Add(Vector3 v1, Vector3 v2) {
 	Vector3 result = {};
 	result.x = v1.x + v2.x;
@@ -104,18 +106,18 @@ Vector3 Lerp(Vector3 start, Vector3 end, float t){
 }
 
 Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t) {
-	float newT = Clamp(t, 0.0f, 1.0f);
+	float newT = YTEngine::Clamp(t, 0.0f, 1.0f);
 
-	Vector3 normalizeV1 = Normalize(v1);
-	Vector3 normalizeV2 = Normalize(v2);
+	Vector3 normalizeV1 = YTEngine::Normalize(v1);
+	Vector3 normalizeV2 = YTEngine::Normalize(v2);
 
 
-	float dot = DotVector3(normalizeV1, normalizeV2);
+	float dot = YTEngine::DotVector3(normalizeV1, normalizeV2);
 
 	float theta = std::acosf(dot) * newT;
 
-	Vector3 subtractVector3 = Subtract(v2, v1);
-	Vector3 relativeVector = Normalize(
+	Vector3 subtractVector3 = YTEngine::Subtract(v2, v1);
+	Vector3 relativeVector = YTEngine::Normalize(
 		{ subtractVector3.x * newT,
 		subtractVector3.y * newT,
 		subtractVector3.z * newT });
@@ -148,8 +150,8 @@ Vector3 Project(const Vector3 a, const Vector3 b) {
 	Vector3 Vector3C = {};
 
 	//bの長さを求める
-	float lengthB = Length(b);
-	float dotAB = DotVector3(a, b);
+	float lengthB = YTEngine::Length(b);
+	float dotAB = YTEngine::DotVector3(a, b);
 
 	//||c||=||a||cosθ
 	//     ↓
@@ -159,7 +161,7 @@ Vector3 Project(const Vector3 a, const Vector3 b) {
 
 	//正射影ベクトルの長さ
 	float t = dotAB / (lengthB * lengthB);
-	float newT = Clamp(t, 0.0f, 1.0f);
+	float newT = YTEngine::Clamp(t, 0.0f, 1.0f);
 	Vector3C.x = newT * b.x;
 	Vector3C.y = newT * b.y;
 	Vector3C.z = newT * b.z;

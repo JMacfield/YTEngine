@@ -12,38 +12,41 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-class CompileShaderManager 
+namespace YTEngine
 {
-private:
+	class CompileShaderManager
+	{
+	private:
 
-	CompileShaderManager();
+		CompileShaderManager();
 
-	~CompileShaderManager();
+		~CompileShaderManager();
 
-public:
-	
-	static CompileShaderManager* GetInstance();
+	public:
 
-	CompileShaderManager(const CompileShaderManager& compileShaderManager) = delete;
+		static CompileShaderManager* GetInstance();
 
-	CompileShaderManager& operator=(const CompileShaderManager& compileShaderManager) = delete;
+		CompileShaderManager(const CompileShaderManager& compileShaderManager) = delete;
 
-private:
+		CompileShaderManager& operator=(const CompileShaderManager& compileShaderManager) = delete;
 
-	void InitializeDXC();
+	private:
 
-public:
+		void InitializeDXC();
 
-	IDxcBlob* CompileShader(
-		const std::wstring& filePath,
-		const wchar_t* profile
+	public:
+
+		IDxcBlob* CompileShader(
+			const std::wstring& filePath,
+			const wchar_t* profile
 		);
 
-	void Release();
+		void Release();
 
-private:
-	//DXC
-	IDxcUtils* dxcUtils_ = nullptr;
-	IDxcCompiler3* dxcCompiler_ = nullptr;
-	IDxcIncludeHandler* includeHandler_ = nullptr;	
-};
+	private:
+		//DXC
+		IDxcUtils* dxcUtils_ = nullptr;
+		IDxcCompiler3* dxcCompiler_ = nullptr;
+		IDxcIncludeHandler* includeHandler_ = nullptr;
+	};
+}

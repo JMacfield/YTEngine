@@ -10,64 +10,67 @@
 #include <imgui_impl_dx12.h>
 #include <imgui_impl_win32.h>
 
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam);
-
-class WinApp final
+namespace YTEngine
 {
-private:
+	extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-	WinApp();
+	class WinApp final
+	{
+	private:
 
-	~WinApp();
+		WinApp();
 
-public:
+		~WinApp();
 
-	WinApp(const WinApp& winApp) = delete;
+	public:
 
-	WinApp& operator=(const WinApp& winApp) = delete;
+		WinApp(const WinApp& winApp) = delete;
 
-	static WinApp* GetInstance();
+		WinApp& operator=(const WinApp& winApp) = delete;
 
-	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+		static WinApp* GetInstance();
 
-private:
+		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-	// ウィンドウクラスの登録
-	void RegisterWindowsClass();
+	private:
 
-	// ウィンドウを表示
-	void DisplayWindow();
+		// ウィンドウクラスの登録
+		void RegisterWindowsClass();
 
-public:
+		// ウィンドウを表示
+		void DisplayWindow();
 
-	// 初期化
-	void Initialize(const wchar_t* title, int32_t clientWidth,int32_t clientHeight);
+	public:
 
-	// ウィンドウメッセージ
-	void WindowsMSG(MSG& msg);
+		// 初期化
+		void Initialize(const wchar_t* title, int32_t clientWidth, int32_t clientHeight);
 
-	// ウィンドウを閉じる
-	void Close();
+		// ウィンドウメッセージ
+		void WindowsMSG(MSG& msg);
+
+		// ウィンドウを閉じる
+		void Close();
 
 #pragma region Getter
-	int GetClientWidth() { return clientWidth_; }
-	int GetClientHeight() { return clientHeight_; }
+		int GetClientWidth() { return clientWidth_; }
+		int GetClientHeight() { return clientHeight_; }
 
-	HWND GetHwnd() { return hwnd_; }
+		HWND GetHwnd() { return hwnd_; }
 
-	HINSTANCE GetHInstance() { return wc_.hInstance; }
+		HINSTANCE GetHInstance() { return wc_.hInstance; }
 
-	wchar_t* SetClassName(wchar_t* name) { title_ = name; }
+		wchar_t* SetClassName(wchar_t* name) { title_ = name; }
 #pragma endregion
 
-private:
+	private:
 
-	const wchar_t* title_ = L"YTEngine";
-	
-	int32_t clientWidth_=0;
-	int32_t clientHeight_=0;
+		const wchar_t* title_ = L"YTEngine";
 
-	HWND hwnd_=0;
+		int32_t clientWidth_ = 0;
+		int32_t clientHeight_ = 0;
 
-	WNDCLASS wc_{};
-};
+		HWND hwnd_ = 0;
+
+		WNDCLASS wc_{};
+	};
+}

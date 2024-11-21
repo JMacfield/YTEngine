@@ -6,6 +6,7 @@
 
 #include "WinApp.h"
 
+using namespace YTEngine;
 
 GlobalVariables* GlobalVariables::GetInstance(){
     static GlobalVariables instance;

@@ -8,6 +8,8 @@
 #include "ModelManager.h"
 #include <cassert>
 
+using namespace YTEngine;
+
 void  SkinCluster::Create(const Skeleton& skeleton, const ModelData& modelData){
     skeleton_ = skeleton;
    

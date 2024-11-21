@@ -12,6 +12,8 @@
 
 #include <memory>
 
+using namespace YTEngine;
+
 class GameManager;
 
 class SelectScene : public IGameScene

@@ -10,6 +10,7 @@
 #include <VectorCalculation.h>
 #include "ModelManager.h"
 
+using namespace YTEngine;
 
 uint32_t AnimationManager::handle_ = 0;
 

@@ -8,65 +8,67 @@
 
 #include <mfreadwrite.h>
 
+namespace YTEngine
+{
+	//チャンクヘッダ
+	struct ChunkHeader {
+		//チャンク毎のID
+		char id[4];
+		//チャンクサイズ
+		int32_t size;
+	};
 
-//チャンクヘッダ
-struct ChunkHeader {
-	//チャンク毎のID
-	char id[4];
-	//チャンクサイズ
-	int32_t size;
-};
+	//FMTチャンク
+	struct FormatChunk {
+		//fmt
+		ChunkHeader chunk;
+		//波形フォーマット
+		WAVEFORMATEX fmt;
 
-//FMTチャンク
-struct FormatChunk {
-	//fmt
-	ChunkHeader chunk;
-	//波形フォーマット
-	WAVEFORMATEX fmt;
+	};
 
-};
+	struct RiffHeader {
+		//RIFF
+		ChunkHeader chunk;
+		//WAVE
+		char type[4];
+	};
 
-struct RiffHeader {
-	//RIFF
-	ChunkHeader chunk;
-	//WAVE
-	char type[4];
-};
+	//音声データ
+	struct SoundData {
+		//波形フォーマット
+		WAVEFORMATEX wfex;
 
-//音声データ
-struct SoundData {
-	//波形フォーマット
-	WAVEFORMATEX wfex;
+		//バッファの先頭アドレス
+		BYTE* pBuffer;
 
-	//バッファの先頭アドレス
-	BYTE* pBuffer;
-
-	//バッファのサイズ
-	unsigned int bufferSize;
-};
+		//バッファのサイズ
+		unsigned int bufferSize;
+	};
 
 
-struct AudioInformation {
+	struct AudioInformation {
 
-	//読み込んだテクスチャの名前
-	const char* name_ = {};
-	
-	//サウンドデータ
-	SoundData soundData_ = {};
+		//読み込んだテクスチャの名前
+		const char* name_ = {};
 
-	//波形フォーマットを基にSourceVoiceの生成
-	IXAudio2SourceVoice* pSourceVoice_ = nullptr;
+		//サウンドデータ
+		SoundData soundData_ = {};
 
-	//mp3版
+		//波形フォーマットを基にSourceVoiceの生成
+		IXAudio2SourceVoice* pSourceVoice_ = nullptr;
 
-	const WCHAR* mp3FileName_ = {};
+		//mp3版
 
-	//MP3
-	IMFSourceReader* pSourceReader_ = nullptr;
+		const WCHAR* mp3FileName_ = {};
 
-	std::vector<BYTE> mediaData;
+		//MP3
+		IMFSourceReader* pSourceReader_ = nullptr;
 
-	//ハンドル
-	uint32_t audioHandle_ = 0;
+		std::vector<BYTE> mediaData;
 
-};
+		//ハンドル
+		uint32_t audioHandle_ = 0;
+
+	};
+}

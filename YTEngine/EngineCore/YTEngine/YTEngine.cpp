@@ -10,14 +10,16 @@
 #include "Audio.h"
 #include "GlobalVariables.h"
 
-YTEngine* YTEngine::GetInstance() 
+using namespace YTEngine;
+
+MyEngine* MyEngine::GetInstance() 
 {
-	static YTEngine instance;
+	static MyEngine instance;
 
 	return &instance;
 }
 
-void YTEngine::Initialize()
+void MyEngine::Initialize()
 {
 	const wchar_t* titleBarName = L"YTEngine";
 	
@@ -51,14 +53,14 @@ void YTEngine::Initialize()
 	gameManager_->Initialize();
 }
 
-void YTEngine::BeginFrame()
+void MyEngine::BeginFrame()
 {
 	DirectXCommon::GetInstance()->BeginFrame();
 	SrvManager::GetInstance()->PreDraw();
 	ImGuiManager::GetInstance()->BeginFrame();
 }
 
-void YTEngine::Update()
+void MyEngine::Update()
 {
 	//GlobalVariables::GetInstance()->GetInstance()->Update();
 
@@ -69,7 +71,7 @@ void YTEngine::Update()
 	gameManager_->Update();
 }
 
-void YTEngine::Draw()
+void MyEngine::Draw()
 {
 	ImGuiManager::GetInstance()->PreDraw();	
 	ImGuiManager::GetInstance()->Draw();
@@ -78,13 +80,13 @@ void YTEngine::Draw()
 }
 
 
-void YTEngine::EndFrame() 
+void MyEngine::EndFrame() 
 {
 	ImGuiManager::GetInstance()->EndFrame();
 	DirectXCommon::GetInstance()->EndFrame();			
 }
 
-void YTEngine::Execute()
+void MyEngine::Execute()
 {
 	Initialize();
 	
@@ -113,7 +115,7 @@ void YTEngine::Execute()
 	Release();
 }
 
-void YTEngine::Release() 
+void MyEngine::Release() 
 {
 	Audio::GetInstance()->Release();
 	
@@ -126,7 +128,7 @@ void YTEngine::Release()
 	WinApp::GetInstance()->Close();
 }
 
-YTEngine::~YTEngine()
+MyEngine::~MyEngine()
 {
 	delete gameManager_;
 }

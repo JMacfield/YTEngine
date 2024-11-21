@@ -5,7 +5,10 @@
 #include <VertexWeightData.h>
 #include <vector>
 
-struct JointWeightData {
-	Matrix4x4 inverseBindPoseMatrix;
-	std::vector<VertexWeightData> vertexWeights;
-};
+namespace YTEngine
+{
+	struct JointWeightData {
+		Matrix4x4 inverseBindPoseMatrix;
+		std::vector<VertexWeightData> vertexWeights;
+	};
+}

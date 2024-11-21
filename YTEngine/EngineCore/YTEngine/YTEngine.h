@@ -6,65 +6,68 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 
-class YTEngine final
+namespace YTEngine
 {
-private:
+	class MyEngine final
+	{
+	private:
 
-	//コンストラクタ
-	YTEngine() = default;
-		
-	//デストラクタ
-	~YTEngine();
+		//コンストラクタ
+		MyEngine() = default;
 
-public:
+		//デストラクタ
+		~MyEngine();
 
-	//インスタンス
-	static YTEngine* GetInstance();
+	public:
 
-	YTEngine(const YTEngine& YTEngine) = delete;
+		//インスタンス
+		static MyEngine* GetInstance();
 
-	YTEngine& operator=(const YTEngine& YTEngine) = delete;
+		MyEngine(const MyEngine& YTEngine) = delete;
 
-public:
+		MyEngine& operator=(const MyEngine& YTEngine) = delete;
 
-	/// <summary>
-	/// 実行
-	/// </summary>
-	void Execute();
+	public:
 
-private:
+		/// <summary>
+		/// 実行
+		/// </summary>
+		void Execute();
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Initialize();
+	private:
 
- 	/// <summary>
- 	/// フレームの開始
- 	/// </summary>
- 	void BeginFrame();
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		void Initialize();
 
-	/// <summary>
-	/// フレーム更新
-	/// </summary>
-	void Update();
+		/// <summary>
+		/// フレームの開始
+		/// </summary>
+		void BeginFrame();
 
-	/// <summary>
-	/// 描画
-	/// </summary>
-	void Draw();
+		/// <summary>
+		/// フレーム更新
+		/// </summary>
+		void Update();
 
-	/// <summary>
-	/// フレームの終了
-	/// </summary>
-	void EndFrame();
+		/// <summary>
+		/// 描画
+		/// </summary>
+		void Draw();
 
-	/// <summary>
-	/// 解放
-	/// </summary>
-	void Release();
+		/// <summary>
+		/// フレームの終了
+		/// </summary>
+		void EndFrame();
 
-private:
+		/// <summary>
+		/// 解放
+		/// </summary>
+		void Release();
 
-	GameManager* gameManager_ = nullptr;
-};
+	private:
+
+		GameManager* gameManager_ = nullptr;
+	};
+}

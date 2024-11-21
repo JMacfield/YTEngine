@@ -6,11 +6,12 @@
 #include <vector>
 #include <QuaternionTransform.h>
 
-
-
-struct Node {
-	QuaternionTransform transform;
-	Matrix4x4 localMatrix;
-	std::string name;
-	std::vector<Node> children;
-};
+namespace YTEngine
+{
+	struct Node {
+		QuaternionTransform transform;
+		Matrix4x4 localMatrix;
+		std::string name;
+		std::vector<Node> children;
+	};
+}

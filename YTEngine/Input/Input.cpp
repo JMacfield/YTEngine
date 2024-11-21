@@ -2,6 +2,8 @@
 
 #include "Input.h"
 
+using namespace YTEngine;
+
 //コンストラクタ
 Input::Input() {
 

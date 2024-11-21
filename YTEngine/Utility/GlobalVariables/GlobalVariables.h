@@ -11,81 +11,84 @@
 
 #include <json.hpp>
 
-//項目
-struct Item 
+namespace YTEngine
 {
-	std::variant<int32_t,float, Vector3 >value;
-};
+	//項目
+	struct Item
+	{
+		std::variant<int32_t, float, Vector3 >value;
+	};
 
-//グループ
-struct Group 
-{
-	std::map<std::string, Item>items;
-};
+	//グループ
+	struct Group
+	{
+		std::map<std::string, Item>items;
+	};
 
-//調整項目クラス
-class GlobalVariables
-{
-private:
-	
-	GlobalVariables() = default;
+	//調整項目クラス
+	class GlobalVariables
+	{
+	private:
 
-	~GlobalVariables() = default;
+		GlobalVariables() = default;
 
-public:
+		~GlobalVariables() = default;
 
-	static GlobalVariables* GetInstance();
+	public:
 
-	GlobalVariables(const GlobalVariables& obj) = delete;
+		static GlobalVariables* GetInstance();
 
-	GlobalVariables& operator=(const GlobalVariables& obj) = delete;
+		GlobalVariables(const GlobalVariables& obj) = delete;
 
-public:
+		GlobalVariables& operator=(const GlobalVariables& obj) = delete;
 
-	/// <summary>
-	/// グループの作成
-	/// </summary>
-	/// <param name="groupName">グループの名前</param>
-	void CreateGroup(const std::string& groupName);
+	public:
 
-	// 値のセット
-	void SetValue(const std::string& groupName, const std::string& key, int32_t value);
+		/// <summary>
+		/// グループの作成
+		/// </summary>
+		/// <param name="groupName">グループの名前</param>
+		void CreateGroup(const std::string& groupName);
 
-	void SetValue(const std::string& groupName, const std::string& key, float value);
+		// 値のセット
+		void SetValue(const std::string& groupName, const std::string& key, int32_t value);
 
-	void SetValue(const std::string& groupName, const std::string& key, const Vector3 value);
+		void SetValue(const std::string& groupName, const std::string& key, float value);
 
-	// 値の追加
-	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
+		void SetValue(const std::string& groupName, const std::string& key, const Vector3 value);
 
-	void AddItem(const std::string& groupName, const std::string& key, float value);
+		// 値の追加
+		void AddItem(const std::string& groupName, const std::string& key, int32_t value);
 
-	void AddItem(const std::string& groupName, const std::string& key, const Vector3 value);
-	
-	// 値を取得
-	int32_t GetIntValue(const std::string groupName, const std::string& key);
+		void AddItem(const std::string& groupName, const std::string& key, float value);
 
-	float GetFloatValue(const std::string groupName, const std::string& key);
+		void AddItem(const std::string& groupName, const std::string& key, const Vector3 value);
 
-	Vector3 GetVector3Value(const std::string groupName, const std::string& key);
+		// 値を取得
+		int32_t GetIntValue(const std::string groupName, const std::string& key);
 
-	// ファイルのセーブ・ロード
-	void SaveFile(const std::string& groupName);
+		float GetFloatValue(const std::string groupName, const std::string& key);
 
-	void LoadFile();
+		Vector3 GetVector3Value(const std::string groupName, const std::string& key);
 
-	void LoadFile(const std::string& groupName);
-	
-	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update();
+		// ファイルのセーブ・ロード
+		void SaveFile(const std::string& groupName);
 
-private:
+		void LoadFile();
 
-	std::map<std::string, Group>datas_;
+		void LoadFile(const std::string& groupName);
 
-	using json = nlohmann::json;
+		/// <summary>
+		/// 更新
+		/// </summary>
+		void Update();
 
-	const std::string DIRECTORY_PATH_ = "Resources/JsonFile/";
-};
+	private:
+
+		std::map<std::string, Group>datas_;
+
+		using json = nlohmann::json;
+
+		const std::string DIRECTORY_PATH_ = "Resources/JsonFile/";
+	};
+}

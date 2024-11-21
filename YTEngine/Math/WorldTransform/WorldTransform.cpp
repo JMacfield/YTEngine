@@ -6,6 +6,8 @@
 #include "DirectXCommon.h"
 #include <Camera.h>
 
+using namespace YTEngine;
+
 void WorldTransform::Initialize() {
 	//Resource作成
 	bufferResource_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(WorldTransformData)).Get();

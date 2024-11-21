@@ -2,6 +2,8 @@
 
 #include "Collision.h"
 
+using namespace YTEngine;
+
 //AABBとPointの当たり判定
 bool IsCollisionAABBAndPoint(const AABB& aabb, const Vector3& point)
 {
@@ -47,13 +49,13 @@ bool IsCollision(const OBB& obb1, const OBB& obb2)
 
 	// 分離軸テスト
 	for (const auto& axis : obb1.orientation) {
-		if (!TestAxis(axis, obb1, obb2)) {
+		if (!YTEngine::TestAxis(axis, obb1, obb2)) {
 			return false;
 		}
 	}
 
 	for (const auto& axis : obb2.orientation) {
-		if (!TestAxis(axis, obb1, obb2)) {
+		if (!YTEngine::TestAxis(axis, obb1, obb2)) {
 			return false;
 		}
 	}
@@ -69,7 +71,7 @@ bool IsCollision(const OBB& obb1, const OBB& obb2)
 			Vector3{obb1.orientation[0].x * obb2.orientation[1].x - obb1.orientation[1].x * obb2.orientation[0].x,
 					obb1.orientation[0].y * obb2.orientation[1].y - obb1.orientation[1].y * obb2.orientation[0].y,
 					obb1.orientation[0].z * obb2.orientation[1].z - obb1.orientation[1].z * obb2.orientation[0].z} }) {
-		if (!TestAxis(axis, obb1, obb2)) {
+		if (!YTEngine::TestAxis(axis, obb1, obb2)) {
 			return false;
 		}
 	}
@@ -80,11 +82,11 @@ bool IsCollision(const OBB& obb1, const OBB& obb2)
 bool TestAxis(const Vector3& axis, const OBB& obb1, const OBB& obb2) {
 
 	// OBBの射影を計算
-	auto projection1 = OBBProjection(obb1, axis);
-	auto projection2 = OBBProjection(obb2, axis);
+	auto projection1 = YTEngine::OBBProjection(obb1, axis);
+	auto projection2 = YTEngine::OBBProjection(obb2, axis);
 
 	// 射影が重なっているかチェック
-	return ProjectionOverlap(projection1, projection2);
+	return YTEngine::ProjectionOverlap(projection1, projection2);
 }
 
 std::pair<float, float> OBBProjection(const OBB& obb, const Vector3& axis) {
@@ -138,9 +140,9 @@ Vector3 GetZAxis(const Matrix4x4& m) {
 }
 
 void GetOrientations(const Matrix4x4& m, Vector3 orientations[3]) {
-	orientations[0] = GetXAxis(m);
-	orientations[1] = GetYAxis(m);
-	orientations[2] = GetZAxis(m);
+	orientations[0] = YTEngine::GetXAxis(m);
+	orientations[1] = YTEngine::GetYAxis(m);
+	orientations[2] = YTEngine::GetZAxis(m);
 }
 
 //bool IsCollision(const OBB& obb_1, const OBB& obb_2) {
@@ -172,8 +174,8 @@ bool SeparationAxis(const Vector3 axis, const OBB obb_1, const OBB obb_2) {// �
 	std::vector<Vector3> vertices_1;
 	std::vector<Vector3> vertices_2;
 	// 配列に頂点を代入
-	OBBIndex(obb_1, vertices_1);
-	OBBIndex(obb_2, vertices_2);
+	YTEngine::OBBIndex(obb_1, vertices_1);
+	YTEngine::OBBIndex(obb_2, vertices_2);
 	// 距離を格納
 	float min_1 = DotVector3(vertices_1[0], L);
 	float max_1 = min_1;
@@ -211,9 +213,9 @@ void OBBIndex(const OBB& obb, std::vector<Vector3>& output_vertices) {
 		{-obb.size.x, +obb.size.y, +obb.size.z},
 	};
 
-	Matrix4x4 rotateMatrix = SetRotate(obb.orientation);
+	Matrix4x4 rotateMatrix = YTEngine::SetRotate(obb.orientation);
 	for (auto& vertex : vertices) {
-		vertex = ColliTransform(vertex, rotateMatrix);
+		vertex = YTEngine::ColliTransform(vertex, rotateMatrix);
 		vertex = Add(vertex, obb.center);
 	}
 	output_vertices = vertices;

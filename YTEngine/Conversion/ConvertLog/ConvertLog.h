@@ -9,10 +9,13 @@
 #include <dxgidebug.h>
 #include <dxcapi.h>
 
-void Log(const std::string& message);
+namespace YTEngine
+{
+	void Log(const std::string& message);
 
-// string->wstring
-std::wstring ConvertString(const std::string& str);
+	// string->wstring
+	std::wstring ConvertString(const std::string& str);
 
-// wstring->string
-std::string ConvertString(const std::wstring& str);
+	// wstring->string
+	std::string ConvertString(const std::wstring& str);
+}

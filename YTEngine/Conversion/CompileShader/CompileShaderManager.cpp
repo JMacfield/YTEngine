@@ -4,6 +4,8 @@
 
 #include "DirectXCommon.h"
 
+using namespace YTEngine;
+
 //コンストラクタ
 CompileShaderManager::CompileShaderManager() {
 

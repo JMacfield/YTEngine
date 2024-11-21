@@ -2,6 +2,8 @@
 
 #include "ConvertColor.h"
 
+using namespace YTEngine;
+
 Vector4 ColorAdapter(unsigned int color)
 {
     Vector4 ResultColor = 

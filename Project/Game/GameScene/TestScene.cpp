@@ -9,6 +9,8 @@
 #include "ModelManager.h"
 #include "AnimationManager.h"
 
+using namespace YTEngine;
+
 void TestScene::Initialize()
 {
 	camera_.Initialize();

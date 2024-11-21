@@ -12,6 +12,8 @@
 #include "ModelManager.h"
 #include "AnimationManager.h"
 
+using namespace YTEngine;
+
 void GameScene::Initialize() 
 {
 	camera_.Initialize();

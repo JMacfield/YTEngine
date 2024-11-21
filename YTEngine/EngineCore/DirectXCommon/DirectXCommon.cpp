@@ -4,6 +4,8 @@
 
 #include <thread>
 
+using namespace YTEngine;
+
 DirectXCommon* DirectXCommon::GetInstance() 
 {
 	static DirectXCommon instance;

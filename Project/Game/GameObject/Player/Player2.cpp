@@ -1,6 +1,8 @@
 #include "GameObject/Player/Player2.h"
 #include "GameObject/Stage/Stage.h"
 
+using namespace YTEngine;
+
 void Player2::Initialize()
 {
 	playerModelHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/AssignmentModel/human", "walk.gltf");

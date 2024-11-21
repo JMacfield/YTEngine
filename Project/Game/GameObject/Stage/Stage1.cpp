@@ -1,5 +1,7 @@
 #include "Stage1.h"
 
+using namespace YTEngine;
+
 Stage1* Stage1::GetInstance()
 {
 	static Stage1 instance;

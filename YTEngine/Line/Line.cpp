@@ -3,6 +3,8 @@
 #include "Line.h"
 #include <PipelineManager.h>
 
+using namespace YTEngine;
+
 Line::Line(){
 
 }

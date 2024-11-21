@@ -9,6 +9,8 @@
 #include "Camera.h"
 #include <numbers>
 
+using namespace YTEngine;
+
 void JsonLoader::RecursiveLoad(nlohmann::json& objects) {
 	//"objects"の全オブジェクトを走査
 	for (nlohmann::json& object : objects) {

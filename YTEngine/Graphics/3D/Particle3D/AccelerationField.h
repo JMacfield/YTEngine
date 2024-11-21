@@ -4,7 +4,10 @@
 #include <Vector3.h>
 #include <AABB.h>
 
-struct AccelerationField {
-	Vector3 acceleration;
-	AABB area;
-};
+namespace YTEngine
+{
+	struct AccelerationField {
+		Vector3 acceleration;
+		AABB area;
+	};
+}

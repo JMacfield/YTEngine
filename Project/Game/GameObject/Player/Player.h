@@ -18,6 +18,8 @@
 
 #include <memory>
 
+using namespace YTEngine;
+
 enum class Behavior
 {
 	kIdle,

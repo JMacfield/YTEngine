@@ -4,6 +4,8 @@
 
 #include <array>
 
+using namespace YTEngine;
+
 PipelineManager* PipelineManager::GetInstance() 
 {
 	static PipelineManager instance;
