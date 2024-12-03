@@ -12,8 +12,10 @@ void TitleScene::Initialize()
 	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
 
 	camera_.Initialize();
-	camera_.translate_.y = 2.0f;
-	camera_.translate_.z = -10.0f;
+	/*camera_.translate_.y = 2.0f;
+	camera_.translate_.z = -10.0f;*/
+	camera_.rotate_ = { 0.2f,0.0f,0.0f };
+	camera_.translate_ = { 0.0f,10.0f,-30.0f };
 
 	AnimationInitialize();
 
@@ -24,21 +26,59 @@ void TitleScene::Initialize()
 
 	testStage_ = std::make_unique<Stage>();
 	testStage_->Initialize();
+
+	
+
+	uint32_t particleHandle = ModelManager::GetInstance()->LoadModelFile("Resources/Particle", "Particle.obj");
+	particleTextureHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/Particle/circle.png");
+	particleSystem.reset(Particle3D::Create(particleHandle));
+
+	int count = 20;
+
+	//0.5秒ごとに発生
+	float frequency = 0.5f;
+	//発生頻度用の時刻。0.0で初期化
+	float frequencyTime = 0.0f;
+
+	accelerationField_.acceleration = { 5.0f,0.0f,0.0, };
+	accelerationField_.area.min = { -1.0f,-1.0f,-1.0f };
+	accelerationField_.area.max = { 1.0f,1.0f,1.0f };
+
+	isSetField_ = true;
+	particleSystem->SetField(isSetField_);
+	particleSystem->SetAccelerationField(accelerationField_);
+
+	particleSystem->SetCount(count);
+	particleSystem->SetFrequency(frequency);
+	particleSystem->SetFrequencyTime(frequencyTime);
+	particleTranslate_ = { 0.0f,1.0f,0.0f };
+
+	particleSystem->SetScale({ 4.0f,4.0f,4.0f });
+	particleSystem->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 }
 
 void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
  
-	ImGui::Begin("Frame");
+	/*ImGui::Begin("Frame");
 	float frame = ImGui::GetIO().Framerate;
 	ImGui::DragFloat("Frame", &frame);
+	ImGui::End();*/
+
+	Vector3 ts = particleSystem->GetTranslate();
+
+	ImGui::Begin("Camera");
+	ImGui::DragFloat3("Translate", &camera_.translate_.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &camera_.rotate_.x, 0.01f);
+	ImGui::DragFloat3("Par Pos", &ts.x, 0.01f);
 	ImGui::End();
 
 	/*ImGui::Begin("Debug");
 	ImGui::DragFloat2("BTS", &blackTransform_.x, 1.0f);
 	ImGui::DragFloat2("Scale", &blackSize_.x, 1.0f);
 	ImGui::End();*/
+
 	black_->SetPosition(blackTransform_);
 
 	/*XINPUT_STATE joyState{};
@@ -50,6 +90,10 @@ void TitleScene::Update(GameManager* gameManager)
 			gameManager->ChangeScene(new SelectScene);
 		}
 	}*/
+
+	/*particle3d_->SetTranslate(particleTranslate_);
+	particle3d_->SetField(isSetField_);
+	particle3d_->Update(camera_);*/
 
 	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE) && isScreenDown_ == false && isTestStart_ == false)
 	{
@@ -104,8 +148,6 @@ void TitleScene::Update(GameManager* gameManager)
 		blackSize_.y += 1.5f;
 	
 	}
-
-	camera_.Update();
 
 	if (isTitleStart_ == true)
 	{
@@ -171,13 +213,17 @@ void TitleScene::Update(GameManager* gameManager)
 
 		Initialize();
 	}
+
+	particleSystem->SetTranslate(particleTranslate_);
+	particleSystem->SetField(isSetField_);
+	//particleSystem->Update(camera_);
+
+	camera_.Update();
 }
 
 void TitleScene::Draw()
 {
-	//titleSprite_->Draw();
-
-	if (isTestStart_ == false) 
+	/*if (isTestStart_ == false) 
 	{
 		AnimationDraw();
 
@@ -203,7 +249,9 @@ void TitleScene::Draw()
 	if (isGameOverDraw_ == true)
 	{
 		gameOverSprite_->Draw();
-	}
+	}*/
+
+	particleSystem->Draw(particleTextureHandle_, camera_);
 }
 
 void TitleScene::AnimationInitialize()

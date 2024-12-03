@@ -1,5 +1,3 @@
-/// 3Dパーティクル描画を管理するクラス
-
 #pragma once
 #include <unordered_map>
 #include <string>
@@ -13,18 +11,6 @@
 #include <Camera.h>
 #include <AccelerationField.h>
 #include <DirectionalLight.h>
-#include "Transform.h"
-
-struct ParticleEmitterStruct {
-	//エミッタのTransform;
-	Transform transform;
-	//発生数
-	uint32_t count;
-	//発生頻度
-	float frequency;
-	//頻度用時刻
-	float frequencyTime;
-};
 
 struct ParticleGrounp {
 	//マテリアルデータ
@@ -43,10 +29,18 @@ struct ParticleGrounp {
 	uint32_t instanceNumber;
 	//インスタンシングデータに書き込むためのポインタ
 	ParticleForGPU* instancingData;
-
-	ParticleEmitterStruct emitter_ = {};
 };
 
+struct Emitter {
+	//エミッタのTransform;
+	Transform transform;
+	//発生数
+	uint32_t count;
+	//発生頻度
+	float frequency;
+	//頻度用時刻
+	float frequencyTime;
+};
 
 class Particle3DManager final {
 private:
@@ -68,65 +62,27 @@ public:
 
 
 public:
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Initialize();
+	void Initialize(uint32_t modelHandle);
 
-	/// <summary>
-	/// 放出
-	/// </summary>
-	/// <param name="名前"></param>
-	/// <param name="テクスチャハンドル"></param>
-	/// <param name="座標"></param>
-	/// <param name="数"></param>
-	void Emit(const std::string name,uint32_t textureHandle, const Vector3& position, uint32_t count);
 
-	/// <summary>
-	/// 描画
-	/// </summary>
-	/// <param name="カメラ"></param>
-	void Draw(Camera& camera);
 
-	/// <summary>
-	/// 指定したものを消す
-	/// </summary>
-	/// <param name="名前"></param>
-	void DeleteElement(const std::string name);
+	void CreateParticleGroup(const std::string name, uint32_t textureHandle);
+
+	void Emit(const std::string name, const Vector3& position, uint32_t count);
+
+	void Draw(Camera& camera, uint32_t textureHandle);
+
 
 private:
-	/// <summary>
-	/// 更新
-	/// </summary>
-	/// <param name="camera"></param>
+	Particle MakeNewParticle(std::mt19937& randomEngine);
+
+	std::list<Particle> Emission(const Emitter& emmitter, std::mt19937& randomEngine);
+
 	void Update(Camera& camera);
-
-	void CreateParticleGroup(const std::string name, uint32_t textureHandle, Vector3 position,uint32_t count);
-
-
-	/// <summary>
-	/// 生成
-	/// </summary>
-	/// <param name="ランダムエンジン"></param>
-	/// <param name="座標"></param>
-	/// <returns></returns>
-	Particle MakeNewParticle(std::mt19937& randomEngine,Vector3 position);
-
-	//エミッタ
-	std::list<Particle> Emission(Vector3 podition, uint32_t count, std::mt19937& randomEngine);
-
 
 private:
 	//ユーザーが付けるグループ名をキーとしてグループを持てるようにする
 	std::unordered_map<std::string, ParticleGrounp>particleGroup_;
-
-
-
-	//C++でいうsrandみたいなやつ
-	//ランダムエンジンの初期化
-	 //C++でいうsrandみたいなやつ
-	std::random_device seedGenerator;
-	std::mt19937 rand_ = {};
 
 	ComPtr<ID3D12Resource> vertexResource_ = nullptr;
 	std::vector<VertexData> vertices_{};
@@ -135,8 +91,6 @@ private:
 	ComPtr<ID3D12Resource> materialResource_ = nullptr;
 	//色関係のメンバ変数
 	Vector4 materialColor_ = { 1.0f,1.0f,1.0f,1.0f };
-	//基本はtrueで
-	bool isEnableLighting_ = true;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};
 
@@ -148,7 +102,8 @@ private:
 	Vector4 directionalLightColor_ = { 1.0f,1.0f,1.0f,1.0f };
 	float directionalLightIntensity_ = 3.0f;
 
-	
+	//基本はtrueで
+	bool isEnableLighting_ = true;
 	//方向
 	Vector3 lightingDirection_ = { 0.0f,-1.0f,0.0f };
 
@@ -160,15 +115,16 @@ private:
 	bool isBillBordMode_ = true;
 
 	//エミッタの設定
-	//Emitter emitter_ = {};
+	Emitter emitter_ = {};
 	const float DELTA_TIME = 1.0f / 60.0f;
 
 	//フィールド
-	bool isSetField_ = true;
+	bool isSetField_ = false;
 	AccelerationField accelerationField_ = {};
 
 
 	//パーティクル
+	std::list<Particle>particles_;
 	ParticleForGPU* instancingData_ = nullptr;
 };
 

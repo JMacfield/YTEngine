@@ -18,6 +18,10 @@
 
 #include <memory>
 
+constexpr float kDefaultFallSpeed = 0.01f;
+constexpr float kDefaultCharacterSpeed = 0.03f;
+constexpr uint32_t kInvalidHandle = UINT32_MAX;
+
 enum class Behavior
 {
 	kIdle,
@@ -55,25 +59,27 @@ private:
 	
 	// プレイヤーに関する基本
 	std::unique_ptr<AnimationModel> player_ = nullptr;
-	uint32_t playerModelHandle_;
+	uint32_t playerModelHandle_ = kInvalidHandle;
 	WorldTransform playerWorldTransform_ = {};
 
-	uint32_t playerIdleAnimationHandle_;
-	uint32_t playerWalkAnimationHandle_;
-	uint32_t playerSprintAnimationHandle_;
-	uint32_t playerPunchAnimationHandle_;
-	uint32_t playerJumpAnimationHandle_;
+	uint32_t playerIdleAnimationHandle_ = kInvalidHandle;
+	uint32_t playerWalkAnimationHandle_ = kInvalidHandle;
+	uint32_t playerSprintAnimationHandle_ = kInvalidHandle;
+	uint32_t playerPunchAnimationHandle_ = kInvalidHandle;
+	uint32_t playerJumpAnimationHandle_ = kInvalidHandle;
 
-	uint32_t playerGrabAnimationHandle_;
-	uint32_t playerGrabStartAnimationHandle_;
-	uint32_t playerGrabStopAnimationHandle_;
+	uint32_t playerGrabAnimationHandle_ = kInvalidHandle;
+	uint32_t playerGrabStartAnimationHandle_ = kInvalidHandle;
+	uint32_t playerGrabStopAnimationHandle_ = kInvalidHandle;
 	
 	Skeleton playerSkeleton = {};
 	float playerAnimationTime_;
 	SkinCluster playerSkinCluster_ = {};
 
 	OBB playerCollision_;
-	float fallSpeed_ = 0.01f;
+
+	float fallSpeed_ = kDefaultFallSpeed;
+	const float kCharacterSpeed = kDefaultCharacterSpeed;
 
 private: 
 
@@ -110,6 +116,4 @@ private:
 	uint32_t controlSpriteHandle_;
 
 	Vector2 controlSpriteTransform_;
-
-	const float kCharacterSpeed = 0.03f;
 };

@@ -1,5 +1,3 @@
-/// パーティクル構造体
-
 #pragma once
 #include <Transform.h>
 #include "Vector4.h"
@@ -14,6 +12,7 @@ struct Particle {
 	float currentTime;
 };
 
+//似てるけど全く別の物
 struct ParticleForGPU {
 	Matrix4x4  World;
 	Vector4 color;

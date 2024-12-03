@@ -1,5 +1,3 @@
-/// 加速場について
-
 #pragma once
 #include <Vector3.h>
 #include <AABB.h>

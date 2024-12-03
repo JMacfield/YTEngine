@@ -1,5 +1,3 @@
-/// 3Dパーティクルを描画するクラス
-
 #pragma once
 #include <string>
 #include <cassert>
@@ -75,7 +73,7 @@ public:
 	//void Draw();
 
 	//テクスチャを上書きをする描画
-	void Draw(uint32_t textureHandle,Camera& camera);
+	void Draw(uint32_t textureHandle, Camera& camera);
 
 
 	//デストラクタ
@@ -85,6 +83,8 @@ public:
 
 
 public:
+	//アクセッサのまとめ
+
 	//透明度の変更
 	void SetColor(Vector4 color) {
 		this->materialColor_ = color;
@@ -93,21 +93,23 @@ public:
 	void SetTransparency(float transparency) {
 		this->materialColor_.w = transparency;
 	}
-	
+
+	//ビルボードにするかどうか
+	//デフォルトではするようにしている
 	bool IsBillBordMode(bool isBillBordMode) {
 		this->isBillBordMode_ = isBillBordMode;
 	}
 
 
 #pragma region エミッタの中の設定
-	
 
-	#pragma region SRT
+
+#pragma region SRT
 	//Scale
 	void SetScale(Vector3 scale) {
 		this->emitter_.transform.scale = scale;
 	}
-	
+
 	//Rotate
 	void SetRotate(Vector3 rotate) {
 		this->emitter_.transform.rotate = rotate;
@@ -124,22 +126,23 @@ public:
 		return emitter_.transform.translate;
 	}
 
-	#pragma endregion
+#pragma endregion
 
 	//発生数
 	void SetCount(uint32_t count) {
 		this->emitter_.count = count;
 	}
 	//発生頻度
-	void SetFrequency(float frequency){
+	void SetFrequency(float frequency) {
 		this->emitter_.frequency = frequency;
 	}
 	//発生頻度を設定
-	void SetFrequencyTime(float frequencyTime){
+	void SetFrequencyTime(float frequencyTime) {
 		this->emitter_.frequencyTime = frequencyTime;
 	}
 
 
+	//以下の2つはセットで使ってね
 	void SetField(bool isSetField) {
 		this->isSetField_ = isSetField;
 	}
@@ -161,7 +164,7 @@ public:
 #pragma endregion
 
 private:
-	
+	//TextureManagerを参考にする
 	std::list<ModelData> modelInformationList_;
 
 	//頂点リソースを作る
@@ -190,7 +193,7 @@ private:
 	//基本はtrueで
 	bool isEnableLighting_ = true;
 	//方向
-	Vector3 lightingDirection_ = {0.0f,-1.0f,0.0f};
+	Vector3 lightingDirection_ = { 0.0f,-1.0f,0.0f };
 
 
 	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU_ = {};
@@ -203,7 +206,7 @@ private:
 	//描画すべきインスタンス数
 	uint32_t numInstance_ = 0;
 
-	int InstancingIndex_;
+	int INDEX_;
 
 	//パーティクル
 	std::list<Particle>particles_;

@@ -125,4 +125,13 @@ private:
 	Vector2 gameOverTransform_;
 
 	float color_;
+
+	
+
+	//uint32_t particleHandle = 0u;
+	uint32_t particleTextureHandle_ = 0u;
+	std::unique_ptr<Particle3D> particleSystem = nullptr;
+	Vector3 particleTranslate_ = {};
+	AccelerationField accelerationField_ = {};
+	bool isSetField_ = false;;
 };

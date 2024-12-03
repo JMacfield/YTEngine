@@ -1,5 +1,3 @@
-/// 3Dパーティクルを描画するクラス
-
 #include "Particle3D.h" 
 #include <Camera.h>
 #include <TextureManager.h>
@@ -19,11 +17,15 @@ Particle3D::Particle3D() {
 }
 
 //RandomParticle用
+///パーティクルだけはvoid型で初期化する
 Particle3D* Particle3D::Create(uint32_t modelHandle) {
 	Particle3D* particle3D = new Particle3D();
 
-	
+	//初期化の所でやってね、Update,Drawでやるのが好ましいけど凄く重くなった。
+	//ブレンドモードの設定
+	//Addでやるべきとのこと
 	PipelineManager::GetInstance()->GenerateParticle3DPSO();
+	//INDEX_++;
 
 #pragma region デフォルトの設定 
 	particle3D->emitter_.count = 100;
@@ -38,7 +40,7 @@ Particle3D* Particle3D::Create(uint32_t modelHandle) {
 
 #pragma endregion
 
-
+	////マテリアル用のリソースを作る。今回はcolor1つ分のサイズを用意する
 	particle3D->materialResource_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(Material)).Get();
 
 
@@ -47,7 +49,7 @@ Particle3D* Particle3D::Create(uint32_t modelHandle) {
 
 
 
-	particle3D->InstancingIndex_ = SrvManager::GetInstance()->Allocate();
+	particle3D->INDEX_ = SrvManager::GetInstance()->Allocate();
 
 
 
@@ -56,7 +58,9 @@ Particle3D* Particle3D::Create(uint32_t modelHandle) {
 
 	particle3D->vertexResource_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(VertexData) * particle3D->vertices_.size());
 
-	
+	//読み込みのところでバッファインデックスを作った方がよさそう
+	//vertexResourceがnullらしい
+	//リソースの先頭のアドレスから使う
 	particle3D->vertexBufferView_.BufferLocation = particle3D->vertexResource_->GetGPUVirtualAddress();
 	//使用するリソースは頂点のサイズ
 	particle3D->vertexBufferView_.SizeInBytes = UINT(sizeof(VertexData) * particle3D->vertices_.size());
@@ -66,21 +70,23 @@ Particle3D* Particle3D::Create(uint32_t modelHandle) {
 
 
 
+
+
 	//インスタンシング
 	particle3D->instancingResource_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(ParticleForGPU) * MAX_INSTANCE_NUMBER_);
-	descriptorSizeSRV_ =  DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	
-	particle3D->instancingSrvHandleCPU_= SrvManager::GetInstance()->GetCPUDescriptorHandle(particle3D->InstancingIndex_);
-	particle3D->instancingSrvHandleGPU_ = SrvManager::GetInstance()->GetGPUDescriptorHandle(particle3D->InstancingIndex_);
-	
+	descriptorSizeSRV_ = DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	SrvManager::GetInstance()->CreateSRVForStructuredBuffer(particle3D->InstancingIndex_, particle3D->instancingResource_.Get(), MAX_INSTANCE_NUMBER_, sizeof(ParticleForGPU));
-	
+	particle3D->instancingSrvHandleCPU_ = SrvManager::GetInstance()->GetCPUDescriptorHandle(particle3D->INDEX_);
+	particle3D->instancingSrvHandleGPU_ = SrvManager::GetInstance()->GetGPUDescriptorHandle(particle3D->INDEX_);
+
+
+	SrvManager::GetInstance()->CreateSRVForStructuredBuffer(particle3D->INDEX_, particle3D->instancingResource_.Get(), MAX_INSTANCE_NUMBER_, sizeof(ParticleForGPU));
+
 	particle3D->instancingResource_->Map(0, nullptr, reinterpret_cast<void**>(&particle3D->instancingData_));
 
 	//Lighting
 	particle3D->directionalLightResource_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(DirectionalLight)).Get();
-	
+
 
 
 	return particle3D;
@@ -98,16 +104,16 @@ Particle Particle3D::MakeNewParticle(std::mt19937& randomEngine) {
 	particle.transform.rotate = { 0.0f,0.0f,0.0f };
 	//ランダムの値
 	Vector3 randomTranslate = { distribute(randomEngine),distribute(randomEngine),distribute(randomEngine) };
-	particle.transform.translate = Add(emitter_.transform.translate,randomTranslate);
-	
+	particle.transform.translate = Add(emitter_.transform.translate, randomTranslate);
+
 	//速度
 	std::uniform_real_distribution<float>distVelocity(-1.0f, 1.0f);
-	particle.velocity = {distVelocity(randomEngine),distVelocity(randomEngine),distVelocity(randomEngine)};
+	particle.velocity = { distVelocity(randomEngine),distVelocity(randomEngine),distVelocity(randomEngine) };
 
 	//Color
 	std::uniform_real_distribution<float> distColor(0.0f, 1.0f);
 	particle.color = { distColor(randomEngine),distColor(randomEngine),distColor(randomEngine),1.0f };
-	
+
 
 	//時間
 	std::uniform_real_distribution<float> distTime(1.0f, 3.0f);
@@ -121,7 +127,7 @@ Particle Particle3D::MakeNewParticle(std::mt19937& randomEngine) {
 }
 
 //エミッタ
-std::list<Particle> Particle3D::Emission(const Emitter& emmitter, std::mt19937& randomEngine){
+std::list<Particle> Particle3D::Emission(const Emitter& emmitter, std::mt19937& randomEngine) {
 	std::list<Particle> particles;
 
 	for (uint32_t count = 0; count < emmitter.count; ++count) {
@@ -134,20 +140,20 @@ std::list<Particle> Particle3D::Emission(const Emitter& emmitter, std::mt19937& 
 
 
 //更新
-void Particle3D::Update(Camera& camera){
-	
+void Particle3D::Update(Camera& camera) {
 
-	
+
+	//C++でいうsrandみたいなやつ
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
-	
+
 	///時間経過
 	emitter_.frequencyTime += DELTA_TIME;
 	//頻度より大きいなら
 	if (emitter_.frequency <= emitter_.frequencyTime) {
 		//パーティクルを作る
 		particles_.splice(particles_.end(), Emission(emitter_, randomEngine));
-		
+		//余計に杉田時間も神して頻度計算する
 		emitter_.frequencyTime -= emitter_.frequency;
 	}
 
@@ -155,73 +161,76 @@ void Particle3D::Update(Camera& camera){
 	//座標の計算など
 	numInstance_ = 0;
 	for (std::list<Particle>::iterator particleIterator = particles_.begin();
-		particleIterator != particles_.end();++particleIterator) {
+		particleIterator != particles_.end(); ++particleIterator) {
 		if ((*particleIterator).lifeTime <= (*particleIterator).currentTime) {
-			
+
 			continue;
 		}
-		
-		
+
+		//フィールド設定すると風の影響を受ける
 		if (isSetField_ == true) {
-			if (IsCollisionAABBAndPoint(accelerationField_.area,(*particleIterator).transform.translate)) {
+			if (IsCollisionAABBAndPoint(accelerationField_.area, (*particleIterator).transform.translate)) {
 				(*particleIterator).velocity.x += accelerationField_.acceleration.x * DELTA_TIME;
 				(*particleIterator).velocity.y += accelerationField_.acceleration.y * DELTA_TIME;
 				(*particleIterator).velocity.z += accelerationField_.acceleration.z * DELTA_TIME;
 			}
 		}
 
-		
+
 		particleIterator->currentTime += DELTA_TIME;
 		particleIterator->transform.translate.x += particleIterator->velocity.x * DELTA_TIME;
 		particleIterator->transform.translate.y += particleIterator->velocity.y * DELTA_TIME;
 		particleIterator->transform.translate.z += particleIterator->velocity.z * DELTA_TIME;
-		
 
-		
+
+		//ビルボード有り
 		if (isBillBordMode_ == true) {
 			//Y軸でπ/2回転
-			
+			//これからはM_PIじゃなくてstd::numbers::pi_vを使おうね
 			Matrix4x4 backToFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
 
 			//カメラの回転を適用する
 			Matrix4x4 billBoardMatrix = Multiply(backToFrontMatrix, camera.worldMatrix_);
-			
+			//平行成分はいらないよ
 			billBoardMatrix.m[3][0] = 0.0f;
 			billBoardMatrix.m[3][1] = 0.0f;
 			billBoardMatrix.m[3][2] = 0.0f;
 
 			Matrix4x4 scaleMatrix = MakeScaleMatrix(particleIterator->transform.scale);
 			Matrix4x4 translateMatrix = MakeTranslateMatrix(particleIterator->transform.translate);
-			
 
-			Matrix4x4 worldMatrix = Multiply(scaleMatrix,Multiply(billBoardMatrix,translateMatrix));
-			
-		
+
+			//パーティクル個別のRotateは関係ないよ
+			Matrix4x4 worldMatrix = Multiply(scaleMatrix, Multiply(billBoardMatrix, translateMatrix));
+
+			//最大値を超えて描画しないようにする
 			if (numInstance_ < MAX_INSTANCE_NUMBER_) {
 				instancingData_[numInstance_].World = worldMatrix;
 				instancingData_[numInstance_].color = particleIterator->color;
 
-				
+				//アルファはVector4でいうwだね
 				float alpha = 1.0f - (particleIterator->currentTime / particleIterator->lifeTime);
-				instancingData_[numInstance_].color.w=alpha;
+				instancingData_[numInstance_].color.w = alpha;
 
 				++numInstance_;
 			}
 		}
-		
+		//ビルボード無し
 		else if (isBillBordMode_ == false) {
-			
+			//ビルボードやらない版
 			Matrix4x4 worldMatrix = MakeAffineMatrix(
 				particleIterator->transform.scale,
 				particleIterator->transform.rotate,
 				particleIterator->transform.translate);
-			
-		
+
+			//WVP行列を作成
+
+			//最大値を超えて描画しないようにする
 			if (numInstance_ < MAX_INSTANCE_NUMBER_) {
 				instancingData_[numInstance_].World = worldMatrix;
 				instancingData_[numInstance_].color = particleIterator->color;
 
-				
+				//アルファはVector4でいうwだね
 				float alpha = 1.0f - (particleIterator->currentTime / particleIterator->lifeTime);
 				instancingData_[numInstance_].color.w = alpha;
 
@@ -232,15 +241,23 @@ void Particle3D::Update(Camera& camera){
 }
 
 //描画
-void Particle3D::Draw(uint32_t textureHandle,Camera& camera){
-	
+void Particle3D::Draw(uint32_t textureHandle, Camera& camera) {
+
 	//更新
 	Update(camera);
 
+#pragma region 頂点データ
+	//頂点バッファにデータを書き込む
+	VertexData* vertexData = nullptr;
+	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));//書き込むためのアドレスを取得
+	std::memcpy(vertexData, vertices_.data(), sizeof(VertexData) * vertices_.size());
+	vertexResource_->Unmap(0, nullptr);
 
+#pragma endregion
 
 #pragma region マテリアルにデータを書き込む
-	
+	//書き込むためのアドレスを取得
+	//reinterpret_cast...char* から int* へ、One_class* から Unrelated_class* へなどの変換に使用
 	Material* materialData_ = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	materialData_->color = materialColor_;
@@ -253,9 +270,9 @@ void Particle3D::Draw(uint32_t textureHandle,Camera& camera){
 #pragma endregion
 
 #pragma region DirectionalLight
-	
+
 	directionalLightResource_->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData_));
-	directionalLightData_->color = directionalLightColor_;                                                                                                                                                                                          
+	directionalLightData_->color = directionalLightColor_;
 	directionalLightData_->direction = lightingDirection_;
 	directionalLightData_->intensity = directionalLightIntensity_;
 	directionalLightResource_->Unmap(0, nullptr);
@@ -267,7 +284,7 @@ void Particle3D::Draw(uint32_t textureHandle,Camera& camera){
 	DirectXCommon::GetInstance()->GetCommandList()->SetPipelineState(PipelineManager::GetInstance()->GetParticle3DGraphicsPipelineState().Get());
 
 
-	
+
 	//RootSignatureを設定。PSOに設定しているけど別途設定が必要
 	DirectXCommon::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えよう
@@ -280,25 +297,25 @@ void Particle3D::Draw(uint32_t textureHandle,Camera& camera){
 
 	//インスタンシング
 
-	//DirectXSetup::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU_);
+	//DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU_);
 
-	SrvManager::GetInstance()->SetGraphicsRootDescriptorTable(1, InstancingIndex_);
+	SrvManager::GetInstance()->SetGraphicsRootDescriptorTable(1, INDEX_);
 
 
 	//SRVのDescriptorTableの先頭を設定。2はrootParameter[2]である
-	if (textureHandle_!= 0) {
-		TextureManager::GraphicsCommand(textureHandle );
+	if (textureHandle_ != 0) {
+		TextureManager::GraphicsCommand(textureHandle);
 	}
-	
+
 	//DirectionalLight
 	DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
 
 	//カメラ
 	DirectXCommon::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(4, camera.bufferResource_->GetGPUVirtualAddress());
-	
 
-	
-	
+
+
+
 	//DrawCall
 	DirectXCommon::GetInstance()->GetCommandList()->DrawInstanced(UINT(vertices_.size()), numInstance_, 0, 0);
 }
@@ -311,4 +328,3 @@ Particle3D::~Particle3D() {
 
 
 
-	
