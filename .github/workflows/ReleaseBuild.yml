@@ -7,8 +7,9 @@ on:
     branches: [ "master" ]
 
 env:
-  # Path to the solution file relative to the root of the project.
+  #リポジトリのルートディレクトリを基点としたソリューションのファイルパス
   SOLUTION_FILE_PATH: CG2_1.sln
+  #VSの構成(Debug/Release)
   CONFIGURATION: Release
 
 permissions:
