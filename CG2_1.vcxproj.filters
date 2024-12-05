@@ -280,6 +280,7 @@
     <ClCompile Include="Project\Game\GameScene\TestScene.cpp" />
     <ClCompile Include="Project\Game\GameObject\Player\PlayerTest.cpp" />
     <ClCompile Include="Project\Game\GameObject\Player\Player2.cpp" />
+    <ClCompile Include="Project\Game\NetworkManager\NetworkManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Particle3D\Particle3d.PS.hlsl">
@@ -548,6 +549,7 @@
     <ClInclude Include="Project\Game\GameScene\TestScene.h" />
     <ClInclude Include="Project\Game\GameObject\Player\PlayerTest.h" />
     <ClInclude Include="Project\Game\GameObject\Player\Player2.h" />
+    <ClInclude Include="Project\Game\NetworkManager\NetworkManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Particle3D\Particle3D.hlsli">
