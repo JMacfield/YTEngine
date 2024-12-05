@@ -18,11 +18,28 @@ void TitleScene::Initialize()
 	AnimationInitialize();
 
 	SurfaceInitialize();
+
+	testPlayer_ = std::make_unique<Player>();
+	testPlayer_->Initialize();
+
+	testStage_ = std::make_unique<Stage>();
+	testStage_->Initialize();
 }
 
 void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
+ 
+	ImGui::Begin("Frame");
+	float frame = ImGui::GetIO().Framerate;
+	ImGui::DragFloat("Frame", &frame);
+	ImGui::End();
+
+	/*ImGui::Begin("Debug");
+	ImGui::DragFloat2("BTS", &blackTransform_.x, 1.0f);
+	ImGui::DragFloat2("Scale", &blackSize_.x, 1.0f);
+	ImGui::End();*/
+	black_->SetPosition(blackTransform_);
 
 	/*XINPUT_STATE joyState{};
 
@@ -34,7 +51,7 @@ void TitleScene::Update(GameManager* gameManager)
 		}
 	}*/
 
-	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE) && isScreenDown_ == false)
+	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE) && isScreenDown_ == false && isTestStart_ == false)
 	{
 		isScreenDown_ = true;
 	}
@@ -51,7 +68,21 @@ void TitleScene::Update(GameManager* gameManager)
 		isTitleStart_ = false;
 		isTitleReset_ = true;
 
-		gameManager->ChangeScene(new GameScene);
+		TestInitialize();
+
+		if (isTestStart_ == false)
+		{
+			isTestStart_ = true;
+		}
+		else if (isTestStart_ == true)
+		{
+			isTestStart_ = false;
+			camera_.translate_.y = 2.0f;
+			camera_.translate_.z = -10.0f;
+			camera_.rotate_.x = 0.0f;
+		}
+
+		//gameManager->ChangeScene(new GameScene);
 	}
 
 	if (isTitleReset_ == true)
@@ -61,8 +92,17 @@ void TitleScene::Update(GameManager* gameManager)
 
 	if (whiteTransform_.y == -720.0f && isTitleReset_ == true)
 	{
-		isTitleReset_ = false;
-		isTitleStart_ = true;
+		
+	/*	isTitleReset_ = false;
+		isTitleStart_ = true;*/
+	}
+
+	if (isZoom_ == true)
+	{
+		black_->SetScale(blackSize_);
+		blackSize_.x += 2.0f;
+		blackSize_.y += 1.5f;
+	
 	}
 
 	camera_.Update();
@@ -85,15 +125,85 @@ void TitleScene::Update(GameManager* gameManager)
 	ImGui::DragFloat3("Player", &playerTransform_[0].translate_.x, 0.01f);
 	ImGui::DragFloat2("1 P", &titleIconTransform_.x, 0.01f);
 	ImGui::End();*/
+
+	if (isTestStart_ == true)
+	{
+		testPlayer_->Update();
+
+		testStage_->Update();
+
+
+		if (testPlayer_->GetWorldTransform().translate_.x > 3.3f)
+		{
+			//isScreenDown_ = true;
+			isZoom_ = true;
+			isGameOver_ = true;
+
+			testPlayer_->SetPosition({ -2.2f,-0.2f,0.0f });
+			testPlayer_->SetRotate({ 0.0f,1.4f,0.0f });
+		}
+	}
+
+	if (blackSize_.x > 240.0f)
+	{
+		isZoom_ = false;
+		isGameOverDraw_ = true;
+	}
+
+	if (isGameOverDraw_ == true)
+	{
+		color_ += 0.01f;
+		gameOverSprite_->SetColor({ 1.0f,1.0f,1.0f,color_ });
+	}
+
+	if (isGameOverDraw_ == true && Input::GetInstance()->IsTriggerKey(DIK_SPACE))
+	{
+		AnimationInitialize();
+		//TestInitialize();
+		isTestStart_ = false;
+		//isTitleReset_ = true;
+		isScreenDown_ = false;
+		isTitleStart_ = true;
+
+		camera_.translate_.y = 2.0f;
+		camera_.translate_.z = -10.0f;
+		camera_.rotate_.x = 0.0f;
+
+		Initialize();
+	}
 }
 
 void TitleScene::Draw()
 {
 	//titleSprite_->Draw();
 
-	AnimationDraw();
+	if (isTestStart_ == false) 
+	{
+		AnimationDraw();
 
-	SurfaceDraw();
+		SurfaceDraw();
+	}
+
+	if (isTestStart_ == true)
+	{
+		testPlayer_->Draw(camera_);
+
+		testStage_->Draw(camera_);
+	}
+
+	white_->Draw();
+
+	titleSign_->Draw(titleSignTransform_, camera_);
+
+	if (isGameOver_ == true)
+	{
+		black_->Draw();
+	}
+
+	if (isGameOverDraw_ == true)
+	{
+		gameOverSprite_->Draw();
+	}
 }
 
 void TitleScene::AnimationInitialize()
@@ -129,10 +239,42 @@ void TitleScene::AnimationInitialize()
 	playerIconTransform_[1].x = 1520.0f;
 	playerIconTransform_[2].x = -740.0f;
 	playerIconTransform_[3].x = 1820.0f;
+
+	titleSignHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/TitleSign", "TitleSign.gltf");
+
+	titleSign_.reset(Model::Create(titleSignHandle_));
+
+	titleSignTransform_.Initialize();
+	titleSignTransform_.translate_ = { 0.0f,0.0f,0.0f };
+	titleSignTransform_.scale_ = { 10.0f,10.0f,10.0f };
+
+	blackHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/black.png");
+	blackTransform_ = { 1055.0f,628.0f };
+	blackSize_ = { 1.0f,1.0f };
+	black_.reset(Sprite::Create(blackHandle_, blackTransform_));
+	black_->SetAnchorPoint({ 0.5f,0.5f });
+
+	isGameOver_ = false;
+
+	isZoom_ = false;
+	isGameOverDraw_ = false;
+
+	gameOverHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/gameover.png");
+	gameOverTransform_ = { 0.0f,0.0f };
+	gameOverSprite_.reset(Sprite::Create(gameOverHandle_, gameOverTransform_));
+
+	color_ = 0.0f;
+
+	gameOverSprite_->SetColor({ 1.0f,1.0f,1.0f,color_ });
 }
 
 void TitleScene::AnimationUpdate()
 {
+	/*ImGui::Begin("Debug");
+	ImGui::DragFloat3("SignTransform", &titleSignTransform_.translate_.x, 0.01f);
+	ImGui::DragFloat3("Camera", &camera_.translate_.x, 0.01f);
+	ImGui::End();*/
+
 	playerAnimationTime_[0] += 1.0f / 60.0f;
 
 	for (int i = 0; i < 4; i++)
@@ -262,6 +404,8 @@ void TitleScene::AnimationDraw()
 	{
 		player_[i]->Draw(playerTransform_[i], camera_, playerSkinCluster_[i]);
 	}
+
+	//titleSign_->Draw(titleSignTransform_, camera_);
 }
 
 void TitleScene::SurfaceInitialize()
@@ -342,6 +486,21 @@ void TitleScene::SurfaceDraw()
 	playerIcon_[3]->Draw();
 
 	titleIcon_->Draw();
+}
 
-	white_->Draw();
+void TitleScene::TestInitialize()
+{
+	camera_.translate_.y = 4.0f;
+	camera_.translate_.z = -14.0f;
+	camera_.rotate_.x = 0.1f;
+}
+
+void TitleScene::TestUpdate()
+{
+	
+}
+
+void TitleScene::TestDraw()
+{
+
 }

@@ -48,6 +48,9 @@ public:
 	void SetCollision();
 	void SetFallSpeed(float fallSpeed) { fallSpeed_ = fallSpeed; }
 
+	Vector3 SetPosition(Vector3 setPosition) { return playerWorldTransform_.translate_ = setPosition; }
+	Vector3 SetRotate(Vector3 setRotate) { return playerWorldTransform_.rotate_ = setRotate; }
+
 private: 
 	
 	// プレイヤーに関する基本

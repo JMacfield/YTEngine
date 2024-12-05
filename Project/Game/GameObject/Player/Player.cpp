@@ -65,7 +65,6 @@ void Player::Update()
 void Player::Draw(Camera& camera)
 {
 	player_->Draw(playerWorldTransform_, camera, playerSkinCluster_);
-	//controlSprite_->Draw();
 }
 
 void Player::Control()
