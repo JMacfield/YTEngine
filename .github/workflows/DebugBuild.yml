@@ -1,4 +1,4 @@
-name: ReleaseBuild
+name: DebugBuild
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: CG2_1.sln
-  CONFIGURATION: Release
+  CONFIGURATION: Debug
 
 permissions:
   contents: read
