@@ -154,9 +154,6 @@
     <ClCompile Include="YTEngine\Audio\Audio.cpp">
       <Filter>YTEngine\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Game\GameScene\GameScene1.cpp">
-      <Filter>Project\GameScene</Filter>
-    </ClCompile>
     <ClCompile Include="Project\Game\GameScene\ClearScene.cpp">
       <Filter>Project\GameScene</Filter>
     </ClCompile>
@@ -170,9 +167,6 @@
       <Filter>Project\Game\GameObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="Project\Game\GameObject\Stage\Stage.cpp">
-      <Filter>Project\Game\GameObject\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\Game\GameObject\Stage\Stage1.cpp">
       <Filter>Project\Game\GameObject\Stage</Filter>
     </ClCompile>
     <ClCompile Include="YTEngine\Line\Line.cpp">
@@ -504,17 +498,11 @@
     <ClInclude Include="Project\Game\GameScene\SelectScene.h">
       <Filter>Project\GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="Project\Game\GameScene\GameScene1.h">
-      <Filter>Project\GameScene</Filter>
-    </ClInclude>
     <ClInclude Include="Project\Game\GameScene\ClearScene.h">
       <Filter>Project\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="Project\Game\GameObject\Player\Player.h">
       <Filter>Project\Game\GameObject\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\Game\GameObject\Stage\Stage1.h">
-      <Filter>Project\Game\GameObject\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Project\Game\GameObject\Stage\Stage.h">
       <Filter>Project\Game\GameObject\Stage</Filter>

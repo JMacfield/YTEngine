@@ -133,9 +133,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Project\Game\GameObject\Player\Player2.cpp" />
     <ClCompile Include="Project\Game\GameObject\Player\PlayerTest.cpp" />
     <ClCompile Include="Project\Game\GameObject\Stage\Stage.cpp" />
-    <ClCompile Include="Project\Game\GameObject\Stage\Stage1.cpp" />
     <ClCompile Include="Project\Game\GameScene\ClearScene.cpp" />
-    <ClCompile Include="Project\Game\GameScene\GameScene1.cpp" />
     <ClCompile Include="Project\Game\GameScene\SelectScene.cpp" />
     <ClCompile Include="Project\Game\GameScene\TestScene.cpp" />
     <ClCompile Include="Project\Game\GameScene\TitleScene.cpp" />
@@ -234,9 +232,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Project\Game\GameObject\Player\Player2.h" />
     <ClInclude Include="Project\Game\GameObject\Player\PlayerTest.h" />
     <ClInclude Include="Project\Game\GameObject\Stage\Stage.h" />
-    <ClInclude Include="Project\Game\GameObject\Stage\Stage1.h" />
     <ClInclude Include="Project\Game\GameScene\ClearScene.h" />
-    <ClInclude Include="Project\Game\GameScene\GameScene1.h" />
     <ClInclude Include="Project\Game\GameScene\SelectScene.h" />
     <ClInclude Include="Project\Game\GameScene\TestScene.h" />
     <ClInclude Include="Project\Game\GameScene\TitleScene.h" />

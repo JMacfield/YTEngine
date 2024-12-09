@@ -3,7 +3,7 @@
 #include "GameScene/GameScene.h"
 #include "GameScene/ClearScene.h"
 #include "GameScene/TitleScene.h"
-#include "GameScene/GameScene1.h"
+
 
 #include <imgui.h>
 #include <Input.h>
@@ -46,7 +46,7 @@ void GameScene::Update(GameManager* gameManager)
 
 	if (player_->GetWorldTransform().translate_.x > 3.3f) 
 	{
-		gameManager->ChangeScene(new GameScene1);
+		gameManager->ChangeScene(new GameScene);
 	}
 
 	if (IsCollision(player_->GetCollision(), stage_->GetCollision()))
