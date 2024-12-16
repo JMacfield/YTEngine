@@ -6,12 +6,14 @@
 #include "GameManager/IGameScene.h"
 
 #include "Audio.h"
+#include "DeltaTime.h"
 #include "Input.h"
 #include "Sprite.h"
 
 #include "TextureManager.h"
 
 #include <memory>
+#include <math.h>
 
 class GameManager;
 
@@ -125,4 +127,6 @@ private:
 	Vector2 gameOverTransform_;
 
 	float color_;
+
+	bool cameraShakeVelo_ = false;
 };

@@ -26,6 +26,7 @@ enum class Behavior
 	kGrab,
 	kPunch,
 	kJump,
+	kReaction,
 };
 
 class Player 
@@ -67,6 +68,8 @@ private:
 	uint32_t playerGrabAnimationHandle_;
 	uint32_t playerGrabStartAnimationHandle_;
 	uint32_t playerGrabStopAnimationHandle_;
+
+	uint32_t playerReactionHandle_;
 	
 	Skeleton playerSkeleton = {};
 	float playerAnimationTime_;
@@ -96,6 +99,9 @@ private:
 	void BehaviorJumpInitialize();
 	void BehaviorJumpUpdate();
 
+	void BehaviorReactionInitialize();
+	void BehaviorReactionUpdate();
+
 	void BehaviorUpdate();
 
 	Behavior GetBehavior() { return behavior_; }
@@ -111,5 +117,8 @@ private:
 
 	Vector2 controlSpriteTransform_;
 
-	const float kCharacterSpeed = 0.03f;
+	const float kCharacterSpeed = 0.06f;
+
+	bool isCanMove_ = true;
+	int timer_ = 0;
 };

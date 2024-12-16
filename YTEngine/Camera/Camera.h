@@ -19,6 +19,14 @@ struct CameraForGPU
 	Vector3 worldPosition;
 };
 
+struct CameraShake
+{
+	bool isShake;
+	float duration = 0.0f;
+	float amplitude = 0.0f;
+	float frequency = 0.0f;
+	float timeElapsed = 0.0f;
+};
 
 struct Camera 
 {

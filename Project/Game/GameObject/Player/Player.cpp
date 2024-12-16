@@ -15,6 +15,8 @@ void Player::Initialize()
 	playerGrabStartAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerGrabStart", "PlayerGrabStart.gltf");
 	playerGrabStopAnimationHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerGrabStop", "PlayerGrabStop.gltf");
 
+	playerReactionHandle_ = AnimationManager::GetInstance()->LoadFile("Resources/Player/PlayerReaction", "PlayerReaction.gltf");
+
 	player_.reset(AnimationModel::Create(playerModelHandle_));
 	
 	playerWorldTransform_.Initialize();
@@ -73,21 +75,24 @@ void Player::Control()
 
 	Vector3 move{};
 
-	if (Input::GetInstance()->IsPushKey(DIK_D))
+	if (isCanMove_ == true)
 	{
-		playerWorldTransform_.rotate_.y = 1.4f;
-		move = { 0.4f / SHRT_MAX,0.0f,0.0f };
-		behaviorRequest_ = Behavior::kWalk;
-	}
-	else if (Input::GetInstance()->IsPushKey(DIK_A))
-	{
-		playerWorldTransform_.rotate_.y = -1.4f;
-		move = { -0.4f / SHRT_MAX ,0.0f,0.0f };
-		behaviorRequest_ = Behavior::kWalk;
-	}
-	else
-	{
-		behaviorRequest_ = Behavior::kIdle;
+		if (Input::GetInstance()->IsPushKey(DIK_D))
+		{
+			playerWorldTransform_.rotate_.y = 1.4f;
+			move = { 0.4f / SHRT_MAX,0.0f,0.0f };
+			behaviorRequest_ = Behavior::kSprint;
+		}
+		else if (Input::GetInstance()->IsPushKey(DIK_A))
+		{
+			playerWorldTransform_.rotate_.y = -1.4f;
+			move = { -0.4f / SHRT_MAX ,0.0f,0.0f };
+			behaviorRequest_ = Behavior::kSprint;
+		}
+		else if (isCanMove_ == true)
+		{
+			behaviorRequest_ = Behavior::kIdle;
+		}
 	}
 
 	move = Multiply(kCharacterSpeed, Normalize(move));
@@ -99,6 +104,20 @@ void Player::Control()
 	else if (playerWorldTransform_.translate_.x < -5.0f)
 	{
 		playerWorldTransform_.translate_.x = -5.0f;
+
+		isCanMove_ = false;
+		behaviorRequest_ = behaviorRequest_ = Behavior::kReaction;
+	}
+
+	if (isCanMove_ == false)
+	{
+		timer_ += 1;
+
+		if (timer_ == 60)
+		{
+			isCanMove_ = true;
+			timer_ = 0;
+		}
 	}
 
 	playerWorldTransform_.translate_ = Add(move, playerWorldTransform_.translate_);
@@ -205,7 +224,7 @@ void Player::BehaviorSprintInitialize()
 
 void Player::BehaviorSprintUpdate()
 {
-	/*AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerSprintAnimationHandle_, playerModelHandle_, playerAnimationTime_);*/
+	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerSprintAnimationHandle_, playerModelHandle_, playerAnimationTime_);
 }
 
 void Player::BehaviorGrabInitialize()
@@ -267,6 +286,16 @@ void Player::BehaviorJumpUpdate()
 	/*AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerJumpAnimationHandle_, playerModelHandle_, playerAnimationTime_);*/
 }
 
+void Player::BehaviorReactionInitialize()
+{
+	playerAnimationTime_ = 0;
+}
+
+void Player::BehaviorReactionUpdate()
+{
+	AnimationManager::GetInstance()->ApplyAnimation(playerSkeleton, playerReactionHandle_, playerModelHandle_, playerAnimationTime_);
+}
+
 void Player::BehaviorUpdate()
 {
 	if (behaviorRequest_)
@@ -299,6 +328,10 @@ void Player::BehaviorUpdate()
 		case Behavior::kJump:
 			BehaviorJumpInitialize();
 			break;
+
+		case Behavior::kReaction:
+			BehaviorReactionInitialize();
+			break;
 		}
 
 		behaviorRequest_ = std::nullopt;
@@ -329,6 +362,10 @@ void Player::BehaviorUpdate()
 
 	case Behavior::kJump:
 		BehaviorJumpUpdate();
+		break;
+
+	case Behavior::kReaction:
+		BehaviorReactionUpdate();
 		break;
 	}
 }

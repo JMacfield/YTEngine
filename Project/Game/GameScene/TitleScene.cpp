@@ -30,10 +30,11 @@ void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
  
-	ImGui::Begin("Frame");
+	/*ImGui::Begin("Frame");
 	float frame = ImGui::GetIO().Framerate;
 	ImGui::DragFloat("Frame", &frame);
-	ImGui::End();
+	ImGui::DragFloat3("Camera", &camera_.translate_.y, 0.01f);
+	ImGui::End();*/
 
 	/*ImGui::Begin("Debug");
 	ImGui::DragFloat2("BTS", &blackTransform_.x, 1.0f);
@@ -132,8 +133,32 @@ void TitleScene::Update(GameManager* gameManager)
 
 		testStage_->Update();
 
+		if (Input::GetInstance()->IsPushKey(DIK_A) || Input::GetInstance()->IsPushKey(DIK_D))
+		{
+			if (cameraShakeVelo_ == false)
+			{
+				camera_.translate_.y += 0.007f;
+			}
+			else
+			{
+				camera_.translate_.y -= 0.007f;
+			}
 
-		if (testPlayer_->GetWorldTransform().translate_.x > 3.3f)
+			if (camera_.translate_.y > 4.1f)
+			{
+				cameraShakeVelo_ = true;
+			}
+			if (camera_.translate_.y < 3.9f)
+			{
+				cameraShakeVelo_ = false;
+			}
+		}
+		else
+		{
+			camera_.translate_.y = 4.0f;
+		}
+
+		if (testPlayer_->GetWorldTransform().translate_.x > 4.8f)
 		{
 			//isScreenDown_ = true;
 			isZoom_ = true;

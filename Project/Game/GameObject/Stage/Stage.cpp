@@ -21,7 +21,7 @@ void Stage::Initialize()
 	goalObject_.reset(Model::Create(goalObjectHandle_));
 
 	goalObjectTransform_.Initialize();
-	goalObjectTransform_.translate_ = { 3.7f,-0.2f,0.0f };
+	goalObjectTransform_.translate_ = { 4.6f,-0.2f,0.0f };
 	goalObjectTransform_.scale_ = { 0.5f,0.5f,0.5f };
 
 	grabObjectHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/Touch", "Touch.obj");

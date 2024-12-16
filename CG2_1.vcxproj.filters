@@ -544,6 +544,7 @@
       <Filter>YTEngine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Project\Game\GameScene\TestScene.h" />
+    <ClInclude Include="YTEngine\Math\DeltaTime.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Particle3D\Particle3D.hlsli">
