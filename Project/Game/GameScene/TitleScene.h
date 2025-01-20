@@ -21,6 +21,8 @@ class TitleScene : public IGameScene
 {
 public:
 
+	virtual ~TitleScene();
+
 	// タイトルベース //
 	void Initialize() override;
 
@@ -129,4 +131,15 @@ private:
 	float color_;
 
 	bool cameraShakeVelo_ = false;
+
+	int wallTimer_;
+	bool wallTimerStart_ = false;
+
+	std::unique_ptr<Sprite> adSprite_;
+	Vector2 adSpriteTransform_;
+	uint32_t adSpriteHandle_;
+
+	std::unique_ptr<Sprite> fSprite_;
+	Vector2 fSpriteTransform_;
+	uint32_t fSpriteHandle_;
 };

@@ -30,6 +30,8 @@ public:
 	void SetCollision();
 	void SetParent(const WorldTransform* parent) { grabObjectTransform_.parent_ = parent; }
 
+	void SetMoveWallFlag(bool isFlag) { isMoveWall_ = isFlag; }
+
 	OBB GetCollision() { return testStageCollision_; }
 	
 private:
@@ -59,4 +61,26 @@ private:
 	std::unique_ptr<Model> surfaceBack_;
 	uint32_t surfaceBackHandle_;
 	WorldTransform surfaceBackTransform_;
+
+	std::unique_ptr<Model> moveWall_;
+	uint32_t moveWallHandle_;
+	WorldTransform moveWallTransform_;
+
+	std::unique_ptr<Model> pushBackWall_;
+	uint32_t pushBackWallHandle_;
+	WorldTransform pushBackWallTransform_;
+
+	std::unique_ptr<Model> pushBackWall2_;
+	uint32_t pushBackWallHandle2_;
+	WorldTransform pushBackWallTransform2_;
+
+	std::unique_ptr<Model> bottonBottom_;
+	uint32_t bottonBottomHandle_;
+	WorldTransform bottonBottomTransform_;
+
+	std::unique_ptr<Model> bottonTop_;
+	uint32_t bottonTopHandle_;
+	WorldTransform bottonTopTransform_;
+
+	bool isMoveWall_ = false;
 };

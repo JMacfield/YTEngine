@@ -8,8 +8,31 @@ Stage* Stage::GetInstance()
 
 void Stage::Initialize() 
 {
-	testStageHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
+	moveWallHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
+	moveWall_.reset(Model::Create(moveWallHandle_));
 
+	moveWallTransform_.Initialize();
+	moveWallTransform_.translate_ = { 5.67f,3.00f,0.00f };
+	moveWallTransform_.rotate_ = { 0.00f,0.00f,1.58f };
+	moveWallTransform_.scale_ = { 3.44f,4.72f,3.02f };
+
+	pushBackWallHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
+	pushBackWall_.reset(Model::Create(pushBackWallHandle_));
+
+	pushBackWallTransform_.Initialize();
+	pushBackWallTransform_.translate_ = { -2.60f,3.00f,0.00f };
+	pushBackWallTransform_.rotate_ = { 0.00f,0.00f,1.58f };
+	pushBackWallTransform_.scale_ = { 3.44f,4.72f,3.02f };
+
+	pushBackWallHandle2_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
+	pushBackWall2_.reset(Model::Create(pushBackWallHandle_));
+
+	pushBackWallTransform2_.Initialize();
+	pushBackWallTransform2_.translate_ = { 9.20f,3.00f,0.00f };
+	pushBackWallTransform2_.rotate_ = { 0.00f,0.00f,1.58f };
+	pushBackWallTransform2_.scale_ = { 3.44f,4.72f,3.02f };
+
+	testStageHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
 	testStage_.reset(Model::Create(testStageHandle_));
 
 	testStageTransform_.Initialize();
@@ -55,14 +78,34 @@ void Stage::Initialize()
 	surfaceBackTransform_.rotate_ = { -1.44f,0.0f,0.0f };
 	surfaceBackTransform_.scale_ = { 10.260f,6.140f,7.630f };
 	surfaceBack_->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+
+	bottonBottomHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/GoalObject", "GoalObject.obj");
+	bottonBottom_.reset(Model::Create(bottonBottomHandle_));
+
+	bottonBottomTransform_.Initialize();
+	bottonBottomTransform_.translate_ = { 0.29f,0.0f,0.8f };
+	bottonBottomTransform_.rotate_ = { 0.0f,0.0f,0.0f };
+	bottonBottomTransform_.scale_ = { 0.3f,0.3f,0.3f };
+
+	bottonTopHandle_ = ModelManager::GetInstance()->LoadModelFile("Resources/StageObject", "TestObject.obj");
+	bottonTop_.reset(Model::Create(bottonTopHandle_));
+
+	bottonTopTransform_.Initialize();
+	bottonTopTransform_.translate_ = { 0.3f,-3.88f,0.8f };
+	bottonTopTransform_.rotate_ = { 0.0f,0.0f,0.0f };
+	bottonTopTransform_.scale_ = { 0.7f,5.32f,1.0f };
 }
 
 void Stage::Update()
 {
 	/*ImGui::Begin("Stage");
-	ImGui::DragFloat3("Translate", &testStageTransform_.translate_.x, 0.01f);
-	ImGui::DragFloat3("Rotate", &testStageTransform_.translate_.x, 0.01f);
-	ImGui::DragFloat3("GoalTranslate", &grabObjectTransform_.translate_.x, 0.01f);
+	ImGui::DragFloat3("Translate", &moveWallTransform_.translate_.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &bottonBottomTransform_.rotate_.x, 0.01f);
+	ImGui::DragFloat3("Scale", &bottonBottomTransform_.scale_.x, 0.01f);
+
+	ImGui::DragFloat3("WTranslate", &bottonTopTransform_.translate_.x, 0.01f);
+	ImGui::DragFloat3("WRotate", &bottonTopTransform_.rotate_.x, 0.01f);
+	ImGui::DragFloat3("WScale", &bottonTopTransform_.scale_.x, 0.01f);
 	ImGui::End();*/
 
 	testStageTransform_.Update();
@@ -70,10 +113,25 @@ void Stage::Update()
 	grabObjectTransform_.Update();
 	backObjectTransform_.Update();
 	surfaceBackTransform_.Update();
+	moveWallTransform_.Update();
+	pushBackWallTransform_.Update();
+	pushBackWallTransform2_.Update();
+
+	bottonBottomTransform_.Update();
+	bottonTopTransform_.Update();
 
 	Vector3 move{};
 	XINPUT_STATE joyState{};
 
+	if (isMoveWall_ == true)
+	{
+		moveWallTransform_.translate_.y += 0.02f;
+	}
+
+	if (moveWallTransform_.translate_.y > 8.0f)
+	{
+		isMoveWall_ = false;
+	}
 
 	if (Input::GetInstance()->GetJoystickState(joyState))
 	{
@@ -127,6 +185,12 @@ void Stage::Draw(Camera& camera)
 	//object1_->Draw();
 
 	surfaceBack_->Draw(surfaceBackTransform_, camera);
+	moveWall_->Draw(moveWallTransform_, camera);
+	pushBackWall_->Draw(pushBackWallTransform_,camera);
+	pushBackWall2_->Draw(pushBackWallTransform2_, camera);
+
+	bottonBottom_->Draw(bottonBottomTransform_, camera);
+	bottonTop_->Draw(bottonTopTransform_, camera);
 }
 
 void Stage::SetCollision()

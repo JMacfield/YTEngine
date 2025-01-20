@@ -6,10 +6,27 @@
 #include "TestScene.h"
 #include "ClearScene.h"
 
+TitleScene::~TitleScene()
+{
+
+}
+
 void TitleScene::Initialize()
 {
 	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/Title.png");
 	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
+
+	adSpriteTransform_ = { 54.0f,640.0f };
+	//adSprite_->SetScale({ 0.5f,0.5f });
+
+	adSpriteHandle_ = TextureManager::LoadTexture("Resources/tutorial_ad.png");
+	adSprite_.reset(Sprite::Create(adSpriteHandle_, adSpriteTransform_));
+
+	fSpriteHandle_ = TextureManager::LoadTexture("Resources/f.png");
+
+	fSprite_.reset(Sprite::Create(fSpriteHandle_, fSpriteTransform_));
+
+	fSpriteTransform_ = { 600.0f,360.0f };
 
 	camera_.Initialize();
 	camera_.translate_.y = 2.0f;
@@ -30,6 +47,15 @@ void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
  
+	/*ImGui::Begin("Debug");
+	ImGui::DragFloat2("Pos", &fSpriteTransform_.x, 1.0f);
+	ImGui::End();*/
+
+	fSprite_->SetPosition(fSpriteTransform_);
+
+	adSprite_->SetPosition(adSpriteTransform_);
+	adSprite_->SetScale({ 0.5f,0.5f });
+
 	/*ImGui::Begin("Frame");
 	float frame = ImGui::GetIO().Framerate;
 	ImGui::DragFloat("Frame", &frame);
@@ -133,7 +159,34 @@ void TitleScene::Update(GameManager* gameManager)
 
 		testStage_->Update();
 
-		if (Input::GetInstance()->IsPushKey(DIK_A) || Input::GetInstance()->IsPushKey(DIK_D))
+		if (wallTimer_ < 120)
+		{
+			if (testPlayer_->GetWorldTransform().translate_.x > 1.46f)
+			{
+				testPlayer_->SetPosition({ 1.46f,-0.2f,0.0f });
+			}
+		}
+
+		if (wallTimer_ > 130)
+		{
+			wallTimerStart_ = false;
+		}
+
+		if (wallTimerStart_ == true)
+		{
+			wallTimer_ += 1;
+		}
+
+		if (testPlayer_->GetWorldTransform().translate_.x > -0.1f && testPlayer_->GetWorldTransform().translate_.x < 0.8f)
+		{
+			if (Input::GetInstance()->IsTriggerKey(DIK_F))
+			{
+				wallTimerStart_ = true;
+				testStage_->SetMoveWallFlag(true);
+			}
+		}
+
+		/*if (Input::GetInstance()->IsPushKey(DIK_A) || Input::GetInstance()->IsPushKey(DIK_D))
 		{
 			if (cameraShakeVelo_ == false)
 			{
@@ -156,7 +209,7 @@ void TitleScene::Update(GameManager* gameManager)
 		else
 		{
 			camera_.translate_.y = 4.0f;
-		}
+		}*/
 
 		if (testPlayer_->GetWorldTransform().translate_.x > 4.8f)
 		{
@@ -214,6 +267,13 @@ void TitleScene::Draw()
 		testPlayer_->Draw(camera_);
 
 		testStage_->Draw(camera_);
+
+		adSprite_->Draw();
+
+		if (testPlayer_->GetWorldTransform().translate_.x > -0.1f && testPlayer_->GetWorldTransform().translate_.x < 0.8f) 
+		{
+			fSprite_->Draw();
+		}
 	}
 
 	white_->Draw();
