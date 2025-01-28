@@ -15,6 +15,8 @@
 #include <memory>
 #include <math.h>
 
+#include "GameObject/FollowCamera/FollowCamera.h"
+
 class GameManager;
 
 class TitleScene : public IGameScene
@@ -142,4 +144,8 @@ private:
 	std::unique_ptr<Sprite> fSprite_;
 	Vector2 fSpriteTransform_;
 	uint32_t fSpriteHandle_;
+
+	bool isCanCameraMove_ = true;
+
+	//std::unique_ptr<FollowCamera> followCamera_;
 };

@@ -41,6 +41,13 @@ void TitleScene::Initialize()
 
 	testStage_ = std::make_unique<Stage>();
 	testStage_->Initialize();
+
+	//followCamera_ = std::make_unique<FollowCamera>();
+	//followCamera_->SetTarget(&testPlayer_->GetWorldTransform());
+	//followCamera_->Initialize();
+	//followCamera_->Update();
+
+	//testPlayer_->SetViewProjection(&followCamera_->GetViewProjection());
 }
 
 void TitleScene::Update(GameManager* gameManager)
@@ -48,13 +55,16 @@ void TitleScene::Update(GameManager* gameManager)
 	gameManager;
  
 	/*ImGui::Begin("Debug");
-	ImGui::DragFloat2("Pos", &fSpriteTransform_.x, 1.0f);
+	ImGui::DragFloat3("CameraT", &camera_.translate_.x, 1.0f);
+	ImGui::DragFloat3("CameraR", &camera_.rotate_.x, 1.0f);
 	ImGui::End();*/
 
 	fSprite_->SetPosition(fSpriteTransform_);
 
 	adSprite_->SetPosition(adSpriteTransform_);
 	adSprite_->SetScale({ 0.5f,0.5f });
+
+	camera_.Update();
 
 	/*ImGui::Begin("Frame");
 	float frame = ImGui::GetIO().Framerate;
@@ -132,8 +142,6 @@ void TitleScene::Update(GameManager* gameManager)
 	
 	}
 
-	camera_.Update();
-
 	if (isTitleStart_ == true)
 	{
 		AnimationUpdate();
@@ -185,6 +193,31 @@ void TitleScene::Update(GameManager* gameManager)
 				testStage_->SetMoveWallFlag(true);
 			}
 		}
+
+		if (camera_.translate_.x < -2.5f) {
+			isCanCameraMove_ = false;
+		}
+		if (camera_.translate_.x > -2.5f) {
+			isCanCameraMove_ = true;
+		}
+
+		if (camera_.translate_.x > 3.0f) {
+			isCanCameraMove_ = false;
+		}
+
+		if (isCanCameraMove_ == true) {
+			if (Input::GetInstance()->IsPushKey(DIK_A)) {
+				camera_.translate_.x -= 0.05f;
+			}
+		}
+		if (Input::GetInstance()->IsPushKey(DIK_D)) {
+			camera_.translate_.x += 0.05f;
+		}
+
+		//followCamera_->Update();
+		//camera_.viewMatrix_ = followCamera_->GetViewProjection().viewMatrix_;
+		//camera_.projectionMatrix_ = followCamera_->GetViewProjection().projectionMatrix_;
+		//camera_.Transfer();
 
 		/*if (Input::GetInstance()->IsPushKey(DIK_A) || Input::GetInstance()->IsPushKey(DIK_D))
 		{

@@ -42,7 +42,7 @@ public:
 	void AnimationUpdate();
 
 	// ゲッタ
-	WorldTransform GetWorldTransform() { return playerWorldTransform_; }
+	const WorldTransform& GetWorldTransform() { return playerWorldTransform_; }
 	OBB GetCollision() { return playerCollision_; }
 
 	// セッタ
@@ -51,6 +51,8 @@ public:
 
 	Vector3 SetPosition(Vector3 setPosition) { return playerWorldTransform_.translate_ = setPosition; }
 	Vector3 SetRotate(Vector3 setRotate) { return playerWorldTransform_.rotate_ = setRotate; }
+
+	void SetViewProjection(const Camera* viewProjection) { viewProjection_ = viewProjection; }
 
 private: 
 	
@@ -121,4 +123,6 @@ private:
 
 	bool isCanMove_ = true;
 	int timer_ = 0;
+
+	const Camera* viewProjection_ = nullptr;
 };
