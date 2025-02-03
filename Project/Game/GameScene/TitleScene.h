@@ -147,5 +147,11 @@ private:
 
 	bool isCanCameraMove_ = true;
 
+	std::unique_ptr<Sprite> pauseSprite_;
+	uint32_t pauseSpriteHandle_;
+	Vector2 pauseSpriteTransform_;
+
+	bool isPauseMenuShown_ = false;
+
 	//std::unique_ptr<FollowCamera> followCamera_;
 };

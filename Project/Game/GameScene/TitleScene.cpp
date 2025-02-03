@@ -13,10 +13,15 @@ TitleScene::~TitleScene()
 
 void TitleScene::Initialize()
 {
+	pauseSpriteHandle_ = TextureManager::LoadTexture("Resources/pause.png");
+	pauseSprite_.reset(Sprite::Create(pauseSpriteHandle_, pauseSpriteTransform_));
+
+	pauseSpriteTransform_ = { 0.0f,0.0f };
+
 	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/Title.png");
 	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
 
-	adSpriteTransform_ = { 54.0f,640.0f };
+	adSpriteTransform_ = { 24.0f,480.0f };
 	//adSprite_->SetScale({ 0.5f,0.5f });
 
 	adSpriteHandle_ = TextureManager::LoadTexture("Resources/tutorial_ad.png");
@@ -88,6 +93,8 @@ void TitleScene::Update(GameManager* gameManager)
 		}
 	}*/
 
+
+
 	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE) && isScreenDown_ == false && isTestStart_ == false)
 	{
 		isScreenDown_ = true;
@@ -144,7 +151,9 @@ void TitleScene::Update(GameManager* gameManager)
 
 	if (isTitleStart_ == true)
 	{
-		AnimationUpdate();
+		//if (isPauseMenuShown_ == false) {
+			AnimationUpdate();
+		//}
 	}
 
 	SurfaceUpdate();
@@ -163,7 +172,31 @@ void TitleScene::Update(GameManager* gameManager)
 
 	if (isTestStart_ == true)
 	{
-		testPlayer_->Update();
+		if (Input::GetInstance()->IsTriggerKey(DIK_ESCAPE) && isPauseMenuShown_ == false) {
+			isPauseMenuShown_ = true;
+		}
+		else if (Input::GetInstance()->IsTriggerKey(DIK_ESCAPE) && isPauseMenuShown_ == true) {
+			isPauseMenuShown_ = false;
+		}
+
+		if (isPauseMenuShown_ == true && Input::GetInstance()->IsTriggerKey(DIK_SPACE)) {
+			AnimationInitialize();
+			//TestInitialize();
+				isTestStart_ = false;
+				//isTitleReset_ = true;
+				isScreenDown_ = false;
+				isTitleStart_ = true;
+
+				camera_.translate_.y = 2.0f;
+				camera_.translate_.z = -10.0f;
+				camera_.rotate_.x = 0.0f;
+
+				Initialize();
+		}
+
+		if (isPauseMenuShown_ == false) {
+			testPlayer_->Update();
+		}
 
 		testStage_->Update();
 
@@ -205,14 +238,14 @@ void TitleScene::Update(GameManager* gameManager)
 			isCanCameraMove_ = false;
 		}
 
-		if (isCanCameraMove_ == true) {
+		/*if (isCanCameraMove_ == true) {
 			if (Input::GetInstance()->IsPushKey(DIK_A)) {
 				camera_.translate_.x -= 0.05f;
 			}
 		}
 		if (Input::GetInstance()->IsPushKey(DIK_D)) {
 			camera_.translate_.x += 0.05f;
-		}
+		}*/
 
 		//followCamera_->Update();
 		//camera_.viewMatrix_ = followCamera_->GetViewProjection().viewMatrix_;
@@ -306,6 +339,10 @@ void TitleScene::Draw()
 		if (testPlayer_->GetWorldTransform().translate_.x > -0.1f && testPlayer_->GetWorldTransform().translate_.x < 0.8f) 
 		{
 			fSprite_->Draw();
+		}
+
+		if (isPauseMenuShown_ == true) {
+			pauseSprite_->Draw();
 		}
 	}
 
