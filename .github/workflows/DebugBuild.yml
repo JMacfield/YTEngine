@@ -2,9 +2,9 @@ name: DebugBuild
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "UnravelMaster" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "UnravelMaster" ]
 
 env:
   #リポジトリのルートディレクトリを基点としたソリューションのファイルパス
