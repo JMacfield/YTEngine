@@ -1,4 +1,4 @@
-#include "YNet/Network.h"
+#include "Network.h"
 
 #include <iostream>
 

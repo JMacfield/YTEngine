@@ -30,6 +30,8 @@ namespace YNet
 
 		void Print();
 
+		std::string ToString();
+
 	private:
 
 		IPVersion ip_version = IPVersion::Unknown;

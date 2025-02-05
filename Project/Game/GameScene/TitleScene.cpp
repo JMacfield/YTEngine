@@ -2,9 +2,6 @@
 
 #include "GameScene.h"
 #include "TitleScene.h"
-#include "SelectScene.h"
-#include "TestScene.h"
-#include "ClearScene.h"
 
 TitleScene::~TitleScene()
 {
@@ -13,26 +10,6 @@ TitleScene::~TitleScene()
 
 void TitleScene::Initialize()
 {
-	pauseSpriteHandle_ = TextureManager::LoadTexture("Resources/pause.png");
-	pauseSprite_.reset(Sprite::Create(pauseSpriteHandle_, pauseSpriteTransform_));
-
-	pauseSpriteTransform_ = { 0.0f,0.0f };
-
-	titleSpriteHandle_ = TextureManager::LoadTexture("Resources/Title/Title.png");
-	titleSprite_.reset(Sprite::Create(titleSpriteHandle_, titleSpriteTransform_));
-
-	adSpriteTransform_ = { 24.0f,480.0f };
-	//adSprite_->SetScale({ 0.5f,0.5f });
-
-	adSpriteHandle_ = TextureManager::LoadTexture("Resources/tutorial_ad.png");
-	adSprite_.reset(Sprite::Create(adSpriteHandle_, adSpriteTransform_));
-
-	fSpriteHandle_ = TextureManager::LoadTexture("Resources/f.png");
-
-	fSprite_.reset(Sprite::Create(fSpriteHandle_, fSpriteTransform_));
-
-	fSpriteTransform_ = { 600.0f,360.0f };
-
 	camera_.Initialize();
 	camera_.translate_.y = 2.0f;
 	camera_.translate_.z = -10.0f;
@@ -40,325 +17,25 @@ void TitleScene::Initialize()
 	AnimationInitialize();
 
 	SurfaceInitialize();
-
-	testPlayer_ = std::make_unique<Player>();
-	testPlayer_->Initialize();
-
-	testStage_ = std::make_unique<Stage>();
-	testStage_->Initialize();
-
-	//followCamera_ = std::make_unique<FollowCamera>();
-	//followCamera_->SetTarget(&testPlayer_->GetWorldTransform());
-	//followCamera_->Initialize();
-	//followCamera_->Update();
-
-	//testPlayer_->SetViewProjection(&followCamera_->GetViewProjection());
 }
 
 void TitleScene::Update(GameManager* gameManager)
 {
 	gameManager;
- 
-	/*ImGui::Begin("Debug");
-	ImGui::DragFloat3("CameraT", &camera_.translate_.x, 1.0f);
-	ImGui::DragFloat3("CameraR", &camera_.rotate_.x, 1.0f);
-	ImGui::End();*/
-
-	fSprite_->SetPosition(fSpriteTransform_);
-
-	adSprite_->SetPosition(adSpriteTransform_);
-	adSprite_->SetScale({ 0.5f,0.5f });
 
 	camera_.Update();
 
-	/*ImGui::Begin("Frame");
-	float frame = ImGui::GetIO().Framerate;
-	ImGui::DragFloat("Frame", &frame);
-	ImGui::DragFloat3("Camera", &camera_.translate_.y, 0.01f);
-	ImGui::End();*/
-
-	/*ImGui::Begin("Debug");
-	ImGui::DragFloat2("BTS", &blackTransform_.x, 1.0f);
-	ImGui::DragFloat2("Scale", &blackSize_.x, 1.0f);
-	ImGui::End();*/
-	black_->SetPosition(blackTransform_);
-
-	/*XINPUT_STATE joyState{};
-
-	if (Input::GetInstance()->GetJoystickState(joyState))
-	{
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
-		{
-			gameManager->ChangeScene(new SelectScene);
-		}
-	}*/
-
-
-
-	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE) && isScreenDown_ == false && isTestStart_ == false)
-	{
-		isScreenDown_ = true;
-	}
-
-	if (isScreenDown_ == true)
-	{
-		whiteTransform_.y += 5.0f;
-	}
-
-	if (whiteTransform_.y == 0.0f)
-	{
-		isScreenDown_ = false;
-		AnimationInitialize();
-		isTitleStart_ = false;
-		isTitleReset_ = true;
-
-		TestInitialize();
-
-		if (isTestStart_ == false)
-		{
-			isTestStart_ = true;
-		}
-		else if (isTestStart_ == true)
-		{
-			isTestStart_ = false;
-			camera_.translate_.y = 2.0f;
-			camera_.translate_.z = -10.0f;
-			camera_.rotate_.x = 0.0f;
-		}
-
-		//gameManager->ChangeScene(new GameScene);
-	}
-
-	if (isTitleReset_ == true)
-	{
-		whiteTransform_.y -= 5.0f;
-	}
-
-	if (whiteTransform_.y == -720.0f && isTitleReset_ == true)
-	{
-		
-	/*	isTitleReset_ = false;
-		isTitleStart_ = true;*/
-	}
-
-	if (isZoom_ == true)
-	{
-		black_->SetScale(blackSize_);
-		blackSize_.x += 2.0f;
-		blackSize_.y += 1.5f;
+	AnimationUpdate();
 	
-	}
-
-	if (isTitleStart_ == true)
-	{
-		//if (isPauseMenuShown_ == false) {
-			AnimationUpdate();
-		//}
-	}
 
 	SurfaceUpdate();
-
-	/*ImGui::Begin("Debug");
-	ImGui::DragFloat3("Camera Translate", &camera_.translate_.x, 0.01f);
-	ImGui::DragFloat3("Ground Translate", &surfaceGroundTransform_.translate_.x, 0.01f);
-	ImGui::Text("");
-	ImGui::DragFloat3("Back Translate", &surfaceBackTransform_.translate_.x, 0.01f);
-	ImGui::DragFloat3("Back Rotate", &surfaceBackTransform_.rotate_.x, 0.01f);
-	ImGui::DragFloat3("Back Scale", &surfaceBackTransform_.scale_.x, 0.01f);
-	ImGui::Text("");
-	ImGui::DragFloat3("Player", &playerTransform_[0].translate_.x, 0.01f);
-	ImGui::DragFloat2("1 P", &titleIconTransform_.x, 0.01f);
-	ImGui::End();*/
-
-	if (isTestStart_ == true)
-	{
-		if (Input::GetInstance()->IsTriggerKey(DIK_ESCAPE) && isPauseMenuShown_ == false) {
-			isPauseMenuShown_ = true;
-		}
-		else if (Input::GetInstance()->IsTriggerKey(DIK_ESCAPE) && isPauseMenuShown_ == true) {
-			isPauseMenuShown_ = false;
-		}
-
-		if (isPauseMenuShown_ == true && Input::GetInstance()->IsTriggerKey(DIK_SPACE)) {
-			AnimationInitialize();
-			//TestInitialize();
-				isTestStart_ = false;
-				//isTitleReset_ = true;
-				isScreenDown_ = false;
-				isTitleStart_ = true;
-
-				camera_.translate_.y = 2.0f;
-				camera_.translate_.z = -10.0f;
-				camera_.rotate_.x = 0.0f;
-
-				Initialize();
-		}
-
-		if (isPauseMenuShown_ == false) {
-			testPlayer_->Update();
-		}
-
-		testStage_->Update();
-
-		if (wallTimer_ < 120)
-		{
-			if (testPlayer_->GetWorldTransform().translate_.x > 1.46f)
-			{
-				testPlayer_->SetPosition({ 1.46f,-0.2f,0.0f });
-			}
-		}
-
-		if (wallTimer_ > 130)
-		{
-			wallTimerStart_ = false;
-		}
-
-		if (wallTimerStart_ == true)
-		{
-			wallTimer_ += 1;
-		}
-
-		if (testPlayer_->GetWorldTransform().translate_.x > -0.1f && testPlayer_->GetWorldTransform().translate_.x < 0.8f)
-		{
-			if (Input::GetInstance()->IsTriggerKey(DIK_F))
-			{
-				wallTimerStart_ = true;
-				testStage_->SetMoveWallFlag(true);
-			}
-		}
-
-		if (camera_.translate_.x < -2.5f) {
-			isCanCameraMove_ = false;
-		}
-		if (camera_.translate_.x > -2.5f) {
-			isCanCameraMove_ = true;
-		}
-
-		if (camera_.translate_.x > 3.0f) {
-			isCanCameraMove_ = false;
-		}
-
-		/*if (isCanCameraMove_ == true) {
-			if (Input::GetInstance()->IsPushKey(DIK_A)) {
-				camera_.translate_.x -= 0.05f;
-			}
-		}
-		if (Input::GetInstance()->IsPushKey(DIK_D)) {
-			camera_.translate_.x += 0.05f;
-		}*/
-
-		//followCamera_->Update();
-		//camera_.viewMatrix_ = followCamera_->GetViewProjection().viewMatrix_;
-		//camera_.projectionMatrix_ = followCamera_->GetViewProjection().projectionMatrix_;
-		//camera_.Transfer();
-
-		/*if (Input::GetInstance()->IsPushKey(DIK_A) || Input::GetInstance()->IsPushKey(DIK_D))
-		{
-			if (cameraShakeVelo_ == false)
-			{
-				camera_.translate_.y += 0.007f;
-			}
-			else
-			{
-				camera_.translate_.y -= 0.007f;
-			}
-
-			if (camera_.translate_.y > 4.1f)
-			{
-				cameraShakeVelo_ = true;
-			}
-			if (camera_.translate_.y < 3.9f)
-			{
-				cameraShakeVelo_ = false;
-			}
-		}
-		else
-		{
-			camera_.translate_.y = 4.0f;
-		}*/
-
-		if (testPlayer_->GetWorldTransform().translate_.x > 4.8f)
-		{
-			//isScreenDown_ = true;
-			isZoom_ = true;
-			isGameOver_ = true;
-
-			testPlayer_->SetPosition({ -2.2f,-0.2f,0.0f });
-			testPlayer_->SetRotate({ 0.0f,1.4f,0.0f });
-		}
-	}
-
-	if (blackSize_.x > 240.0f)
-	{
-		isZoom_ = false;
-		isGameOverDraw_ = true;
-	}
-
-	if (isGameOverDraw_ == true)
-	{
-		color_ += 0.01f;
-		gameOverSprite_->SetColor({ 1.0f,1.0f,1.0f,color_ });
-	}
-
-	if (isGameOverDraw_ == true && Input::GetInstance()->IsTriggerKey(DIK_SPACE))
-	{
-		AnimationInitialize();
-		//TestInitialize();
-		isTestStart_ = false;
-		//isTitleReset_ = true;
-		isScreenDown_ = false;
-		isTitleStart_ = true;
-
-		camera_.translate_.y = 2.0f;
-		camera_.translate_.z = -10.0f;
-		camera_.rotate_.x = 0.0f;
-
-		Initialize();
-	}
 }
 
 void TitleScene::Draw()
-{
-	//titleSprite_->Draw();
+{	
+	AnimationDraw();
 
-	if (isTestStart_ == false) 
-	{
-		AnimationDraw();
-
-		SurfaceDraw();
-	}
-
-	if (isTestStart_ == true)
-	{
-		testPlayer_->Draw(camera_);
-
-		testStage_->Draw(camera_);
-
-		adSprite_->Draw();
-
-		if (testPlayer_->GetWorldTransform().translate_.x > -0.1f && testPlayer_->GetWorldTransform().translate_.x < 0.8f) 
-		{
-			fSprite_->Draw();
-		}
-
-		if (isPauseMenuShown_ == true) {
-			pauseSprite_->Draw();
-		}
-	}
-
-	white_->Draw();
-
-	titleSign_->Draw(titleSignTransform_, camera_);
-
-	if (isGameOver_ == true)
-	{
-		black_->Draw();
-	}
-
-	if (isGameOverDraw_ == true)
-	{
-		gameOverSprite_->Draw();
-	}
+	SurfaceDraw();
 }
 
 void TitleScene::AnimationInitialize()
@@ -402,25 +79,6 @@ void TitleScene::AnimationInitialize()
 	titleSignTransform_.Initialize();
 	titleSignTransform_.translate_ = { 0.0f,0.0f,0.0f };
 	titleSignTransform_.scale_ = { 10.0f,10.0f,10.0f };
-
-	blackHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/black.png");
-	blackTransform_ = { 1055.0f,628.0f };
-	blackSize_ = { 1.0f,1.0f };
-	black_.reset(Sprite::Create(blackHandle_, blackTransform_));
-	black_->SetAnchorPoint({ 0.5f,0.5f });
-
-	isGameOver_ = false;
-
-	isZoom_ = false;
-	isGameOverDraw_ = false;
-
-	gameOverHandle_ = TextureManager::GetInstance()->LoadTexture("Resources/gameover.png");
-	gameOverTransform_ = { 0.0f,0.0f };
-	gameOverSprite_.reset(Sprite::Create(gameOverHandle_, gameOverTransform_));
-
-	color_ = 0.0f;
-
-	gameOverSprite_->SetColor({ 1.0f,1.0f,1.0f,color_ });
 }
 
 void TitleScene::AnimationUpdate()
@@ -601,16 +259,7 @@ void TitleScene::SurfaceInitialize()
 
 	titleBGMHandle_ = Audio::GetInstance()->LoadMP3(L"Resources/Title/title.mp3");
 
-	Audio::GetInstance()->ChangeVolume(titleBGMHandle_, 0.05f);
-
-	whiteHandle_ = TextureManager::LoadTexture("Resources/white.png");
-	whiteTransform_ = { 0.0f,-720.0f };
-
-	white_.reset(Sprite::Create(whiteHandle_, whiteTransform_));
-
-	isScreenDown_ = false;
-	isTitleStart_ = true;
-	isTitleReset_ = false;
+	Audio::GetInstance()->ChangeVolume(titleBGMHandle_, 0.05f);	
 }
 
 void TitleScene::SurfaceUpdate()
@@ -622,8 +271,6 @@ void TitleScene::SurfaceUpdate()
 	playerIcon_[1]->SetPosition({ playerIconTransform_[1].x, 270 });
 	playerIcon_[2]->SetPosition({ playerIconTransform_[2].x, 270 });
 	playerIcon_[3]->SetPosition({ playerIconTransform_[3].x, 270 });
-
-	white_->SetPosition({ whiteTransform_.x,whiteTransform_.y });
 
 	titleIcon_->SetPosition({ titleIconTransform_.x,titleIconTransform_.y });
 

@@ -1,9 +1,7 @@
 /// ゲームシーン
 
 #include "GameScene/GameScene.h"
-#include "GameScene/ClearScene.h"
 #include "GameScene/TitleScene.h"
-#include "GameScene/GameScene1.h"
 
 #include <imgui.h>
 #include <Input.h>
@@ -27,9 +25,6 @@ void GameScene::Initialize()
 
 	//jsonLoader_ = new JsonLoader();
 	//jsonLoader_->Load("Resources/Editor", "aaaa.json");
-
-	/*line_ = std::make_unique<DrawSystem>();
-	line_->Initialize();*/
 }
 
 void GameScene::Update(GameManager* gameManager) 
@@ -43,11 +38,6 @@ void GameScene::Update(GameManager* gameManager)
 	stage_->Update();
 
 	//jsonLoader_->Update();
-
-	if (player_->GetWorldTransform().translate_.x > 3.3f) 
-	{
-		gameManager->ChangeScene(new GameScene1);
-	}
 
 	if (IsCollision(player_->GetCollision(), stage_->GetCollision()))
 	{
@@ -67,6 +57,4 @@ void GameScene::Draw()
 	stage_->Draw(camera_);
 
 	//jsonLoader_->Draw(camera_);
-
-	//line_->Draw({ -1.0f,0.0f,0.0f }, { 1.0f,0.0f,0.0f }, camera_);
 }

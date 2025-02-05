@@ -5,8 +5,8 @@
 #include <vector>
 #include <winsock.h>
 
-#include "YNet/PacketException.h"
-#include "YNet/PacketType.h"
+#include "PacketException.h"
+#include "PacketType.h"
 
 namespace YNet 
 {

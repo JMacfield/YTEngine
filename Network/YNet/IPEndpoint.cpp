@@ -202,4 +202,9 @@ namespace YNet
 			std::cout << (int)digit << std::endl;
 		}
 	}
+
+	std::string IPEndpoint::ToString()
+	{
+		return hostname, ip_string;
+	}
 }

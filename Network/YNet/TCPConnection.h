@@ -1,6 +1,6 @@
 #pragma once
 
-#include "YNet/Socket.h"
+#include "Socket.h"
 
 namespace YNet 
 {

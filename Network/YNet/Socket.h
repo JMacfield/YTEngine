@@ -1,12 +1,12 @@
 #pragma once
 
-#include "YNet/SocketHandle.h"
-#include "YNet/YResult.h"
-#include "YNet/IPVersion.h"
-#include "YNet/SocketOption.h"
-#include "YNet/IPEndpoint.h"
-#include "YNet/Constants.h"
-#include "YNet/Packet.h"
+#include "SocketHandle.h"
+#include "YResult.h"
+#include "IPVersion.h"
+#include "SocketOption.h"
+#include "IPEndpoint.h"
+#include "Constants.h"
+#include "Packet.h"
 
 namespace YNet 
 {

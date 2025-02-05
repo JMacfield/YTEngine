@@ -1,5 +1,5 @@
-#include "YNet/Packet.h"
-#include "YNet/Constants.h"
+#include "Packet.h"
+#include "Constants.h"
 
 namespace YNet 
 {

@@ -140,6 +140,12 @@
     <Filter Include="Project\GameScene">
       <UniqueIdentifier>{e3a0acb5-08b3-41f0-a41e-4357a3698e46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network\YNet">
+      <UniqueIdentifier>{00ca7aef-09b9-44f6-a6d2-8f8c1745bf86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Manager">
+      <UniqueIdentifier>{6888a9e3-293b-448d-ae60-7e42df83d4dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Project\Game\GameManager\GameManager.cpp">
@@ -153,15 +159,6 @@
     </ClCompile>
     <ClCompile Include="YTEngine\Audio\Audio.cpp">
       <Filter>YTEngine\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\Game\GameScene\GameScene1.cpp">
-      <Filter>Project\GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\Game\GameScene\ClearScene.cpp">
-      <Filter>Project\GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\Game\GameScene\SelectScene.cpp">
-      <Filter>Project\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="Project\Game\GameScene\TitleScene.cpp">
       <Filter>Project\GameScene</Filter>
@@ -277,8 +274,27 @@
     <ClCompile Include="YTEngine\main.cpp">
       <Filter>YTEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Game\GameScene\TestScene.cpp" />
-    <ClCompile Include="Project\Game\GameObject\FollowCamera\FollowCamera.cpp" />
+    <ClCompile Include="Project\Game\GameObject\FollowCamera\FollowCamera.cpp">
+      <Filter>Project\Game\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\NetworkManager\NetworkManager.cpp">
+      <Filter>Network\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\YNet\IPEndpoint.cpp">
+      <Filter>Network\YNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\YNet\Network.cpp">
+      <Filter>Network\YNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\YNet\Packet.cpp">
+      <Filter>Network\YNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\YNet\Socket.cpp">
+      <Filter>Network\YNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\YNet\TCPConnection.cpp">
+      <Filter>Network\YNet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Particle3D\Particle3d.PS.hlsl">
@@ -499,15 +515,6 @@
     <ClInclude Include="YTEngine\Manager\AnimationManager\AnimationManager.h">
       <Filter>YTEngine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Project\Game\GameScene\SelectScene.h">
-      <Filter>Project\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\Game\GameScene\GameScene1.h">
-      <Filter>Project\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\Game\GameScene\ClearScene.h">
-      <Filter>Project\GameScene</Filter>
-    </ClInclude>
     <ClInclude Include="Project\Game\GameObject\Player\Player.h">
       <Filter>Project\Game\GameObject\Player</Filter>
     </ClInclude>
@@ -544,9 +551,54 @@
     <ClInclude Include="YTEngine\Graphics\3D\AnimationModel\AnimationModel.h">
       <Filter>YTEngine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Project\Game\GameScene\TestScene.h" />
-    <ClInclude Include="YTEngine\Math\DeltaTime.h" />
-    <ClInclude Include="Project\Game\GameObject\FollowCamera\FollowCamera.h" />
+    <ClInclude Include="Project\Game\GameObject\FollowCamera\FollowCamera.h">
+      <Filter>Project\Game\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="YTEngine\Math\DeltaTime.h">
+      <Filter>YTEngine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\NetworkManager\NetWorkManager.h">
+      <Filter>Network\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\IPEndpoint.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\Constants.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\IncludeMe.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\IPVersion.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\Network.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\Packet.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\PacketException.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\PacketType.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\Socket.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\SocketOption.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\SocketHandle.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\TCPConnection.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\YNet\YResult.h">
+      <Filter>Network\YNet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Particle3D\Particle3D.hlsli">

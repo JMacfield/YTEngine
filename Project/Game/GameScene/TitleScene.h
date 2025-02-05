@@ -96,62 +96,7 @@ private:
 
 	uint32_t titleBGMHandle_;
 
-	std::unique_ptr<Sprite> white_;
-	Vector2 whiteTransform_;
-	uint32_t whiteHandle_;
-
-	bool isScreenDown_;
-
-	bool isTitleStart_;
-
-	bool isTitleReset_;
-
-	std::unique_ptr<Player> testPlayer_;
-
-	std::unique_ptr<Stage> testStage_;
-
-	bool isTestStart_;
-
 	std::unique_ptr<Model> titleSign_;
 	uint32_t titleSignHandle_;
 	WorldTransform titleSignTransform_;
-
-	std::unique_ptr<Sprite> black_;
-	Vector2 blackTransform_;
-	uint32_t blackHandle_;
-
-	Vector2 blackSize_;
-
-	bool isGameOver_;
-	bool isZoom_;
-	bool isGameOverDraw_;
-
-	std::unique_ptr<Sprite> gameOverSprite_;
-	uint32_t gameOverHandle_;
-	Vector2 gameOverTransform_;
-
-	float color_;
-
-	bool cameraShakeVelo_ = false;
-
-	int wallTimer_;
-	bool wallTimerStart_ = false;
-
-	std::unique_ptr<Sprite> adSprite_;
-	Vector2 adSpriteTransform_;
-	uint32_t adSpriteHandle_;
-
-	std::unique_ptr<Sprite> fSprite_;
-	Vector2 fSpriteTransform_;
-	uint32_t fSpriteHandle_;
-
-	bool isCanCameraMove_ = true;
-
-	std::unique_ptr<Sprite> pauseSprite_;
-	uint32_t pauseSpriteHandle_;
-	Vector2 pauseSpriteTransform_;
-
-	bool isPauseMenuShown_ = false;
-
-	//std::unique_ptr<FollowCamera> followCamera_;
 };
