@@ -12,5 +12,5 @@ WinSock2を利用したネットワーククラス・ネットワークマネー
 
 TCP/UDP通信・同期・ノンブロッキングI/Oといった通信に関する様々な機能があります
 
-https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network
+[ネットワーク](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network)
 
