@@ -10,7 +10,6 @@ GameManager::GameManager() {
 }
 	
 void GameManager::Initialize() {
-	
 	currentGamaScene_ = std::make_unique<TitleScene>();
 	currentGamaScene_->Initialize();
 }
@@ -23,8 +22,6 @@ void GameManager::Update() {
 void GameManager::Draw() {
 	currentGamaScene_->Draw();
 }
-
-
 
 void GameManager::ChangeScene(std::unique_ptr<IGameScene> newGameScene) {
 	
