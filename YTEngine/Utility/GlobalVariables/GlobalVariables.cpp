@@ -68,9 +68,6 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 
     
 
-    //for文で探そうと思ったがダメだった
-    //一番上のようにfindでやった方が良いかも
-    //まず参照
     Group& group = itGroup->second;
     std::map<std::string, Item>::iterator itItem = group.items.find(key);
     //無かったら追加
@@ -92,9 +89,6 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 
 
 
-    //for文で探そうと思ったがダメだった
-    //一番上のようにfindでやった方が良いかも
-    //まず参照
     Group& group = itGroup->second;
     std::map<std::string, Item>::iterator itItem = group.items.find(key);
     //無かったら追加
@@ -115,9 +109,6 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 
 
 
-    //for文で探そうと思ったがダメだった
-    //一番上のようにfindでやった方が良いかも
-    //まず参照
     Group& group = itGroup->second;
     std::map<std::string, Item>::iterator itItem = group.items.find(key);
     //無かったら追加

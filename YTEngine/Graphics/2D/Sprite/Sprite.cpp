@@ -189,8 +189,6 @@ void Sprite::Draw() {
 
 	transformationMatrixResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixData_));
 	
-
-	//新しく引数作った方が良いかも
 	//3x3x3
 	Matrix4x4 worldMatrixSprite = MakeAffineMatrix({ scale_.x,scale_.y,1.0f }, { 0.0f,0.0f,rotate_ }, {position_.x,position_.y,0.0f});
 	//遠視投影行列

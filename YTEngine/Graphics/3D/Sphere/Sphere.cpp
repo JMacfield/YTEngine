@@ -277,7 +277,6 @@ void Sphere::Draw(SphereShape sphereCondtion, Transform transform,Matrix4x4 view
 	transformationMatrixResourceSphere_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixDataSphere_));
 	
 
-	//新しく引数作った方が良いかも
 	Matrix4x4 worldMatrixSphere = MakeAffineMatrix(transform.scale,transform.rotate,Add(transform.translate,sphereCondtion.center));
 	//遠視投影行列
 	Matrix4x4 viewMatrixSphere = MakeIdentity4x4();
