@@ -2,8 +2,9 @@
 
 #pragma once
 
-#include "IGameScene.h"
+#include <memory>
 
+#include "IGameScene.h"
 
 class GameManager {
 public:
@@ -15,7 +16,7 @@ public:
 	void Initialize();
 
 	//シーンチェンジ
-	void ChangeScene(IGameScene* newGameScene);
+	void ChangeScene(std::unique_ptr<IGameScene> newGameScene);
 
 	//更新
 	void Update();
@@ -29,9 +30,6 @@ public:
 private:
 
 	//StatePatternに必要な変数
-	IGameScene* currentGamaScene_ = nullptr;
-
-
-
+	std::unique_ptr<IGameScene> currentGamaScene_ = nullptr;
 	
 };

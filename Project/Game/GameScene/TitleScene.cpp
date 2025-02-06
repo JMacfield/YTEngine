@@ -29,6 +29,10 @@ void TitleScene::Update(GameManager* gameManager)
 	
 
 	SurfaceUpdate();
+
+	if (Input::GetInstance()->IsTriggerKey(DIK_SPACE)) {
+		gameManager->ChangeScene(std::make_unique<GameScene>());
+	}
 }
 
 void TitleScene::Draw()

@@ -11,9 +11,8 @@ GameManager::GameManager() {
 	
 void GameManager::Initialize() {
 	
-	currentGamaScene_ = new TitleScene();
+	currentGamaScene_ = std::make_unique<TitleScene>();
 	currentGamaScene_->Initialize();
-
 }
 
 
@@ -27,17 +26,16 @@ void GameManager::Draw() {
 
 
 
-void GameManager::ChangeScene(IGameScene* newGameScene) {
+void GameManager::ChangeScene(std::unique_ptr<IGameScene> newGameScene) {
 	
-	delete currentGamaScene_;
-	currentGamaScene_ = newGameScene;
-	
+	currentGamaScene_ = std::move(newGameScene);
+
 	currentGamaScene_->Initialize();
+	currentGamaScene_->Update(this);
 }
 
 
 //デストラクタ
 GameManager::~GameManager() {
-	delete currentGamaScene_;
 
 }
