@@ -45,9 +45,13 @@ void GameScene::Update(GameManager* gameManager)
 	}
 
 #ifdef _DEBUG
-	
 
 #endif
+
+	ImGui::Begin("Debug");
+	ImGui::TreeNode("Game Data");
+	ImGui::Text("aaaaa");
+	ImGui::End();
 }
 
 void GameScene::Draw() 
