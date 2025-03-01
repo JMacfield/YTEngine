@@ -36,7 +36,7 @@ public:
 	// 基本関数
 	void Initialize();
 	void Update();
-	void Draw(Camera& camera);
+	void Draw(const Camera& camera);
 
 	void Control();
 	void AnimationUpdate();

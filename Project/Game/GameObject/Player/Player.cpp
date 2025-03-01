@@ -64,7 +64,7 @@ void Player::Update()
 	if (Input::GetInstance()->IsPushKey(DIK_6)) { behaviorRequest_ = Behavior::kJump; }*/
 }
 
-void Player::Draw(Camera& camera)
+void Player::Draw(const Camera& camera)
 {
 	player_->Draw(playerWorldTransform_, camera, playerSkinCluster_);
 }

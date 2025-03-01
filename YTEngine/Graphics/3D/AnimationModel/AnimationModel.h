@@ -34,7 +34,7 @@ public:
 	/// <param name="worldTransform"></param>
 	/// <param name="camera"></param>
 	/// <param name="skinCluster"></param>
-	void Draw(WorldTransform& worldTransform, Camera& camera, SkinCluster& skinCluster);
+	void Draw(const WorldTransform& worldTransform, const Camera& camera, const SkinCluster& skinCluster);
 
 
 	/// <summary>

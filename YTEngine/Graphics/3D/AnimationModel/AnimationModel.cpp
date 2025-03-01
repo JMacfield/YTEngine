@@ -83,7 +83,7 @@ AnimationModel* AnimationModel::Create(uint32_t modelHandle){
 	
 }
 
-void AnimationModel::Draw(WorldTransform& worldTransform, Camera& camera, SkinCluster& skinCluster){
+void AnimationModel::Draw(const WorldTransform& worldTransform, const Camera& camera, const SkinCluster& skinCluster){
 
 	skinCluster;
 
