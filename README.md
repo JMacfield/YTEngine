@@ -13,7 +13,7 @@ WinSock2を利用したネットワーククラス・ネットワークマネー
 TCP/UDP通信・同期・ノンブロッキングI/O  
 といった通信に関する様々な機能があります。
 
-# YNet 1.0
+# YNet
 ### YNetに関する注意
 [ネットワークディレクトリ](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network)には  
 YNetのコアに必要な全てのファイルが含まれています。プログラムでソースを作成したりする場合などに使用します。
