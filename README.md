@@ -17,3 +17,5 @@ TCP/UDP通信・同期・ノンブロッキングI/O
 ### はじめに YNetに関する注意
 [ネットワークディレクトリ](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network)には  
 YNetのコアに必要な全てのファイルが含まれています。プログラムでソースを作成したりする場合などに使用します。
+
+### Windowsユーザー (Visual Studio 2022 もしくはそれ以降のバージョン)
