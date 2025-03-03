@@ -10,8 +10,8 @@
 WinSock2を利用したネットワーククラス・ネットワークマネージャー
 
 
-TCP/UDP通信・同期・ノンブロッキングI/Oといった通信に関する  
-様々な機能があります
+TCP/UDP通信・同期・ノンブロッキングI/O  
+といった通信に関する様々な機能があります
 
-[ネットワークソースコード](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network)
-
+# YNet
+### 概要
