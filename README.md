@@ -22,3 +22,16 @@ YNetのコアに必要な全てのファイルが含まれています。プロ�
 Windowsユーザー (Visual Studio 2022 もしくはそれ以降のバージョン)  
 [ネットワークソース](https://github.com/JMacfield/YNet_NetworkSystem)よりソースをダウンロードし、  
 Network/YNet/IncludeMe.hをインクルードしてください。
+
+### ソースへの導入
+Network/NetworkManager.h内にあるInitializeとShutdownは対になっています。  
+Initializeはエンジン部の初期化へ　Shutdownはエンジン部の解放へ導入してください  
+※尚、ゲームシーン内に同じようにして導入することも可能です  
+
+
+Update関数は導入した場所（エンジン・ゲームシーン）の更新部へ差し込んでください  
+
+
+Connect関数は相手クライアント・サーバーへ接続することができます  
+ReceiveLoop関数は相手が閉じているか、更新されているかをキャッチすることができます  
+SetReceiveCallBack関数はコールバックをセットします  
