@@ -18,6 +18,7 @@ TCP/UDP通信・同期・ノンブロッキングI/O
 [ネットワークディレクトリ](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network)には  
 YNetのコアに必要な全てのファイルが含まれています。プログラムでソースを作成したりする場合などに使用します。
 
-### Windowsユーザー (Visual Studio 2022 もしくはそれ以降のバージョン)
+### 導入方法
+Windowsユーザー (Visual Studio 2022 もしくはそれ以降のバージョン)
 [ネットワークソース](https://github.com/JMacfield/YNet_NetworkSystem)よりソースをダウンロードし、  
 Network/YNet/IncludeMe.hをインクルードしてください。
