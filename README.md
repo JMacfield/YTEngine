@@ -21,7 +21,7 @@ YNetのコアに必要な全てのファイルが含まれています。プロ�
 ### 導入方法
 * Windowsユーザー (Visual Studio 2022 もしくはそれ以降のバージョン)  
 [ネットワークソース](https://github.com/JMacfield/YNet_NetworkSystem)よりソースをダウンロードし、  
-Network/YNet/IncludeMe.hをインクルードしてください。
+.slnと同階層へ配置後、Network/YNet/IncludeMe.hをインクルードしてください。
 
 ### ソースへの導入
 1. Network/NetworkManager.h内にあるInitializeとShutdownは対になっています。  
