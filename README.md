@@ -32,7 +32,7 @@ TCP/UDP通信・同期・ノンブロッキングI/O
 ### YNetに関する注意
 [ネットワークディレクトリ](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network)には  
 YNetのコアに必要な全てのファイルが含まれています。  
-プログラムでソースを作成したりする場合などに使用します。
+プログラムでソースを作成する場合などに使用します。
 
 
 ### 導入方法
