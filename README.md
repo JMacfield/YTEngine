@@ -17,17 +17,23 @@ WinSock2を利用したネットワーククラス・ネットワークマネー
 TCP/UDP通信・同期・ノンブロッキングI/O  
 といった通信に関する様々な機能があります。
 
+### 動作環境
+* DirectX12動作が可能な環境
+* Windows SDK 10.0.22621.0
+* Windows 10 最低バージョン : 20H2 (私の環境はWindows 11ですが、10でも動作を確認済みです)
+* C++ バージョン : 20
+
+### 外部ライブラリ
+・[assimp](https://github.com/assimp/assimp)
+・[DirectXTex](https://github.com/microsoft/DirectXTex)
+・[imgui](https://github.com/ocornut/imgui)
+
 # YNet
 ### YNetに関する注意
 [ネットワークディレクトリ](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network)には  
 YNetのコアに必要な全てのファイルが含まれています。  
 プログラムでソースを作成したりする場合などに使用します。
 
-### 動作環境
-* DirectX12動作が可能な環境
-* Windows SDK 10.0.22621.0
-* Windows 10 最低バージョン : 20H2 (私の環境はWindows 11ですが、10でも動作を確認済みです)
-* C++ バージョン : 20
 
 ### 導入方法
 * Windowsユーザー (Visual Studio 2022 もしくはそれ以降のバージョン)  
