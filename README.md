@@ -26,7 +26,8 @@ TCP/UDP通信・同期・ノンブロッキングI/O
 ### 外部ライブラリ
 * [assimp](https://github.com/assimp/assimp)  
 * [DirectXTex](https://github.com/microsoft/DirectXTex)  
-* [imgui](https://github.com/ocornut/imgui)  
+* [imgui](https://github.com/ocornut/imgui)
+* [nlohmanjson](https://github.com/nlohmann/json)  
 
 # YNet
 ### YNetに関する注意
