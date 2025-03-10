@@ -23,6 +23,12 @@ TCP/UDP通信・同期・ノンブロッキングI/O
 YNetのコアに必要な全てのファイルが含まれています。  
 プログラムでソースを作成したりする場合などに使用します。
 
+### 動作環境
+* DirectX12動作が可能な環境
+* Windows SDK 10.0.22621.0
+* Windows 10 最低バージョン : 20H2 (私の環境はWindows 11ですが、10でも動作を確認済みです)
+* C++ バージョン : 20
+
 ### 導入方法
 * Windowsユーザー (Visual Studio 2022 もしくはそれ以降のバージョン)  
 [ネットワークソース](https://github.com/JMacfield/YNet_NetworkSystem)よりソースをダウンロードし、  
