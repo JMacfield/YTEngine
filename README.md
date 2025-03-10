@@ -24,9 +24,9 @@ TCP/UDP通信・同期・ノンブロッキングI/O
 * C++ バージョン : 20
 
 ### 外部ライブラリ
-・[assimp](https://github.com/assimp/assimp)  
-・[DirectXTex](https://github.com/microsoft/DirectXTex)  
-・[imgui](https://github.com/ocornut/imgui)  
+* [assimp](https://github.com/assimp/assimp)  
+* [DirectXTex](https://github.com/microsoft/DirectXTex)  
+* [imgui](https://github.com/ocornut/imgui)  
 
 # YNet
 ### YNetに関する注意
