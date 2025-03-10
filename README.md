@@ -1,5 +1,9 @@
+### マスターディレクトリの動作状況
+
 [![DebugBuild](https://github.com/JMacfield/YTEngine/actions/workflows/DebugBuild.yml/badge.svg)](https://github.com/JMacfield/YTEngine/actions/workflows/DebugBuild.yml)
 [![ReleaseBuild](https://github.com/JMacfield/YTEngine/actions/workflows/ReleaseBuild.yml/badge.svg)](https://github.com/JMacfield/YTEngine/actions/workflows/ReleaseBuild.yml)
+
+
 # YTEngine
 ### 概要
 2023年4月～今現在までの約22カ月の間
