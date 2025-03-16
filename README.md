@@ -42,6 +42,36 @@ YNetのコアに必要な全てのファイルが含まれています。
 .slnと同階層へ配置後、Network/YNet/IncludeMe.hをインクルードしてください。
 
 ### ソースへの導入
+```
+ bool NetworkManager::Initialize()
+    {
+        if (!YNet::Network::Initialize())
+        {
+            std::cerr << "Failed to initialize network system." << std::endl;
+            return false;
+        }
+        return true;
+    }
+
+void NetworkManager::Shutdown()
+    {
+        isRunning = false;
+
+        if (receiveThread.joinable())
+        {
+            receiveThread.join();
+        }
+
+        if (connection)
+        {
+            connection->Close();
+            delete connection;
+            connection = nullptr;
+        }
+
+        YNet::Network::Shutdown();
+    }
+```
 1. Network/NetworkManager.h内にあるInitializeとShutdownは対になっています。  
 2. Initializeはエンジン部の初期化へ　Shutdownはエンジン部の解放へ導入してください
 
