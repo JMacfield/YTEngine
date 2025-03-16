@@ -83,8 +83,83 @@ void NetworkManager::Shutdown()
 
 
 * Update関数は導入した場所（エンジン・ゲームシーン）の更新部へ差し込んでください  
+```
+ void NetworkManager::Update()
+    {
+        std::lock_guard<std::mutex> lock(receiveMutex);
+        while (!receiveQueue.empty())
+        {
+            auto data = std::move(receiveQueue.front());
+            receiveQueue.pop();
 
+            if (dataCallback)
+            {
+                dataCallback(data);
+            }
+        }
+    }
 
-* Connect関数は相手クライアント・サーバーへ接続することができます  
-* ReceiveLoop関数は相手が閉じているか、更新されているかをキャッチすることができます  
-* SetReceiveCallBack関数はコールバックをセットします  
+```
+* Connect関数は相手クライアント・サーバーへ接続することができます
+```
+bool NetworkManager::Connect(const std::string& ip, uint16_t port)
+    {
+        const char* cstr = ip.c_str();
+
+        YNet::IPEndpoint endpoint(cstr, port);
+
+        YNet::Socket socket;
+        if (!socket.Create())
+        {
+            std::cerr << "Failed to create socket." << std::endl;
+            return false;
+        }
+
+        if (!socket.Connect(endpoint))
+        {
+            std::cerr << "Failed to connect to server: " << endpoint.ToString() << std::endl;
+            return false;
+        }
+
+        connection = new YNet::TCPConnection(std::move(socket), endpoint);
+        isRunning = true;
+        receiveThread = std::thread(&NetworkManager::ReceiveLoop, this);
+
+        return true;
+    }
+```
+* ReceiveLoop関数は相手が閉じているか、更新されているかをキャッチすることができます
+```
+void NetworkManager::ReceiveLoop()
+    {
+        while (isRunning)
+        {
+            char buffer[1024];
+            int bytesReceived = connection->socket.RecvAll(buffer, sizeof(buffer));
+
+            if (bytesReceived > 0)
+            {
+                std::lock_guard<std::mutex> lock(receiveMutex);
+                receiveQueue.push(std::vector<char>(buffer, buffer + bytesReceived));
+            }
+            else if (bytesReceived == 0)
+            {
+                std::cerr << "Server closed the connection." << std::endl;
+                isRunning = false;
+            }
+            else
+            {
+                std::cerr << "Error while receiving data." << std::endl;
+                isRunning = false;
+            }
+        }
+    }
+```
+* SetReceiveCallBack関数はコールバックをセットします
+```
+ void NetworkManager::SetReceiveCallback(DataCallback callback)
+    {
+        std::lock_guard<std::mutex> lock(receiveMutex);
+        dataCallback = callback;
+    }
+```
