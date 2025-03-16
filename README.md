@@ -42,6 +42,7 @@ YNetのコアに必要な全てのファイルが含まれています。
 .slnと同階層へ配置後、Network/YNet/IncludeMe.hをインクルードしてください。
 
 ### ソースへの導入
+* 初期化
 ```
  bool NetworkManager::Initialize()
     {
@@ -52,7 +53,9 @@ YNetのコアに必要な全てのファイルが含まれています。
         }
         return true;
     }
-
+```
+* 解放
+```
 void NetworkManager::Shutdown()
     {
         isRunning = false;
