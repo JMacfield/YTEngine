@@ -2,7 +2,7 @@
 ![Image](https://github.com/user-attachments/assets/a53e5925-b255-4041-9613-d5913088aaed)
 
 ## 各リポジトリの動作状態
-- マスターブランチ
+- **マスターブランチ**
   - [![DebugBuild](https://github.com/JMacfield/YTEngine/actions/workflows/DebugBuild.yml/badge.svg)](https://github.com/JMacfield/YTEngine/actions/workflows/DebugBuild.yml)  
   - [![ReleaseBuild](https://github.com/JMacfield/YTEngine/actions/workflows/ReleaseBuild.yml/badge.svg)](https://github.com/JMacfield/YTEngine/actions/workflows/ReleaseBuild.yml)
 
@@ -12,6 +12,9 @@
 
 ## 特徴
 YTEngine には、以下のような機能が搭載されています。
+
+- **グラフィックス**
+  - グラフィックパイプライン PC用のDirectX12を使用して構築
 
 - **ネットワーク機能**（WinSock2 を利用）
   - TCP/UDP 通信
