@@ -1,165 +1,208 @@
-# マスターディレクトリの動作状況
+# YTEngine - DirectX 12 ゲームエンジン
 
-[![DebugBuild](https://github.com/JMacfield/YTEngine/actions/workflows/DebugBuild.yml/badge.svg)](https://github.com/JMacfield/YTEngine/actions/workflows/DebugBuild.yml)
+[![DebugBuild](https://github.com/JMacfield/YTEngine/actions/workflows/DebugBuild.yml/badge.svg)](https://github.com/JMacfield/YTEngine/actions/workflows/DebugBuild.yml)  
 [![ReleaseBuild](https://github.com/JMacfield/YTEngine/actions/workflows/ReleaseBuild.yml/badge.svg)](https://github.com/JMacfield/YTEngine/actions/workflows/ReleaseBuild.yml)
 
+## 概要
+**YTEngine** は、DirectX 12 を使用して開発中のゲームエンジンです。2023年4月から現在まで、約22カ月にわたり制作を続けています。
 
-# YTEngine
-### 概要
-2023年4月～今現在までの約22カ月の間
+## 特徴
+YTEngine には、以下のような機能が搭載されています。
 
+- **ネットワーク機能**（WinSock2 を利用）
+  - TCP/UDP 通信
+  - データの同期
+  - ノンブロッキング I/O
 
-制作しているDirectX12APIを使ったゲームエンジンです。
-### 特徴
-WinSock2を利用したネットワーククラス・ネットワークマネージャー
+## 動作環境
+| 必要環境 | 詳細 |
+|----------|------|
+| **DirectX** | DirectX 12 の動作が可能な環境 |
+| **OS** | Windows 10 (20H2 以上) または Windows 11 |
+| **Windows SDK** | 10.0.22621.0 以上 |
+| **C++** | C++20 |
 
+## 外部ライブラリ
+- [assimp](https://github.com/assimp/assimp) （モデル読み込み）
+- [DirectXTex](https://github.com/microsoft/DirectXTex) （テクスチャ処理）
+- [imgui](https://github.com/ocornut/imgui) （GUI）
+- [nlohmann/json](https://github.com/nlohmann/json) （JSON処理）
 
-TCP/UDP通信・同期・ノンブロッキングI/O  
-といった通信に関する様々な機能があります。
+---
 
-### 動作環境
-* DirectX12の動作が可能な環境
-* Windows SDK 10.0.22621.0 よりも高バージョン
-* Windows 10 最低バージョン : 20H2 (私のPCはWindows 11ですが、10でも動作を確認済みです)
-* C++ バージョン : 20
+# YNet - ネットワークシステム
 
-### 外部ライブラリ
-* [assimp](https://github.com/assimp/assimp)  
-* [DirectXTex](https://github.com/microsoft/DirectXTex)  
-* [imgui](https://github.com/ocornut/imgui)
-* [nlohmanjson](https://github.com/nlohmann/json)  
+## YNet とは？
+YNet は、YTEngine に組み込まれているネットワーク通信システムです。TCP・UDP の通信をサポートし、ゲーム内でのプレイヤー間の同期やサーバー通信を簡単に実装できます。
 
-# YNet
-### YNetに関する注意
-[ネットワークディレクトリ](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network)には  
-YNetのコアに必要な全てのファイルが含まれています。  
-プログラムでソースを作成する場合などに使用します。
+### ネットワークディレクトリの構成
+[ネットワークディレクトリ](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network) には、YNet のコアに必要な全ファイルが含まれています。
 
+## YNet の導入方法
+### Windows（Visual Studio 2022 以降）
+1. [YNet のソースコード](https://github.com/JMacfield/YNet_NetworkSystem) をダウンロード
+2. `.sln`（ソリューションファイル）と同じ階層に配置
+3. `Network/YNet/IncludeMe.h` をプロジェクト内でインクルード
 
-### 導入方法
-* Windowsユーザー (Visual Studio 2022 もしくはそれ以降のバージョン)  
-[ネットワークソース](https://github.com/JMacfield/YNet_NetworkSystem)よりソースをダウンロードし、  
-.slnと同階層へ配置後、Network/YNet/IncludeMe.hをインクルードしてください。
-
-### ソースへの導入
-* 初期化
+```cpp
+#include "Network/YNet/IncludeMe.h"
 ```
- bool NetworkManager::Initialize()
+
+## YNet の基本的な使い方
+
+### **1. 初期化**
+ネットワークシステムを初期化するための関数です。
+
+```cpp
+bool NetworkManager::Initialize()
+{
+    if (!YNet::Network::Initialize())
     {
-        if (!YNet::Network::Initialize())
-        {
-            std::cerr << "Failed to initialize network system." << std::endl;
-            return false;
-        }
-        return true;
+        std::cerr << "Failed to initialize network system." << std::endl;
+        return false;
     }
+    return true;
+}
 ```
-* 解放
-```
+
+> `Initialize()` はエンジンの初期化処理の一部として組み込んでください。
+
+---
+
+### **2. 解放（シャットダウン）**
+ネットワークシステムを適切に終了するための関数です。
+
+```cpp
 void NetworkManager::Shutdown()
+{
+    isRunning = false;
+
+    if (receiveThread.joinable())
     {
-        isRunning = false;
-
-        if (receiveThread.joinable())
-        {
-            receiveThread.join();
-        }
-
-        if (connection)
-        {
-            connection->Close();
-            delete connection;
-            connection = nullptr;
-        }
-
-        YNet::Network::Shutdown();
-    }
-```
-1. Network/NetworkManager.h内にあるInitializeとShutdownは対になっています。  
-2. Initializeはエンジン部の初期化へ　Shutdownはエンジン部の解放へ導入してください
-
-
-※尚、ゲームシーン内に同じようにして導入することも可能です  
-
-
-* Update関数は導入した場所（エンジン・ゲームシーン）の更新部へ差し込んでください  
-```
- void NetworkManager::Update()
-    {
-        std::lock_guard<std::mutex> lock(receiveMutex);
-        while (!receiveQueue.empty())
-        {
-            auto data = std::move(receiveQueue.front());
-            receiveQueue.pop();
-
-            if (dataCallback)
-            {
-                dataCallback(data);
-            }
-        }
+        receiveThread.join();
     }
 
+    if (connection)
+    {
+        connection->Close();
+        delete connection;
+        connection = nullptr;
+    }
+
+    YNet::Network::Shutdown();
+}
 ```
-* Connect関数は相手クライアント・サーバーへ接続することができます
+
+> `Shutdown()` はエンジンの終了処理として組み込んでください。
+
+---
+
+### **3. 更新処理（Update 関数）**
+ネットワーク通信のデータを処理する関数です。エンジンのメインループやゲームシーンの更新処理に組み込むことで、受信したデータを適切に処理できます。
+
+```cpp
+void NetworkManager::Update()
+{
+    std::lock_guard<std::mutex> lock(receiveMutex);
+    while (!receiveQueue.empty())
+    {
+        auto data = std::move(receiveQueue.front());
+        receiveQueue.pop();
+
+        if (dataCallback)
+        {
+            dataCallback(data);
+        }
+    }
+}
 ```
+
+> `Update()` はフレームごとに呼び出し、データの処理を行うようにしてください。
+
+---
+
+### **4. クライアントの接続（Connect 関数）**
+特定の IP アドレス・ポートに接続するための関数です。
+
+```cpp
 bool NetworkManager::Connect(const std::string& ip, uint16_t port)
+{
+    const char* cstr = ip.c_str();
+
+    YNet::IPEndpoint endpoint(cstr, port);
+
+    YNet::Socket socket;
+    if (!socket.Create())
     {
-        const char* cstr = ip.c_str();
-
-        YNet::IPEndpoint endpoint(cstr, port);
-
-        YNet::Socket socket;
-        if (!socket.Create())
-        {
-            std::cerr << "Failed to create socket." << std::endl;
-            return false;
-        }
-
-        if (!socket.Connect(endpoint))
-        {
-            std::cerr << "Failed to connect to server: " << endpoint.ToString() << std::endl;
-            return false;
-        }
-
-        connection = new YNet::TCPConnection(std::move(socket), endpoint);
-        isRunning = true;
-        receiveThread = std::thread(&NetworkManager::ReceiveLoop, this);
-
-        return true;
+        std::cerr << "Failed to create socket." << std::endl;
+        return false;
     }
+
+    if (!socket.Connect(endpoint))
+    {
+        std::cerr << "Failed to connect to server: " << endpoint.ToString() << std::endl;
+        return false;
+    }
+
+    connection = new YNet::TCPConnection(std::move(socket), endpoint);
+    isRunning = true;
+    receiveThread = std::thread(&NetworkManager::ReceiveLoop, this);
+
+    return true;
+}
 ```
-* ReceiveLoop関数は相手が閉じているか、更新されているかをキャッチすることができます
-```
+
+> `Connect()` を使用して、クライアントからサーバーへ接続します。
+
+---
+
+### **5. データ受信処理（ReceiveLoop 関数）**
+サーバーとの接続を維持しながら、データの受信を行うスレッドループです。
+
+```cpp
 void NetworkManager::ReceiveLoop()
+{
+    while (isRunning)
     {
-        while (isRunning)
-        {
-            char buffer[1024];
-            int bytesReceived = connection->socket.RecvAll(buffer, sizeof(buffer));
+        char buffer[1024];
+        int bytesReceived = connection->socket.RecvAll(buffer, sizeof(buffer));
 
-            if (bytesReceived > 0)
-            {
-                std::lock_guard<std::mutex> lock(receiveMutex);
-                receiveQueue.push(std::vector<char>(buffer, buffer + bytesReceived));
-            }
-            else if (bytesReceived == 0)
-            {
-                std::cerr << "Server closed the connection." << std::endl;
-                isRunning = false;
-            }
-            else
-            {
-                std::cerr << "Error while receiving data." << std::endl;
-                isRunning = false;
-            }
+        if (bytesReceived > 0)
+        {
+            std::lock_guard<std::mutex> lock(receiveMutex);
+            receiveQueue.push(std::vector<char>(buffer, buffer + bytesReceived));
+        }
+        else if (bytesReceived == 0)
+        {
+            std::cerr << "Server closed the connection." << std::endl;
+            isRunning = false;
+        }
+        else
+        {
+            std::cerr << "Error while receiving data." << std::endl;
+            isRunning = false;
         }
     }
+}
 ```
-* SetReceiveCallBack関数はコールバックをセットします
+
+---
+
+### **6. 受信コールバックの設定（SetReceiveCallback 関数）**
+受信データを処理するコールバック関数を設定できます。
+
+```cpp
+void NetworkManager::SetReceiveCallback(DataCallback callback)
+{
+    std::lock_guard<std::mutex> lock(receiveMutex);
+    dataCallback = callback;
+}
 ```
- void NetworkManager::SetReceiveCallback(DataCallback callback)
-    {
-        std::lock_guard<std::mutex> lock(receiveMutex);
-        dataCallback = callback;
-    }
-```
+
+> 受信したデータを処理する関数を登録できます。
+
+---
+
+## まとめ
+YNet を使用することで、YTEngine におけるネットワーク通信を簡単に実装できます。サーバー・クライアント間の通信をスムーズに行い、マルチプレイ対応のゲームを実現できます。
+
