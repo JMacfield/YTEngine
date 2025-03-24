@@ -32,6 +32,7 @@ YTEngine には、以下のような機能が搭載されています。
 | **OS** | Windows 10 (20H2 以上) または Windows 11 |
 | **Windows SDK** | 10.0.22621.0 以上 |
 | **C++** | C++20 |
+| **VisualStudio** | 2022 以降 |
 
 ## 外部ライブラリ
 - [assimp](https://github.com/assimp/assimp) （モデル読み込み）
