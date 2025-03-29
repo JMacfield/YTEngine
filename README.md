@@ -2,7 +2,7 @@
 ![Image](https://github.com/user-attachments/assets/a53e5925-b255-4041-9613-d5913088aaed)
 
 ## このエンジン・ネットワークライブラリで作られたゲーム
- - [オセロゲーム](https://github.com/JMacfield/YNet_Reversi/tree/main) ネットワークライブラリ YNetを使用
+ - [オセロゲーム](https://github.com/JMacfield/YNet_Reversi/tree/main) (ネットワークライブラリを使用)
  -
 
 ## 各リポジトリの動作状態
