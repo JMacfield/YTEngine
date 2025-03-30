@@ -65,8 +65,12 @@ YNet には、以下のような機能が搭載されています。
  ## 現在進行中の実装
  * 通信時の送受信するデータの暗号化を制作・実装しています。
 
+---
+
 ### ネットワークディレクトリの構成
 [ネットワークディレクトリ](https://github.com/JMacfield/YTEngine/tree/UnravelMaster/Network) には、YNet のコアに必要な全ファイルが含まれています。
+
+---
 
 ## YNet の導入方法
 ### Windows（Visual Studio 2022 以降）
